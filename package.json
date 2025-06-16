@@ -1,0 +1,22 @@
+{
+  "name": "nerdwork-platform",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "pnpm@8.15.4",
+  "workspaces": [
+    "apps/*",
+    "services/*",
+    "libs/*",
+    "infra/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev --parallel",
+    "build": "turbo run build",
+    "lint": "eslint . --ext .ts",
+    "test": "jest",
+    "deploy": "cdk deploy --all"
+  },
+  "devDependencies": {
+    "turbo": "^2.5.4"
+  }
+}
