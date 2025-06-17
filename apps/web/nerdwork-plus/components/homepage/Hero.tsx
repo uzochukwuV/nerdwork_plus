@@ -1,0 +1,47 @@
+import React from "react";
+import Navbar from "./Navbar";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+
+export default function Hero() {
+  return (
+    <header className="relative min-h-screen w-full">
+      <div className="absolute inset-0 bg-[url('@/assets/hero-bg.png')] bg-cover bg-center bg-no-repeat z-0" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(13,13,13,0)_0%,#0D0D0D_61.75%)] z-10" />
+      <div className="relative z-20 text-white h-screen max-w-[1440px] mx-auto">
+        <Navbar />
+        <section className="flex flex-col font-inter text-center -mb-px gap-8 items-center justify-end h-[calc(100%-120px)] pb-32">
+          <p className="bg-[#0856D3] rounded-[20px] px-5 py-1.5 font-medium">
+            Comic con 2025 is here, Register now
+          </p>
+          <h1 className="font-obostar text-[52px]">
+            Where passion
+            <br />
+            meets community
+          </h1>
+          <p className="font-semibold">
+            From comics to conventions, find your people and immerse yourself in
+            everything you love.
+          </p>
+          <form className="max-w-[704px] w-full flex gap-3 justify-center items-stretch">
+            <Input
+              type="email"
+              className="bg-[#17171A] outline-none border-none w-full rounded-[8px] py-2.5 pl-4 w-"
+              placeholder="Email address"
+            />
+            <Button className="h-full bg-[#3373D9] font-inter">Sign Up</Button>
+          </form>
+          <p className="text-[#FFFFFFB2]">
+            Step into the ultimate nerd verse:
+            <br />
+            Explore exclusive comics on the Nerdwork+ platform
+            <br />
+            Attend the most exciting comic conventions
+            <br />
+            Connect with one of the largest nerd community
+          </p>
+        </section>
+      </div>
+    </header>
+  );
+}
