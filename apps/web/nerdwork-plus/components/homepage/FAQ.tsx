@@ -72,17 +72,21 @@ const faqs = [
 
 export default function FAQ() {
   return (
-    <section className="flex max-w-[1130px] font-inter mx-auto text-white py-20">
-      <div className="w-1/2 flex flex-col gap-6">
-        <h2 className="font-obostar text-[40px]">Frequently Asked Questions</h2>
+    <section className="flex max-lg:flex-col max-w-[1130px] font-inter mx-auto text-white py-20 px-7">
+      <div className="lg:w-1/2 flex flex-col gap-6">
+        <h2 className="font-obostar text-[40px] max-md:text-2xl">
+          Frequently Asked Questions
+        </h2>
         <p className="font-semibold">
           What fans everywhere have been asking.
           <br />
           Can’t find the answer? Ask us directly!
         </p>
-        <Button className="bg-[#343435] w-fit">Contact Support</Button>
+        <Button className="bg-[#343435] w-fit max-md:hidden">
+          Contact Support
+        </Button>
       </div>
-      <div className="w-1/2">
+      <div className="lg:w-1/2">
         <Accordion type="single" collapsible>
           {faqs.map((faq) => (
             <AccordionItem
@@ -98,6 +102,10 @@ export default function FAQ() {
           ))}
         </Accordion>
       </div>
+      <p className="text-sm md:hidden my-4">
+        Can’t find the answer? Ask us directly!
+      </p>
+      <Button className="w-fit md:hidden">Contact Support</Button>
     </section>
   );
 }
