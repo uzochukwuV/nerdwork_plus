@@ -10,7 +10,10 @@ export default function Hero() {
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(13,13,13,0)_0%,#0D0D0D_61.75%)] z-10" />
       <div className="relative z-20 text-white h-screen max-w-[1440px] mx-auto">
         <Navbar />
-        <section className="flex flex-col font-inter text-center -mb-px max-md:gap-6 md:gap-8 items-center justify-end h-[calc(100%-120px)] pb-10 md:pb-32 px-7">
+        <section
+          data-testid="hero"
+          className="flex flex-col font-inter text-center -mb-px max-md:gap-6 md:gap-8 items-center justify-end h-[calc(100%-120px)] pb-10 md:pb-32 px-7"
+        >
           <p className="bg-[#0856D3] max-md:text-[13px] rounded-[20px] px-5 py-1.5 font-medium">
             Comic con 2025 is here, Register now
           </p>

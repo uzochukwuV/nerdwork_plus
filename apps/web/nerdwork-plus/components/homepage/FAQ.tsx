@@ -72,7 +72,10 @@ const faqs = [
 
 export default function FAQ() {
   return (
-    <section className="flex max-lg:flex-col max-w-[1130px] font-inter mx-auto text-white py-20 px-7">
+    <section
+      data-testid="faq"
+      className="flex max-lg:flex-col max-w-[1130px] font-inter mx-auto text-white py-20 px-7"
+    >
       <div className="lg:w-1/2 flex flex-col gap-6">
         <h2 className="font-obostar text-[40px] max-md:text-2xl">
           Frequently Asked Questions

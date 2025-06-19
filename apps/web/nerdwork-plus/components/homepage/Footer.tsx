@@ -12,7 +12,7 @@ export default function Footer() {
   return (
     <footer className="relative w-full flex max-lg:flex-col lg:-mt-20 max-lg:gap-12 max-lg:items-start items-center max-w-[1130px] mx-auto text-white font-inter px-7 max-lg:pb-12">
       <section className="flex lg:w-[28%] flex-col gap-6">
-        <Image src={Logo} width={175} height={48} alt="footer image" />
+        <Image src={Logo} width={175} height={48} alt="nerdwork logo" />
         <p>Join to stay up to date</p>
         <form className="flex gap-3 justify-center items-stretch">
           <Input

@@ -37,7 +37,10 @@ const stats = [
 
 export default function ComicCon() {
   return (
-    <section className="z-10 max-w-[1130px] w-full font-inter mx-auto text-white py-20 px-7 mt-32">
+    <section
+      data-testid="comic-con"
+      className="z-10 max-w-[1130px] w-full font-inter mx-auto text-white py-20 px-7 mt-32"
+    >
       <h2 className="font-obostar text-[40px] max-md:text-2xl mb-4">
         EpiC Comic-Cons
         <br />
@@ -65,14 +68,14 @@ export default function ComicCon() {
               src={ComicCon2}
               width={366}
               height={282}
-              alt=""
+              alt="comic con images"
               className="rotate-3 z-0"
             />
             <Image
               src={ComicCon4}
               width={366}
               height={282}
-              alt=""
+              alt="comic con images"
               className="-mt-64 z-20 relative"
             />
           </div>
@@ -92,39 +95,47 @@ export default function ComicCon() {
 
         {/* Desktop images */}
         <div className="md:w-1/2 max-md:hidden">
-          <Image src={ComicCon1} width={589} height={445} alt="" />
+          <Image
+            src={ComicCon1}
+            width={589}
+            height={445}
+            alt="comic con images"
+          />
           <Image
             src={ComicCon2}
             width={589}
             height={445}
-            alt=""
+            alt="comic con images"
             className="-mt-44 -ml-32"
           />
           <Image
             src={ComicCon3}
             width={556}
             height={386}
-            alt=""
+            alt="comic con images"
             className="-mt-20"
           />
         </div>
       </section>
 
-      <section className="max-md:mt-16 mt-20 flex flex-col max-md:gap-16 gap-20 overflow-hidden">
+      <section
+        data-testid="sponsors"
+        className="max-md:mt-16 mt-20 flex flex-col max-md:gap-16 gap-20 overflow-hidden"
+      >
         <p className="text-sm font-medium">Sponsors of comic con 2024</p>
         <div className="flex justify-between gap-4 animate-marquee hover:pause">
           <Image src={Carry1st} width={49} height={48} alt="carry1st logo" />
-          <Image src={Itel} width={75} height={48} alt="carry1st logo" />
-          <Image src={Filmhouse} width={137} height={48} alt="carry1st logo" />
-          <Image src={Tribe} width={93} height={48} alt="carry1st logo" />
-          <Image src={Monster} width={55} height={48} alt="carry1st logo" />
+          <Image src={Itel} width={75} height={48} alt="itel logo" />
+          <Image src={Filmhouse} width={137} height={48} alt="filmhouse logo" />
+          <Image src={Tribe} width={93} height={48} alt="tribe logo" />
+          <Image src={Monster} width={55} height={48} alt="monster logo" />
         </div>
         <div className="flex max-md:hidden justify-between gap-4 animate-marquee-reverse hover:pause">
-          <Image src={Itel} width={75} height={48} alt="carry1st logo" />
+          <Image src={Itel} width={75} height={48} alt="itel logo" />
           <Image src={Carry1st} width={49} height={48} alt="carry1st logo" />
-          <Image src={Tribe} width={93} height={48} alt="carry1st logo" />
-          <Image src={Filmhouse} width={137} height={48} alt="carry1st logo" />
-          <Image src={Monster} width={55} height={48} alt="carry1st logo" />
+          <Image src={Tribe} width={93} height={48} alt="tribe logo" />
+          <Image src={Filmhouse} width={137} height={48} alt="filmhouse logo" />
+          <Image src={Monster} width={55} height={48} alt="monster logo" />
         </div>
       </section>
       <style jsx>{`
