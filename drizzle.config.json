@@ -1,0 +1,9 @@
+{
+  "schema": "./backend/src/model/schema",
+  "out": "./backend/migrations",
+  "dialect": "postgresql",
+  "driver": "neon-http",
+  "dbCredentials": {
+    "connectionString": "postgresql://postgres:yFZDzOJExjUXZDVsObbGBlziizkKIWzU@switchyard.proxy.rlwy.net:20342/railway"
+  }
+}

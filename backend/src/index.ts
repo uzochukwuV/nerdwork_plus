@@ -1,10 +1,9 @@
-
-import {
-  globalErrorHandler,
-  globalNotFoundHandler,
-} from "./middleware/common";
+import { globalErrorHandler, globalNotFoundHandler } from "./middleware/common";
 import type { Request, Response } from "express";
 import { app } from "./server";
+import authRoutes from "./routes/auth";
+
+app.use("/auth", authRoutes);
 
 const PORT = 5000;
 /**
