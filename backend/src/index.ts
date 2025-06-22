@@ -1,7 +1,7 @@
 import { globalErrorHandler, globalNotFoundHandler } from "./middleware/common";
 import type { Request, Response } from "express";
 import { app } from "./server";
-import authRoutes from "./routes/auth";
+import authRoutes from "./routes/auth.routes";
 
 app.use("/auth", authRoutes);
 

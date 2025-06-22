@@ -5,7 +5,8 @@
 // AUTHENTICATION & IDENTITY
 // ================================
 
-interface AuthUser {
+
+type AuthUser = {
   id: string; // UUID
   email: string;
   username: string;
