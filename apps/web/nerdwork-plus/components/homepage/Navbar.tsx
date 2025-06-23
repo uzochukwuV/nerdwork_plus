@@ -16,10 +16,12 @@ export default function Navbar() {
   return (
     <nav>
       <section className="lg:flex hidden border-b border-[#FFFFFF1A] gap-4 font-inter font-semibold justify-between h-[93px] items-center px-6">
-        <Image src={Logo} width={146} height={40} alt="nerdwork logo" />
+        <Link href={"/"}>
+          <Image src={Logo} width={146} height={40} alt="nerdwork logo" />
+        </Link>
         <ul className="flex gap-10">
           <li>Communities</li>
-          <Link href={"/nerdwork-plus"} className="hover:opacity-75">
+          <Link href={"/nerdwork+"} className="hover:opacity-75">
             Nerdwork+
           </Link>
           <li className="flex items-center gap-2">
