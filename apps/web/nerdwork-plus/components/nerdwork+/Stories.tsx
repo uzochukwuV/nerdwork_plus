@@ -1,6 +1,7 @@
 import React from "react";
 import AfricanMan from "@/assets/nerdwork+/african-man.png";
 import UserIcons from "@/assets/nerdwork+/users.png";
+import UsersMobile from "@/assets/nerdwork+/users-mobile.png";
 
 import Image from "next/image";
 
@@ -23,16 +24,18 @@ const features = [
 export default function Stories() {
   return (
     <>
-      <section className="text-white font-inter text-center max-w-[1600px] mx-auto mb-16 flex flex-col gap-20 items-center">
-        <div className="flex flex-col gap-6 max-w-[606px]">
-          <h2 className="font-obostar text-[40px]">Find New Stories</h2>
-          <p className="font-medium">
+      <section className="text-white font-inter md:text-center max-w-[1600px] mx-auto mb-16 flex flex-col gap-20 items-center">
+        <div className="flex flex-col gap-6 max-w-[606px] px-7">
+          <h2 className="font-obostar text-[40px] max-md:text-[24px]">
+            Find New Stories
+          </h2>
+          <p className="font-medium max-md:text-sm">
             Read tales inspired by tradition, modern life, and bold futures. All
             crafted by African creators.
           </p>
         </div>
-        <div className="h-[450px] w-full bg-[url('@/assets/nerdwork+/gallery.png')] bg-cover bg-center bg-no-repeat z-0" />
-        <section className="flex justify-between gap-16 text-left max-w-[1080px]">
+        <div className="h-[450px] w-full bg-[url('@/assets/nerdwork+/gallery.png')] bg-cover md:bg-center bg-no-repeat z-0" />
+        <section className="flex max-md:flex-col max-md:text-sm justify-between gap-8 md:gap-16 text-left max-w-[1080px] px-7">
           <div>
             <p className="font-medium mb-1">Original N+ Comic</p>
             <p className="text-[#FFFFFF99]">
@@ -54,17 +57,17 @@ export default function Stories() {
         </section>
       </section>
 
-      <section className="text-white font-inter max-w-[1130px] mx-auto py-16 flex items-center">
-        <section className="w-[40%]">
-          <h2 className="font-obostar text-[40px] mb-6">
+      <section className="text-white font-inter max-w-[1130px] mx-auto py-16 flex max-lg:flex-col lg:items-center">
+        <section className="lg:w-[40%] max-lg:px-7 lg:pl-7">
+          <h2 className="font-obostar text-[40px] max-md:text-[24px] mb-6">
             Create your Narratives
           </h2>
-          <p>
+          <p className="max-md:text-sm max-md:font-semibold">
             Find the community that speaks to you. Talk about storylines,
             characters and tropes with readers and creators
           </p>
 
-          <div className="mt-24 flex flex-col gap-6">
+          <div className="mt-24 flex flex-col gap-6 max-md:hidden">
             {features.map((feat, index) => (
               <div key={index} className="bg-[#131313] px-6 py-4 rounded-[8px]">
                 <p>{feat.heading}</p>
@@ -73,7 +76,7 @@ export default function Stories() {
             ))}
           </div>
         </section>
-        <figure className="w-[65%]">
+        <figure className="lg:w-[65%]">
           <Image
             src={AfricanMan}
             width={1324}
@@ -81,14 +84,24 @@ export default function Stories() {
             alt="black african man comic image"
           />
         </figure>
+        <div className="-mt-24 flex flex-col gap-6 md:hidden text-sm max-lg:px-7">
+          {features.map((feat, index) => (
+            <div key={index} className="bg-[#131313] px-6 py-4 rounded-[8px]">
+              <p>{feat.heading}</p>
+              <p className="text-[#ADACAA]">{feat.content}</p>
+            </div>
+          ))}
+        </div>
       </section>
 
-      <section className="text-white text-center font-inter max-w-[1600px] mx-auto py-16 mb-16 flex flex-col items-center">
-        <div className="max-w-[738px]">
-          <h2 className="font-obostar text-[40px]">Engage with the Platform</h2>
-          <p>
+      <section className="text-white md:text-center font-inter max-w-[1600px] mx-auto py-16 md:mb-16 flex flex-col items-center">
+        <div className="max-w-[738px] px-7 flex flex-col gap-4">
+          <h2 className="font-obostar text-[40px] max-md:text-2xl">
+            Engage with the Platform
+          </h2>
+          <p className="max-md:text-sm">
             Find the community that speaks to you. Talk about storylines,
-            <br />
+            <br className="max-md:hidden" />
             characters and tropes with readers and creators
           </p>
         </div>
@@ -96,7 +109,14 @@ export default function Stories() {
           src={UserIcons}
           width={2344}
           height={899}
-          className="-mt-20"
+          className="-mt-20 max-md:hidden"
+          alt="User icons"
+        />
+        <Image
+          src={UsersMobile}
+          width={2344}
+          height={899}
+          className="md:hidden mt-2"
           alt="User icons"
         />
       </section>

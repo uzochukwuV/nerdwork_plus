@@ -19,7 +19,7 @@ export default function Navbar() {
         <Link href={"/"}>
           <Image src={Logo} width={146} height={40} alt="nerdwork logo" />
         </Link>
-        <ul className="flex gap-10">
+        <ul className="flex gap-10 items-center">
           <li>Communities</li>
           <Link href={"/nerdwork+"} className="hover:opacity-75">
             Nerdwork+
@@ -43,21 +43,25 @@ export default function Navbar() {
 
       {/* Mobile navbar */}
       <section className="max-lg:flex relative lg:hidden border-b border-[#FFFFFF1A] font-inter font-semibold justify-between h-[88px] items-center px-6">
-        <Image src={Logo} width={146} height={40} alt="nerdwork logo" />
+        <Link href={"/"}>
+          <Image src={Logo} width={146} height={40} alt="nerdwork logo" />
+        </Link>
         <button onClick={handleMenu}>
           <MenuIcon />
         </button>
         {isOpen && (
           <div className="absolute right-0 top-0 flex flex-col w-full gap-8 bg-[#0D0D0D] px-5 py-7">
             <div className="flex justify-between items-center">
-              <Image src={Logo} width={146} height={40} alt="nerdwork logo" />
+              <Link href={"/"}>
+                <Image src={Logo} width={146} height={40} alt="nerdwork logo" />
+              </Link>
               <button onClick={handleMenu} className="">
                 <X />
               </button>
             </div>
             <ul className="flex flex-col gap-7">
               <li>Communities</li>
-              <Link href={"/nerdwork-plus"} className="hover:opacity-75">
+              <Link href={"/nerdwork+"} className="hover:opacity-75">
                 Nerdwork+
               </Link>
               <li className="flex items-center gap-2">

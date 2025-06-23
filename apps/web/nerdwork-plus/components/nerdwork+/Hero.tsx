@@ -12,7 +12,7 @@ export default function ProductHero() {
         <Navbar />
         <section
           data-testid="hero"
-          className="flex flex-col max-w-[600px] w-full ml-24 font-inter -mb-px max-md:gap-6 md:gap-8 items-start justify-center h-[calc(100%-120px)] pb-10 md:pb-32 px-7"
+          className="flex flex-col max-w-[600px] w-full md:ml-24 font-inter -mb-px max-md:gap-6 md:gap-8 items-start justify-center max-md:justify-end h-[calc(100%-120px)] pb-10 md:pb-32 px-7"
         >
           <p className="bg-[#0856D3] text-sm max-md:text-[13px] rounded-[8px] px-5 py-1.5 font-medium">
             Coming Soon
