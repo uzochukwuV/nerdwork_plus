@@ -23,7 +23,7 @@ const features = [
 
 export default function Stories() {
   return (
-    <>
+    <div data-testid="stories">
       <section className="text-white font-inter md:text-center max-w-[1600px] mx-auto mb-16 flex flex-col gap-20 items-center">
         <div className="flex flex-col gap-6 max-w-[606px] px-7">
           <h2 className="font-obostar text-[40px] max-md:text-[24px]">
@@ -34,7 +34,10 @@ export default function Stories() {
             crafted by African creators.
           </p>
         </div>
-        <div className="h-[450px] w-full bg-[url('@/assets/nerdwork+/gallery.png')] bg-cover md:bg-center bg-no-repeat z-0" />
+        <div
+          data-testid="gallery"
+          className="h-[450px] w-full bg-[url('@/assets/nerdwork+/gallery.png')] bg-cover md:bg-center bg-no-repeat z-0"
+        />
         <section className="flex max-md:flex-col max-md:text-sm justify-between gap-8 md:gap-16 text-left max-w-[1080px] px-7">
           <div>
             <p className="font-medium mb-1">Original N+ Comic</p>
@@ -114,12 +117,12 @@ export default function Stories() {
         />
         <Image
           src={UsersMobile}
-          width={2344}
-          height={899}
-          className="md:hidden mt-2"
+          width={430}
+          height={422}
+          className="md:hidden mt-2 w-full"
           alt="User icons"
         />
       </section>
-    </>
+    </div>
   );
 }

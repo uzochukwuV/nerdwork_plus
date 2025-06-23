@@ -7,9 +7,9 @@ import ComicGallery from "@/assets/nerdwork+/comis.png";
 export default function Waitlist() {
   return (
     <section className="text-white font-inter md:text-center max-w-[1600px] max-lg:py-10 mx-auto flex flex-col gap-5 md:items-center">
-      <h1 className="font-obostar text-[40px] max-md:text-2xl px-7">
+      <h2 className="font-obostar text-[40px] max-md:text-2xl px-7">
         Join Today
-      </h1>
+      </h2>
       <p className="px-7">Free to join, pay as you go</p>
 
       <form className="max-w-[600px] px-7 mb-12 w-full flex gap-3 justify-center items-stretch">
