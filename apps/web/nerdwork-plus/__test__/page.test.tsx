@@ -18,7 +18,7 @@ describe("Home Page", () => {
     expect(navLogo).toHaveLength(2);
     expect(screen.getByRole("link", { name: /events/i })).toBeInTheDocument();
     expect(
-      screen.getByRole("link", { name: /nerdwork+/i })
+      screen.getAllByRole("link", { name: /nerdwork+/i })[0]
     ).toBeInTheDocument();
     expect(loginButton).toBeInTheDocument();
     expect(signupButton).toBeInTheDocument();
