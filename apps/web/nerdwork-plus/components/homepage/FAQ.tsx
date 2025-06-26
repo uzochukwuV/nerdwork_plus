@@ -12,61 +12,61 @@ const faqs = [
     id: 1,
     question: "What is Nerdwork all about?",
     answer:
-      "Nerdwork is a community of creatives, enthusiasts and fun oving people who are looking to celebrate art, pop culture, and entertainment. The comic convention will feature panels, exhibits, cosplay, games, and guest appearances from creators and celebrities.",
+      "Nerdwork is a community of creatives, enthusiasts and fun loving people who are looking to celebrate art, pop culture, and entertainment. The comic convention will feature panels, exhibits, cosplay, games, and guest appearances from creators and celebrities.",
   },
   {
     id: 2,
     question: "Do I need to be a weeb/nerd to attend a comic con?",
     answer:
-      "Nerdwork is a community of creatives, enthusiasts and fun oving people who are looking to celebrate art, pop culture, and entertainment. The comic convention will feature panels, exhibits, cosplay, games, and guest appearances from creators and celebrities.",
+      "Nerdwork is a community of creatives, enthusiasts and fun loving people who are looking to celebrate art, pop culture, and entertainment. The comic convention will feature panels, exhibits, cosplay, games, and guest appearances from creators and celebrities.",
   },
   {
     id: 3,
     question: "Do I have to wear a costume?",
     answer:
-      "Nerdwork is a community of creatives, enthusiasts and fun oving people who are looking to celebrate art, pop culture, and entertainment. The comic convention will feature panels, exhibits, cosplay, games, and guest appearances from creators and celebrities.",
+      "Nerdwork is a community of creatives, enthusiasts and fun loving people who are looking to celebrate art, pop culture, and entertainment. The comic convention will feature panels, exhibits, cosplay, games, and guest appearances from creators and celebrities.",
   },
   {
     id: 4,
     question: "Can I buy tickets at the door",
     answer:
-      "Nerdwork is a community of creatives, enthusiasts and fun oving people who are looking to celebrate art, pop culture, and entertainment. The comic convention will feature panels, exhibits, cosplay, games, and guest appearances from creators and celebrities.",
+      "Nerdwork is a community of creatives, enthusiasts and fun loving people who are looking to celebrate art, pop culture, and entertainment. The comic convention will feature panels, exhibits, cosplay, games, and guest appearances from creators and celebrities.",
   },
   {
     id: 5,
     question: "What activities can I expect at a comic con?",
     answer:
-      "Nerdwork is a community of creatives, enthusiasts and fun oving people who are looking to celebrate art, pop culture, and entertainment. The comic convention will feature panels, exhibits, cosplay, games, and guest appearances from creators and celebrities.",
+      "Nerdwork is a community of creatives, enthusiasts and fun loving people who are looking to celebrate art, pop culture, and entertainment. The comic convention will feature panels, exhibits, cosplay, games, and guest appearances from creators and celebrities.",
   },
   {
     id: 6,
     question: "Are there age restrictions for attendees?",
     answer:
-      "Nerdwork is a community of creatives, enthusiasts and fun oving people who are looking to celebrate art, pop culture, and entertainment. The comic convention will feature panels, exhibits, cosplay, games, and guest appearances from creators and celebrities.",
+      "Nerdwork is a community of creatives, enthusiasts and fun loving people who are looking to celebrate art, pop culture, and entertainment. The comic convention will feature panels, exhibits, cosplay, games, and guest appearances from creators and celebrities.",
   },
   {
     id: 7,
     question: "Can I meet my favorite creators or celebrities?",
     answer:
-      "Nerdwork is a community of creatives, enthusiasts and fun oving people who are looking to celebrate art, pop culture, and entertainment. The comic convention will feature panels, exhibits, cosplay, games, and guest appearances from creators and celebrities.",
+      "Nerdwork is a community of creatives, enthusiasts and fun loving people who are looking to celebrate art, pop culture, and entertainment. The comic convention will feature panels, exhibits, cosplay, games, and guest appearances from creators and celebrities.",
   },
   {
     id: 8,
     question: "Will there be merchandise available for purchase?",
     answer:
-      "Nerdwork is a community of creatives, enthusiasts and fun oving people who are looking to celebrate art, pop culture, and entertainment. The comic convention will feature panels, exhibits, cosplay, games, and guest appearances from creators and celebrities.",
+      "Nerdwork is a community of creatives, enthusiasts and fun loving people who are looking to celebrate art, pop culture, and entertainment. The comic convention will feature panels, exhibits, cosplay, games, and guest appearances from creators and celebrities.",
   },
   {
     id: 9,
     question: "Are pets allowed at the event?",
     answer:
-      "Nerdwork is a community of creatives, enthusiasts and fun oving people who are looking to celebrate art, pop culture, and entertainment. The comic convention will feature panels, exhibits, cosplay, games, and guest appearances from creators and celebrities.",
+      "Nerdwork is a community of creatives, enthusiasts and fun loving people who are looking to celebrate art, pop culture, and entertainment. The comic convention will feature panels, exhibits, cosplay, games, and guest appearances from creators and celebrities.",
   },
   {
     id: 10,
     question: "What are the health and safety guidelines for attendees?",
     answer:
-      "Nerdwork is a community of creatives, enthusiasts and fun oving people who are looking to celebrate art, pop culture, and entertainment. The comic convention will feature panels, exhibits, cosplay, games, and guest appearances from creators and celebrities.",
+      "Nerdwork is a community of creatives, enthusiasts and fun loving people who are looking to celebrate art, pop culture, and entertainment. The comic convention will feature panels, exhibits, cosplay, games, and guest appearances from creators and celebrities.",
   },
 ];
 

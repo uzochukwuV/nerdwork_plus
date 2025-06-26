@@ -138,37 +138,6 @@ export default function ComicCon() {
           <Image src={Monster} width={55} height={48} alt="monster logo" />
         </div>
       </section>
-      <style jsx>{`
-        @keyframes marquee {
-          0% {
-            transform: translateX(100%);
-          }
-          100% {
-            transform: translateX(-100%);
-          }
-        }
-
-        @keyframes marquee-reverse {
-          0% {
-            transform: translateX(-100%);
-          }
-          100% {
-            transform: translateX(100%);
-          }
-        }
-
-        .animate-marquee {
-          animation: marquee 10s linear infinite;
-        }
-
-        .animate-marquee-reverse {
-          animation: marquee-reverse 10s linear infinite;
-        }
-
-        .hover\\:pause:hover {
-          animation-play-state: paused;
-        }
-      `}</style>
     </section>
   );
 }
