@@ -2,7 +2,7 @@ import { eq } from "drizzle-orm";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { db } from "../config/db";
-import { authUsers } from "../model/schema";
+import { authUsers } from "../model/auth";
 
 const JWT_SECRET = process.env.JWT_SECRET!;
 
@@ -63,4 +63,32 @@ export const login = async (req: any, res: any) => {
   });
 
   return res.status(200).json({ token, user });
+};
+
+export const getCurrentUser = async (req: any, res: any) => {
+  try {
+    const userId = (req as any).userId;
+
+    if (!userId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const [user] = await db
+      .select({
+        name: authUsers.username,
+        email: authUsers.email,
+        createdAt: authUsers.createdAt,
+      })
+      .from(authUsers)
+      .where(eq(authUsers.id, userId));
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    return res.status(200).json(user);
+  } catch (err) {
+    console.error("Error fetching user:", err);
+    return res.status(500).json({ message: "Server error" });
+  }
 };
