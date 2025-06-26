@@ -1,5 +1,7 @@
 import { Router } from "express";
-import { signup, login } from "../controller/auth";
+import { signup, login } from "../controller/auth.js";
+import { authenticate } from "../middleware/common/auth.js";
+import { getCurrentUser } from "../controller/auth.js";
 
 const router = Router();
 
@@ -161,5 +163,7 @@ router.post("/signup", signup);
  *               $ref: '#/components/schemas/ErrorResponse'
  */
 router.post("/login", login);
+
+router.get("/me", authenticate, getCurrentUser);
 
 export default router;
