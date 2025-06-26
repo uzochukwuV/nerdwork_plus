@@ -156,6 +156,7 @@ export default function EventsHero() {
           onClick={prevSlide}
           className="absolute max-sm:hidden left-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/20 p-3 text-white backdrop-blur-sm transition-all hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white/50"
           aria-label="Previous slide"
+          data-testid="previous-slide"
         >
           <ChevronLeft className="h-6 w-6" />
         </button>
@@ -163,6 +164,7 @@ export default function EventsHero() {
           onClick={nextSlide}
           className="absolute max-sm:hidden right-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/20 p-3 text-white backdrop-blur-sm transition-all hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white/50"
           aria-label="Next slide"
+          data-testid="next-slide"
         >
           <ChevronRight className="h-6 w-6" />
         </button>

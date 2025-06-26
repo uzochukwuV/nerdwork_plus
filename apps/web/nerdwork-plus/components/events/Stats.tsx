@@ -36,7 +36,10 @@ const stats = [
 
 export default function EventStats() {
   return (
-    <section className="max-w-[1130px] w-full font-inter mx-auto text-white flex flex-col gap-20 px-7">
+    <section
+      data-testid="events-stats"
+      className="max-w-[1130px] w-full font-inter mx-auto text-white flex flex-col gap-20 px-7"
+    >
       <section className="py-10">
         <div className="max-w-[706px] mx-auto md:text-center flex flex-col gap-6 items-center">
           <h2 className="font-obostar text-[40px] max-md:text-2xl">
@@ -141,6 +144,7 @@ export default function EventStats() {
         <h2 className="font-obostar text-[40px] max-md:text-2xl md:text-center">
           Hall of Fame
         </h2>
+        {/* desktop hall of fame */}
         <div className="max-md:hidden grid md:grid-cols-3 gap-6 mt-20">
           <div className="flex flex-col gap-6">
             <Image
@@ -203,7 +207,7 @@ export default function EventStats() {
             />
           </div>
         </div>
-
+        {/*mobile hall of fame  */}
         <div className="md:hidden grid grid-cols-2 gap-3 mt-6">
           <div className="flex flex-col gap-3">
             <Image

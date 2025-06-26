@@ -36,7 +36,10 @@ const events = [
 
 export default function EventLists() {
   return (
-    <section className="max-w-[1130px] w-full font-inter mx-auto text-white my-20 md:py-10 px-7">
+    <section
+      data-testid="events-list"
+      className="max-w-[1130px] w-full font-inter mx-auto text-white my-20 md:py-10 px-7"
+    >
       <div className="flex justify-between mb-10">
         <h3 className="font-obostar text-[28px] max-md:text-lg">
           Upcoming Events
