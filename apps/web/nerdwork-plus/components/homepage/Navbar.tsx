@@ -14,7 +14,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav>
+    <nav className="bg-[#0D0D0D1A] z-20 text-white fixed right-0 left-0 w-full max-w-[1600px] mx-auto backdrop-blur-[2px]">
       <section className="lg:flex hidden border-b border-[#FFFFFF1A] gap-4 font-inter font-semibold justify-between h-[93px] items-center px-6">
         <Link href={"/"}>
           <Image src={Logo} width={146} height={40} alt="nerdwork logo" />

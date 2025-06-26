@@ -12,7 +12,7 @@ export default function Hero() {
         <Navbar />
         <section
           data-testid="hero"
-          className="flex flex-col font-inter text-center -mb-px max-md:gap-6 md:gap-8 items-center justify-end h-[calc(100%-120px)] pb-10 md:pb-32 px-7"
+          className="flex flex-col font-inter text-center -mb-px max-md:gap-6 md:gap-8 items-center justify-end h-screen pb-10 md:pb-32 px-7"
         >
           <p className="bg-[#0856D3] max-md:text-[13px] rounded-[20px] px-5 py-1.5 font-medium">
             Comic con 2025 is here, Register now
