@@ -36,21 +36,21 @@ const stats = [
 
 export default function EventStats() {
   return (
-    <section className="max-w-[1130px] w-full font-inter mx-auto text-white flex flex-col gap-20">
+    <section className="max-w-[1130px] w-full font-inter mx-auto text-white flex flex-col gap-20 px-7">
       <section className="py-10">
-        <div className="max-w-[706px] mx-auto text-center flex flex-col gap-6 items-center">
-          <h2 className="font-obostar text-[40px]">
+        <div className="max-w-[706px] mx-auto md:text-center flex flex-col gap-6 items-center">
+          <h2 className="font-obostar text-[40px] max-md:text-2xl">
             The Biggest IRL Meet up for Nerds Comic Enthusiasts
           </h2>
-          <p className="font-semibold">
+          <p className="font-semibold text-sm">
             We champion one of the biggest comic cons that showcase Africa’s
             creativity, diversity, and innovation, bringing all of geek culture
             together.
           </p>
         </div>
 
-        <section className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 mt-24">
-          <div className="group px-5 pb-10 relative flex flex-col justify-end rounded-[12px] bg-[url(@/assets/events/games.jpg)] bg-cover bg-center bg-no-repeat w-full h-[628px] cursor-pointer transition-all duration-300">
+        <section className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 mt-10 md:mt-24">
+          <div className="group px-5 pb-10 relative flex flex-col justify-end rounded-[12px] bg-[url(@/assets/events/games.jpg)] bg-cover bg-center bg-no-repeat w-full h-[350px] md:h-[628px] cursor-pointer transition-all duration-300">
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(13,13,13,0)_53.03%,rgba(13,13,13,0.9)_88.77%)] z-10 group-hover:bg-[linear-gradient(180deg,rgba(13,13,13,0.2)_0%,rgba(13,13,13,0.95)_100%)] transition-all duration-300" />
             <div className="z-10">
               <p className="font-semibold group-hover:-translate-y-16 transition-all duration-300 transform">
@@ -63,7 +63,7 @@ export default function EventStats() {
             </div>
           </div>
 
-          <div className="group px-5 pb-10 relative flex flex-col justify-end rounded-[12px] bg-[url(@/assets/events/anime-con.jpg)] bg-cover bg-center bg-no-repeat w-full h-[628px] cursor-pointer transition-all duration-300">
+          <div className="group px-5 pb-10 relative flex flex-col justify-end rounded-[12px] bg-[url(@/assets/events/anime-con.jpg)] bg-cover bg-center bg-no-repeat w-full h-[350px] md:h-[628px] cursor-pointer transition-all duration-300">
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(13,13,13,0)_53.03%,rgba(13,13,13,0.9)_88.77%)] z-10 group-hover:bg-[linear-gradient(180deg,rgba(13,13,13,0.2)_0%,rgba(13,13,13,0.95)_100%)] transition-all duration-300" />
             <div className="z-10">
               <p className="font-semibold group-hover:-translate-y-16 transition-all duration-300 transform">
@@ -76,7 +76,7 @@ export default function EventStats() {
             </div>
           </div>
 
-          <div className="group px-5 pb-10 relative flex flex-col justify-end rounded-[12px] bg-[url(@/assets/events/cosplay.jpg)] bg-cover bg-center bg-no-repeat w-full h-[628px] cursor-pointer transition-all duration-300">
+          <div className="group px-5 pb-10 relative flex flex-col justify-end rounded-[12px] bg-[url(@/assets/events/cosplay.jpg)] bg-cover bg-center bg-no-repeat w-full h-[350px] md:h-[628px] cursor-pointer transition-all duration-300">
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(13,13,13,0)_53.03%,rgba(13,13,13,0.9)_88.77%)] z-10 group-hover:bg-[linear-gradient(180deg,rgba(13,13,13,0.2)_0%,rgba(13,13,13,0.95)_100%)] transition-all duration-300" />
             <div className="z-10">
               <p className="font-semibold group-hover:-translate-y-16 transition-all duration-300 transform">
@@ -91,14 +91,14 @@ export default function EventStats() {
         </section>
       </section>
 
-      <section className="py-10">
-        <h2 className="font-obostar text-[40px] max-w-[706px]">
+      <section className="md:py-10">
+        <h2 className="font-obostar text-[40px] max-md:text-[32px] max-w-[706px]">
           With over 5000 Attendees in Just 5 years. We just get Bigger and
           Better
         </h2>
-        <div className="flex justify-between mt-16">
+        <div className="md:flex max-md:grid grid-cols-2 max-md:gap-6 justify-between mt-16">
           {stats.map((stat, index) => (
-            <div key={index} className="text-center">
+            <div key={index} className="md:text-center">
               <h3 className="font-obostar bg-gradient-to-r from-white from-50% to-[#0D0D0D] to-100% bg-clip-text text-transparent text-[28px] max-md:text-lg mb-2">
                 {stat.first}
               </h3>
@@ -111,7 +111,7 @@ export default function EventStats() {
       {/* SPONSORS */}
       <section
         data-testid="sponsors"
-        className=" py-10 flex flex-col max-md:gap-16 gap-20 overflow-hidden"
+        className="md:py-10 flex flex-col max-md:gap-16 gap-20 overflow-hidden"
       >
         <p className="text-sm font-medium">Sponsors of comic con 2024.</p>
         <div className="flex justify-between gap-4 animate-marquee hover:pause">
@@ -138,8 +138,10 @@ export default function EventStats() {
 
       {/* HALL OF FAME */}
       <section className="py-10">
-        <h2 className="font-obostar text-[40px] text-center">Hall of Fame</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-20">
+        <h2 className="font-obostar text-[40px] max-md:text-2xl md:text-center">
+          Hall of Fame
+        </h2>
+        <div className="max-md:hidden grid md:grid-cols-3 gap-6 mt-20">
           <div className="flex flex-col gap-6">
             <Image
               src={HOF1}
@@ -195,6 +197,67 @@ export default function EventStats() {
             />
             <Image
               src={HOF9}
+              width={432}
+              height={535}
+              alt="Hall of fame image"
+            />
+          </div>
+        </div>
+
+        <div className="md:hidden grid grid-cols-2 gap-3 mt-6">
+          <div className="flex flex-col gap-3">
+            <Image
+              src={HOF1}
+              width={432}
+              height={535}
+              alt="Hall of fame image"
+            />
+            <Image
+              src={HOF4}
+              width={432}
+              height={535}
+              alt="Hall of fame image"
+            />
+            <Image
+              src={HOF7}
+              width={432}
+              height={535}
+              alt="Hall of fame image"
+            />
+            <Image
+              src={HOF3}
+              width={432}
+              height={535}
+              alt="Hall of fame image"
+            />
+            <Image
+              src={HOF9}
+              width={432}
+              height={535}
+              alt="Hall of fame image"
+            />
+          </div>
+          <div className="flex flex-col gap-3 ">
+            <Image
+              src={HOF2}
+              width={432}
+              height={535}
+              alt="Hall of fame image"
+            />
+            <Image
+              src={HOF5}
+              width={432}
+              height={535}
+              alt="Hall of fame image"
+            />
+            <Image
+              src={HOF8}
+              width={432}
+              height={535}
+              alt="Hall of fame image"
+            />
+            <Image
+              src={HOF6}
               width={432}
               height={535}
               alt="Hall of fame image"

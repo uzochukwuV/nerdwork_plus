@@ -32,7 +32,7 @@ export default function Footer() {
         alt="footer image"
         className="max-lg:hidden w-[36%]"
       />
-      <section className="flex justify-between lg:w-[36%] text-sm md:gap-10 lg::-ml-10 text-[#DEDEDE9E]">
+      <section className="flex justify-between lg:w-[36%] text-sm max-md:gap-3 md:gap-10 lg::-ml-10 text-[#DEDEDE9E]">
         <ul className="flex flex-col gap-3">
           <li className="text-white text-nowrap">Quick Links</li>
           <li>Home</li>

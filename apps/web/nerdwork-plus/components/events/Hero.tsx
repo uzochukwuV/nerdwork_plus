@@ -97,7 +97,7 @@ export default function EventsHero() {
   return (
     <header data-testid="event-hero">
       <div
-        className="relative h-[90vh] w-full overflow-hidden"
+        className="relative h-[95vh] w-full overflow-hidden"
         data-testid="hero-slideshow"
       >
         {/* Background Images */}
@@ -126,24 +126,24 @@ export default function EventsHero() {
         <>
           <Navbar />
           <div className="relative z-10 flex h-full items-end -mt-24">
-            <div className="container mx-auto flex flex-col items-center text-white text-center px-4 sm:px-6 lg:px-8">
-              <div className="max-w-3xl flex flex-col gap-6 items-center">
-                <p className="bg-nerd-blue text-white max-md:text-[13px] rounded-[20px] px-5 py-1.5 font-medium">
+            <div className="container mx-auto flex flex-col items-center text-white md:text-center px-4 sm:px-6 lg:px-8">
+              <div className="max-w-3xl flex flex-col gap-6 md:items-center max-md:items-start px-7">
+                <p className="bg-nerd-blue text-white text-center max-md:text-[13px] rounded-[20px] px-5 py-1.5 font-medium">
                   {slides[currentSlide].title} is here, Register now
                 </p>
                 <h1
-                  className="text-[52px] font-obostar tracking-tight text-white animate-fade-in"
+                  className="md:text-[52px] max-md:text-[32px] font-obostar tracking-tight text-white animate-fade-in"
                   key={`title-${currentSlide}`}
                 >
                   {slides[currentSlide].title}
                 </h1>
                 <p
-                  className="animate-fade-in delay-200"
+                  className="animate-fade-in delay-200 max-md::text-sm font-semibold"
                   key={`subtitle-${currentSlide}`}
                 >
                   {slides[currentSlide].subtitle}
                 </p>
-                <div className="flex flex-col gap-4 sm:flex-row">
+                <div className="flex gap-4 justify-center">
                   <Button variant={"primary"}>Register</Button>
                   <Button>See all Events</Button>
                 </div>
@@ -154,14 +154,14 @@ export default function EventsHero() {
         {/* Navigation Arrows */}
         <button
           onClick={prevSlide}
-          className="absolute left-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/20 p-3 text-white backdrop-blur-sm transition-all hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white/50"
+          className="absolute max-sm:hidden left-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/20 p-3 text-white backdrop-blur-sm transition-all hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white/50"
           aria-label="Previous slide"
         >
           <ChevronLeft className="h-6 w-6" />
         </button>
         <button
           onClick={nextSlide}
-          className="absolute right-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/20 p-3 text-white backdrop-blur-sm transition-all hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white/50"
+          className="absolute max-sm:hidden right-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/20 p-3 text-white backdrop-blur-sm transition-all hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white/50"
           aria-label="Next slide"
         >
           <ChevronRight className="h-6 w-6" />
@@ -169,7 +169,7 @@ export default function EventsHero() {
         {/* Play/Pause Button */}
         <button
           onClick={() => setIsPlaying(!isPlaying)}
-          className="absolute bottom-20 left-4 z-20 rounded-full bg-white/20 p-3 text-white backdrop-blur-sm transition-all hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white/50 sm:bottom-8"
+          className="absolute max-sm:hidden bottom-20 left-4 z-20 rounded-full bg-white/20 p-3 text-white backdrop-blur-sm transition-all hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white/50 sm:bottom-8"
           aria-label={isPlaying ? "Pause slideshow" : "Play slideshow"}
         >
           {isPlaying ? (
@@ -209,7 +209,7 @@ export default function EventsHero() {
           ))}
         </div>
         {/* Slide Indicators (dots) */}
-        <div className="absolute bottom-20 right-4 z-20 flex flex-col space-y-2 sm:bottom-8">
+        <div className="absolute max-md:hidden bottom-20 right-4 z-20 flex flex-col space-y-2 sm:bottom-8">
           {slides.map((_, index) => (
             <button
               key={index}

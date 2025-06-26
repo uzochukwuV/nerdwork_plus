@@ -36,10 +36,12 @@ const events = [
 
 export default function EventLists() {
   return (
-    <section className="max-w-[1130px] w-full font-inter mx-auto text-white my-20 py-10">
+    <section className="max-w-[1130px] w-full font-inter mx-auto text-white my-20 md:py-10 px-7">
       <div className="flex justify-between mb-10">
-        <h3 className="font-obostar text-[28px]">Upcoming Events</h3>
-        <Button>See all Events</Button>
+        <h3 className="font-obostar text-[28px] max-md:text-lg">
+          Upcoming Events
+        </h3>
+        <Button className="max-md:hidden">See all Events</Button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
@@ -52,9 +54,9 @@ export default function EventLists() {
               alt="Event image"
               className="rounded-[12px]"
             />
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3 max-md:text-sm">
               <p className="font-semibold uppercase">{event.title}</p>
-              <p className="text-sm text-[#FFFFFF80] font-medium">
+              <p className="text-sm max-md:text-xs text-[#FFFFFF80] font-medium">
                 {event.date}
               </p>
               <p className="text-[#FFFFFFCC]">{event.subtitle}</p>
@@ -65,6 +67,7 @@ export default function EventLists() {
           </div>
         ))}
       </div>
+      <Button className="md:hidden mt-8">See all Events</Button>
     </section>
   );
 }
