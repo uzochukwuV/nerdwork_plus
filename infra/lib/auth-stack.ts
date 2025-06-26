@@ -14,7 +14,7 @@ export class AuthStack extends Stack {
       code: lambda.Code.fromAsset(path.join(__dirname, '../functions/auth')),
       memorySize: 128,
       timeout: cdk.Duration.seconds(10),
-      description: 'Handles basic auth logic (MVP placeholder)',
+      description: 'Handles basic auth logic (MVP placeholder)!',
     });
   }
 }
