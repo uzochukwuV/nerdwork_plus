@@ -8,13 +8,14 @@
     "start": "npx tsx --env-file=.env --watch  src/index.ts",
     "test": "jest",
     "generate:dev": "drizzle-kit generate --config=./src/config/drizzle-dev.config.ts",
-    "migrate:dev": "drizzle-kit generate --config=./src/config/drizzle-dev.config.ts",
+    "migrate:dev": "drizzle-kit migrate --config=./src/config/drizzle-dev.config.ts",
     "push:dev": "drizzle-kit push --config=./src/config/drizzle-dev.config.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@heliofi/sdk": "^2.2.5",
     "@neondatabase/serverless": "^1.0.1",
     "@types/compression": "^1.8.1",
     "@types/cors": "^2.8.19",
@@ -22,6 +23,7 @@
     "@types/morgan": "^1.9.10",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.8",
+    "axios": "^1.10.0",
     "bcrypt": "^6.0.0",
     "compression": "^1.8.0",
     "cors": "^2.8.5",
