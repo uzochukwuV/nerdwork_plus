@@ -4,6 +4,7 @@ import ComicCon from "@/assets/events/comic-con.jpg";
 import TechSummit from "@/assets/events/tech-summit.jpg";
 import ArtsFair from "@/assets/events/arts-fair.jpg";
 import Image from "next/image";
+import Link from "next/link";
 
 const events = [
   {
@@ -65,7 +66,7 @@ export default function EventLists() {
               <p className="text-[#FFFFFFCC]">{event.subtitle}</p>
             </div>
             <Button variant={"primary"} className="w-fit">
-              Register
+              <Link href={`/events/${event.id.toString()}`}>Register</Link>
             </Button>
           </div>
         ))}
