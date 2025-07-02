@@ -32,9 +32,10 @@ export const createPaymentLink = async (req: any, res: any) => {
 
         // Prepare DTO for Helio
         const createPaylinkDto: CreatePaylinkWithApiDto = {
-            name: name,
-            price: amount,
+            name: req.user.id + name + new Date().toISOString(), // Unique name for each payment link
+            price: (Number(amount) * 1000000).toString(), // Ensure amount is a number
             pricingCurrency: "63777da9d2f1ab96ae0ee600",
+            description: `Payment for Nerd Work Token by ${req.user.id} on ${new Date().toISOString()} amount: ${amount} `,
             features: {},
             recipients: [
                 {
