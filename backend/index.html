@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login and Pay</title>
+  <style>
+    body { font-family: Arial; max-width: 400px; margin: 40px auto; }
+    form { display: flex; flex-direction: column; gap: 10px; }
+    input, button { padding: 10px; font-size: 16px; }
+    #checkoutSection { margin-top: 30px; }
+  </style>
+</head>
+<body>
+
+  <h2>Login</h2>
+  <form id="loginForm">
+    {
+      "email": "test@example.com",
+      "password": "password123"
+    }
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <button type="submit">Login</button>
+  </form>
+
+  <div id="checkoutSection" style="display:none;">
+    <h2>Buy Tokens</h2>
+    <input type="number" id="amount" placeholder="Amount in USD" value="10" />
+    <p>Price: $0.01 USD</p>
+    <input type="text" id="name" placeholder="Name" value="Nerd Work Token" />
+    <p>Network: Testnet</p>
+
+    <button id="buyBtn">Buy Now</button>
+    <div id="helioCheckoutContainer1" style="margin-top: 20px;"></div>
+  </div>
+   <script
+        type="module"
+        crossorigin
+        async
+        src="https://embed.hel.io/assets/index-v1.js"
+      ></script>
+
+
+  <script>
+    let id ="";
+    const loginForm = document.getElementById("loginForm");
+    const buyBtn = document.getElementById("buyBtn");
+    const checkoutSection = document.getElementById("checkoutSection");
+
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      try {
+        const res = await fetch("http://localhost:5000/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+          alert("Login successful!");
+          checkoutSection.style.display = "block";
+        } else {
+          alert("Login failed");
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Login error");
+      }
+    });
+
+    buyBtn.addEventListener("click", async () => {
+      const token = localStorage.getItem("token");
+      if (!token) return alert("Please log in first.");
+
+      try {
+        const res = await fetch("http://localhost:5000/payment/helio/link", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            amount: document.getElementById("amount").value,
+            name: document.getElementById("name").value
+          })
+        });
+
+        const data = await res.json();
+        if (!data.success || !data.paylinkId) {
+          return alert("Failed to create payment link");
+        }
+        id = data.paylinkId;
+        console.log(data)
+        
+         
+       
+          window.location.href = `./indexPay.html?link=${data.paylinkId}&amount=${data.payment.price}`;
+        
+      } catch (err) {
+        console.error(err);
+        alert("Error creating payment link");
+      }
+    });
+
+
+
+     
+  </script>
+
+ 
+</body>
+</html>
