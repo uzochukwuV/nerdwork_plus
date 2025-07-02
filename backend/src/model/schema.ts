@@ -4,3 +4,4 @@ export * from "./payment";
 export * from "./profile";
 export * from "./wallet";
 export * from "./event";
+export * from "./tickets";

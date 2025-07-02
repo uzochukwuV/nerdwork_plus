@@ -8,7 +8,7 @@ app.use(router);
 
 describe("GET /event", () => {
   it("should return a list of events", async () => {
-    jest.setTimeout(20000); // Increase timeout to 20 seconds
+    jest.setTimeout(20000);
 
     const res = await request(app).get("/event");
     console.log("Response:", res.statusCode, res.body); // See what's coming back
