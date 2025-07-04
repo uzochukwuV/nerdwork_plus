@@ -14,7 +14,11 @@ export default function Navbar() {
   };
 
   return (
+<<<<<<< HEAD
+    <nav className="bg-[#0D0D0D1A] z-20 text-white fixed right-0 left-0 w-full  mx-auto backdrop-blur-[2px]">
+=======
     <nav className="bg-[#0D0D0D1A] z-30 text-white fixed right-0 left-0 w-full max-w-[1600px] mx-auto backdrop-blur-[2px]">
+>>>>>>> 4f6d9019f525b3573261fd5991c82455c4d01988
       <section className="lg:flex hidden border-b border-[#FFFFFF1A] gap-4 font-inter font-semibold justify-between h-[93px] items-center px-6">
         <Link href={"/"}>
           <Image src={Logo} width={146} height={40} alt="nerdwork logo" />
