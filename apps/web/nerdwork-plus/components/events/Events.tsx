@@ -11,6 +11,7 @@ const events = [
     id: 1,
     src: ComicCon,
     alt: "Comic con",
+    link: "https://www.tketnation.com/nwcc25",
     date: "March 23, 2025",
     title: "Comic Con 2025",
     subtitle:
@@ -20,6 +21,7 @@ const events = [
     id: 2,
     src: TechSummit,
     alt: "tech summit",
+    link: "",
     date: "May 215, 2025",
     title: "Tech Innovation Summit 2025",
     subtitle:
@@ -29,6 +31,7 @@ const events = [
     id: 3,
     src: ArtsFair,
     alt: "arts fair",
+    link: "",
     date: "June 10, 2025",
     title: "Arts & Crafts Fair 2025",
     subtitle: "Showcase your talents and discover new art at our annual fair!",
@@ -66,7 +69,9 @@ export default function EventLists() {
               <p className="text-[#FFFFFFCC]">{event.subtitle}</p>
             </div>
             <Button variant={"primary"} className="w-fit">
-              <Link href={`/events/${event.id.toString()}`}>Register</Link>
+              <Link target="_blank" href={`${event.link}`}>
+                Register
+              </Link>
             </Button>
           </div>
         ))}
