@@ -7,6 +7,7 @@ import TechSummit from "@/assets/events/tech-summit.jpg";
 import ArtsFair from "@/assets/events/arts-fair.jpg";
 import Navbar from "../homepage/Navbar";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 export default function EventsHero() {
   const slides = [
@@ -14,6 +15,7 @@ export default function EventsHero() {
       id: 1,
       src: ComicCon,
       alt: "Comic con",
+      link: "https://www.tketnation.com/nwcc25",
       title: "Comic Con 2025",
       subtitle:
         "Discover one of the biggest comic conventions in Nigeria, where all geek culture collide.",
@@ -22,6 +24,7 @@ export default function EventsHero() {
       id: 2,
       src: TechSummit,
       alt: "tech summit",
+      link: "",
       title: "Tech Innovation Summit 2025",
       subtitle:
         "Join industry leaders to explore the latest in technology and innovation.",
@@ -30,6 +33,7 @@ export default function EventsHero() {
       id: 3,
       src: ArtsFair,
       alt: "arts fair",
+      link: "",
       title: "Arts & Crafts Fair 2025",
       subtitle:
         "Showcase your talents and discover new art at our annual fair!",
@@ -144,7 +148,9 @@ export default function EventsHero() {
                   {slides[currentSlide].subtitle}
                 </p>
                 <div className="flex gap-4 justify-center">
-                  <Button variant={"primary"}>Register</Button>
+                  <Link target="_blank" href={`${slides[currentSlide].link}`}>
+                    <Button variant={"primary"}>Register</Button>
+                  </Link>
                   <Button>See all Events</Button>
                 </div>
               </div>

@@ -12,6 +12,7 @@ import Carry1st from "@/assets/sponsors/carry1st.svg";
 import Itel from "@/assets/sponsors/itel.svg";
 import Filmhouse from "@/assets/sponsors/filmhouse.svg";
 import Tribe from "@/assets/sponsors/tribe.svg";
+import Link from "next/link";
 
 const RegisterEvent = ({
   params,
@@ -79,7 +80,7 @@ const RegisterEvent = ({
       <section className="grid grid-cols-1 md:grid-cols-2 gap-20 max-w-[1130px] mx-auto my-10 px-7">
         <section className="flex flex-col gap-16">
           <div className="">
-            <p>INFORMATION</p>
+            <p className="font-semibold">INFORMATION</p>
             <div className="text-[#FFFFFFE5] text-sm flex flex-col gap-3 my-6">
               <p>{displayedText}</p>
             </div>
@@ -163,7 +164,7 @@ const RegisterEvent = ({
             </div>
           </div>
           <Separator className="bg-[#404040]" />
-          <div className="flex justify-between max-md:flex-col max-md:items-center max-md:gap-4 p-10">
+          <div className="flex justify-between items-center max-md:flex-col max-md:items-center max-md:gap-4 p-10">
             <div className="flex gap-5 items-center">
               <button
                 onClick={removeTicket}
@@ -186,7 +187,9 @@ const RegisterEvent = ({
               </button>
             </div>
             <Button variant={"primary"}>
-              Buy N{ticketPrice.toLocaleString()}
+              <Link href={`${event?.link}`} target="_blank">
+                Buy N{ticketPrice.toLocaleString()}
+              </Link>
             </Button>
           </div>
         </form>
