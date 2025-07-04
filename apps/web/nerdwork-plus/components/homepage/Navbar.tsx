@@ -14,79 +14,81 @@ export default function Navbar() {
   };
 
   return (
-<<<<<<< HEAD
-    <nav className="bg-[#0D0D0D1A] z-20 text-white fixed right-0 left-0 w-full  mx-auto backdrop-blur-[2px]">
-=======
-    <nav className="bg-[#0D0D0D1A] z-30 text-white fixed right-0 left-0 w-full max-w-[1600px] mx-auto backdrop-blur-[2px]">
->>>>>>> 4f6d9019f525b3573261fd5991c82455c4d01988
-      <section className="lg:flex hidden border-b border-[#FFFFFF1A] gap-4 font-inter font-semibold justify-between h-[93px] items-center px-6">
-        <Link href={"/"}>
-          <Image src={Logo} width={146} height={40} alt="nerdwork logo" />
-        </Link>
-        <ul className="flex gap-10 items-center">
-          <Link href={"/communities"} className="hover:opacity-75">
-            Communities
+    <nav className="bg-[#0D0D0D1A] z-30 text-white fixed right-0 left-0 w-full border-b border-[#FFFFFF1A] backdrop-blur-[2px]">
+      <section className="max-w-[1600px] mx-auto">
+        <section className="lg:flex hidden gap-4 font-inter font-semibold justify-between h-[93px] items-center px-6">
+          <Link href={"/"}>
+            <Image src={Logo} width={146} height={40} alt="nerdwork logo" />
           </Link>
-          <Link href={"/nerdwork+"} className="hover:opacity-75">
-            Nerdwork+
-          </Link>
-          <li className="flex items-center gap-2">
-            Comic Con 2025{" "}
-            <span className="bg-[#1BDB6C] font-medium px-2 pb-0.5 text-black rounded-[6px]">
-              Soon
-            </span>
-          </li>
-          <Link href={"/events"} className="hover:opacity-75">
-            Events
-          </Link>
-          <li>Company</li>
-        </ul>
-        <div className="flex gap-4">
-          <Button>Log In</Button>
-          <Button variant={"primary"}>Sign Up</Button>
-        </div>
-      </section>
-
-      {/* Mobile navbar */}
-      <section className="max-lg:flex relative lg:hidden border-b border-[#FFFFFF1A] font-inter font-semibold justify-between h-[88px] items-center px-6">
-        <Link href={"/"}>
-          <Image src={Logo} width={146} height={40} alt="nerdwork logo" />
-        </Link>
-        <button onClick={handleMenu}>
-          <MenuIcon />
-        </button>
-        {isOpen && (
-          <div className="absolute right-0 top-0 flex flex-col w-full gap-8 bg-[#0D0D0D] px-5 py-7">
-            <div className="flex justify-between items-center">
-              <Link href={"/"}>
-                <Image src={Logo} width={146} height={40} alt="nerdwork logo" />
-              </Link>
-              <button onClick={handleMenu} className="">
-                <X />
-              </button>
-            </div>
-            <ul className="flex flex-col gap-7">
-              <Link href={"/communities"}>Communities</Link>
-              <Link href={"/nerdwork+"} className="hover:opacity-75">
-                Nerdwork+
-              </Link>
-              <li className="flex items-center gap-2">
-                Comic Con 2025{" "}
-                <span className="bg-[#1BDB6C] font-medium px-2 pb-0.5 text-black rounded-[6px]">
-                  Soon
-                </span>
-              </li>
-              <Link href={"/events"} className="hover:opacity-75">
-                Events
-              </Link>
-              <li>Company</li>
-            </ul>
-            <div className="flex justify-between gap-4 w-full">
-              <Button className="bg-[#343435] w-1/2">Log In</Button>
-              <Button className="bg-[#3373D9] w-1/2">Sign Up</Button>
-            </div>
+          <ul className="flex gap-10 items-center">
+            <Link href={"/communities"} className="hover:opacity-75">
+              Communities
+            </Link>
+            <Link href={"/nerdwork+"} className="hover:opacity-75">
+              Nerdwork+
+            </Link>
+            <li className="flex items-center gap-2">
+              Comic Con 2025{" "}
+              <span className="bg-[#1BDB6C] font-medium px-2 pb-0.5 text-black rounded-[6px]">
+                Soon
+              </span>
+            </li>
+            <Link href={"/events"} className="hover:opacity-75">
+              Events
+            </Link>
+            <li>Company</li>
+          </ul>
+          <div className="flex gap-4">
+            <Button>Log In</Button>
+            <Button variant={"primary"}>Sign Up</Button>
           </div>
-        )}
+        </section>
+        {/* Mobile navbar */}
+        <section className="max-lg:flex relative lg:hidden border-b border-[#FFFFFF1A] font-inter font-semibold justify-between h-[88px] items-center px-6">
+          <Link href={"/"}>
+            <Image src={Logo} width={146} height={40} alt="nerdwork logo" />
+          </Link>
+          <button onClick={handleMenu}>
+            <MenuIcon />
+          </button>
+          {isOpen && (
+            <div className="absolute right-0 top-0 flex flex-col w-full gap-8 bg-[#0D0D0D] px-5 py-7">
+              <div className="flex justify-between items-center">
+                <Link href={"/"}>
+                  <Image
+                    src={Logo}
+                    width={146}
+                    height={40}
+                    alt="nerdwork logo"
+                  />
+                </Link>
+                <button onClick={handleMenu} className="">
+                  <X />
+                </button>
+              </div>
+              <ul className="flex flex-col gap-7">
+                <Link href={"/communities"}>Communities</Link>
+                <Link href={"/nerdwork+"} className="hover:opacity-75">
+                  Nerdwork+
+                </Link>
+                <li className="flex items-center gap-2">
+                  Comic Con 2025{" "}
+                  <span className="bg-[#1BDB6C] font-medium px-2 pb-0.5 text-black rounded-[6px]">
+                    Soon
+                  </span>
+                </li>
+                <Link href={"/events"} className="hover:opacity-75">
+                  Events
+                </Link>
+                <li>Company</li>
+              </ul>
+              <div className="flex justify-between gap-4 w-full">
+                <Button className="bg-[#343435] w-1/2">Log In</Button>
+                <Button className="bg-[#3373D9] w-1/2">Sign Up</Button>
+              </div>
+            </div>
+          )}
+        </section>
       </section>
     </nav>
   );
