@@ -36,7 +36,7 @@ export default function Stories() {
         </div>
         <div
           data-testid="gallery"
-          className="h-[450px] w-full bg-[url('@/assets/nerdwork+/gallery.png')] bg-cover md:bg-center bg-no-repeat z-0"
+          className="h-[450px] w-full bg-[url('/nerdwork+/gallery.png')] bg-cover md:bg-center bg-no-repeat z-0"
         />
         <section className="flex max-md:flex-col max-md:text-sm justify-between gap-8 md:gap-16 text-left max-w-[1080px] px-7">
           <div>
