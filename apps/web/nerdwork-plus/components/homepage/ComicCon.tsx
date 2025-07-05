@@ -11,6 +11,7 @@ import Itel from "@/assets/sponsors/itel.svg";
 import Filmhouse from "@/assets/sponsors/filmhouse.svg";
 import Tribe from "@/assets/sponsors/tribe.svg";
 import Monster from "@/assets/sponsors/monster.svg";
+import Link from "next/link";
 
 const stats = [
   {
@@ -53,12 +54,16 @@ export default function ComicCon() {
               Meet your favorite creators, cosplay icons, and fellow fans
             </p>
             <div className="flex flex-col gap-4">
-              <Button variant={"primary"} className="md:w-fit">
-                Register for comic con 2025
-              </Button>
-              <Button className="md:w-fit">
-                See last year&apos;s comic con
-              </Button>
+              <Link href={"https://www.tketnation.com/nwcc25"}>
+                <Button variant={"primary"} className="md:w-fit">
+                  Register for comic con 2025
+                </Button>
+              </Link>
+              <Link href={"/events"}>
+                <Button className="md:w-fit">
+                  See last year&apos;s comic con
+                </Button>
+              </Link>
             </div>
           </div>
 

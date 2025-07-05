@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 const features = [
   {
@@ -46,8 +47,12 @@ export default function Nerdwork() {
             Step into a universe of African comics like never before.
           </p>
           <div className="flex gap-4 max-md:w-full justify-center">
-            <Button variant={"primary"}>Go to Nerdwork+</Button>
-            <Button>Learn More</Button>
+            <Link href={"/nerdwork+"}>
+              <Button variant={"primary"}>Go to Nerdwork+</Button>
+            </Link>
+            <Link href={"/nerdwork+"}>
+              <Button>Learn More</Button>
+            </Link>
           </div>
         </div>
         <div>

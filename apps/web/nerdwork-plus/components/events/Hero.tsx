@@ -148,10 +148,22 @@ export default function EventsHero() {
                   {slides[currentSlide].subtitle}
                 </p>
                 <div className="flex gap-4 justify-center">
-                  <Link target="_blank" href={`${slides[currentSlide].link}`}>
-                    <Button variant={"primary"}>Register</Button>
+                  {slides[currentSlide].link == "" ? (
+                    <Button
+                      variant={"primary"}
+                      disabled
+                      className="disabled:cursor-not-allowed w-fit"
+                    >
+                      Coming Soon
+                    </Button>
+                  ) : (
+                    <Link target="_blank" href={`${slides[currentSlide].link}`}>
+                      <Button variant={"primary"}>Register</Button>
+                    </Link>
+                  )}
+                  <Link href={"#events"}>
+                    <Button>See all Events</Button>
                   </Link>
-                  <Button>See all Events</Button>
                 </div>
               </div>
             </div>

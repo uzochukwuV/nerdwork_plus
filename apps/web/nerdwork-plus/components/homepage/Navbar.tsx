@@ -27,12 +27,15 @@ export default function Navbar() {
             <Link href={"/nerdwork+"} className="hover:opacity-75">
               Nerdwork+
             </Link>
-            <li className="flex items-center gap-2">
+            <Link
+              href={"/events"}
+              className="flex items-center gap-2 hover:opacity-75"
+            >
               Comic Con 2025{" "}
               <span className="bg-[#1BDB6C] font-medium px-2 pb-0.5 text-black rounded-[6px]">
                 Soon
               </span>
-            </li>
+            </Link>
             <Link href={"/events"} className="hover:opacity-75">
               Events
             </Link>

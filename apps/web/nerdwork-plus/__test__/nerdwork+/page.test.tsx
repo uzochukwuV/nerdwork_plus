@@ -49,7 +49,7 @@ describe("Home Page", () => {
 
     expect(stories).toBeInTheDocument();
     expect(headings).toHaveLength(3);
-    expect(gallery).toHaveClass("bg-[url('@/assets/nerdwork+/gallery.png')]");
+    expect(gallery).toHaveClass("bg-[url('/nerdwork+/gallery.png')]");
     expect(african).toBeInTheDocument();
     expect(users).toHaveLength(2);
   });
