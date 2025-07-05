@@ -54,7 +54,7 @@ export default function ComicCon() {
               Meet your favorite creators, cosplay icons, and fellow fans
             </p>
             <div className="flex flex-col gap-4">
-              <Link href={"https://www.tketnation.com/nwcc25"}>
+              <Link target="_blank" href={"https://www.tketnation.com/nwcc25"}>
                 <Button variant={"primary"} className="md:w-fit">
                   Register for comic con 2025
                 </Button>
