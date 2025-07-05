@@ -7,7 +7,7 @@ import React from "react";
 
 export default function Events() {
   return (
-    <div className="bg-[#0D0D0D]">
+    <div className="bg-[#0D0D0D] !scroll-smooth">
       <EventsHero />
       <EventLists />
       <EventStats />

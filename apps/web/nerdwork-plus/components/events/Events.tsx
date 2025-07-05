@@ -12,7 +12,7 @@ const events = [
     src: ComicCon,
     alt: "Comic con",
     link: "https://www.tketnation.com/nwcc25",
-    date: "March 23, 2025",
+    date: "September 6, 2025",
     title: "Comic Con 2025",
     subtitle:
       "Experience a day of creativity and connection at our annual community event! ",
@@ -22,7 +22,7 @@ const events = [
     src: TechSummit,
     alt: "tech summit",
     link: "",
-    date: "May 215, 2025",
+    date: "---",
     title: "Tech Innovation Summit 2025",
     subtitle:
       "Join industry leaders to explore the latest in technology and innovation.",
@@ -32,7 +32,7 @@ const events = [
     src: ArtsFair,
     alt: "arts fair",
     link: "",
-    date: "June 10, 2025",
+    date: "---",
     title: "Arts & Crafts Fair 2025",
     subtitle: "Showcase your talents and discover new art at our annual fair!",
   },
@@ -45,7 +45,7 @@ export default function EventLists() {
       className="max-w-[1130px] w-full font-inter mx-auto text-white my-20 md:py-10 px-7"
     >
       <div className="flex justify-between mb-10">
-        <h3 className="font-obostar text-[28px] max-md:text-lg">
+        <h3 id="events" className="font-obostar text-[28px] max-md:text-lg">
           Upcoming Events
         </h3>
         <Button className="max-md:hidden">See all Events</Button>
@@ -68,11 +68,17 @@ export default function EventLists() {
               </p>
               <p className="text-[#FFFFFFCC]">{event.subtitle}</p>
             </div>
-            <Button variant={"primary"} className="w-fit">
+            {event.date == "---" ? (
+              <Button disabled className="disabled:cursor-not-allowed w-fit">
+                Coming Soon
+              </Button>
+            ) : (
               <Link target="_blank" href={`${event.link}`}>
-                Register
+                <Button variant={"primary"} className="w-fit">
+                  Register
+                </Button>
               </Link>
-            </Button>
+            )}
           </div>
         ))}
       </div>

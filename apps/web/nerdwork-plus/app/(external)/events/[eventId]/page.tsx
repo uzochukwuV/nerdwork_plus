@@ -64,7 +64,7 @@ const RegisterEvent = ({
       <Navbar />
       <section className="relative min-h-[80vh] w-full">
         <div
-          className="absolute inset-0 bg-[url('@/assets/events/cosplay.jpg')] bg-cover bg-center bg-no-repeat z-0"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat z-0"
           style={{ backgroundImage: `url(${event?.src})` }}
         />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(13,13,13,0)_0%,#0D0D0D_83%)] z-10" />
