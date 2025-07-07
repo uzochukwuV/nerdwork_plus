@@ -107,9 +107,9 @@ export const createPaymentLink = async (req: any, res: any) => {
 
 
 export const createWebhookForPayment = async (req: any, res: any) => {
-    // if (!req.user) {
-    //     return res.status(401).json({ message: "Unauthorized: User not authenticated" });
-    // }
+    if (!req.user) {
+        return res.status(401).json({ message: "Unauthorized: User not authenticated" });
+    }
     try {
         const { paymentId } = req.body;
         const events = ["CREATED"];

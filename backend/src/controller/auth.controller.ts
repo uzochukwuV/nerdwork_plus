@@ -35,9 +35,11 @@ export const signup = async (req: any, res: any) => {
 
   return res.status(201).json({ token, user: newUser });
 };
-
+console.log(jwt?.sign)
 export const login = async (req: any, res: any) => {
   const { email, password } = req.body;
+
+  console.log(jwt?.sign)
 
   const [user] = await db
     .select()

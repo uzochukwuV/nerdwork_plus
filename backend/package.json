@@ -16,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "@heliofi/sdk": "^2.2.5",
+    "@metaplex-foundation/umi-uploader-irys": "^1.2.0",
     "@neondatabase/serverless": "^1.0.1",
     "@types/compression": "^1.8.1",
     "@types/cors": "^2.8.19",
