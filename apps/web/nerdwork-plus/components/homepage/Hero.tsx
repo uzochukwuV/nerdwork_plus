@@ -1,7 +1,6 @@
-// import React from "react";
-import Navbar from "./Navbar";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -9,14 +8,18 @@ export default function Hero() {
       <div className="absolute inset-0 bg-[url('/hero-bg.png')] bg-cover bg-center bg-no-repeat z-0" />
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(13,13,13,0)_0%,#0D0D0D_61.75%)] z-10" />
       <div className="relative z-20 text-white h-screen max-w-[1440px] mx-auto">
-        <Navbar />
         <section
           data-testid="hero"
           className="flex flex-col font-inter text-center -mb-px max-md:gap-6 md:gap-8 items-center justify-end h-screen pb-10 md:pb-32 px-7"
         >
-          <p className="bg-[#0856D3] max-md:text-[13px] rounded-[20px] px-5 py-1.5 font-medium">
-            Comic con 2025 is here, Register now
-          </p>
+          <Link target="_blank" href={"https://www.tketnation.com/nwcc25"}>
+            <Button
+              variant={"primary"}
+              className="max-md:text-[13px] text-base rounded-[20px] px-5 py-1.5 font-medium"
+            >
+              Comic Con 2025 is here, Register now
+            </Button>
+          </Link>
           <h1 className="font-obostar text-[52px] max-md:text-[32px]">
             Where passion
             <br />

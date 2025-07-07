@@ -40,7 +40,7 @@ export default function ComicCon() {
   return (
     <section
       data-testid="comic-con"
-      className="z-10 max-w-[1130px] w-full font-inter mx-auto text-white py-20 px-7 mt-32"
+      className="z-10 max-w-[1130px] w-full font-inter mx-auto text-white py-20 px-7 md:mt-32"
     >
       <h2 className="font-obostar text-[40px] max-md:text-2xl mb-4">
         EpiC Comic-Cons
