@@ -14,6 +14,7 @@ import HOF6 from "@/assets/events/hof6.png";
 import HOF7 from "@/assets/events/hof7.png";
 import HOF8 from "@/assets/events/hof8.png";
 import HOF9 from "@/assets/events/hof9.png";
+import EventCard from "./EventCard";
 
 const stats = [
   {
@@ -51,46 +52,24 @@ export default function EventStats() {
             together.
           </p>
         </div>
-
-        <section className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 mt-10 md:mt-24">
-          <div className="group px-5 pb-10 relative flex flex-col justify-end rounded-[12px] bg-[url(/events/games.jpg)] bg-cover bg-center bg-no-repeat w-full h-[350px] md:h-[628px] cursor-pointer transition-all duration-300">
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(13,13,13,0)_53.03%,rgba(13,13,13,0.9)_88.77%)] z-10 group-hover:bg-[linear-gradient(180deg,rgba(13,13,13,0.2)_0%,rgba(13,13,13,0.95)_100%)] transition-all duration-300" />
-            <div className="z-10">
-              <p className="font-semibold group-hover:-translate-y-20 transition-all duration-300 transform">
-                Game Conventions
-              </p>
-              <p className="text-[#FFFFFFCC] absolute bottom-5 left-5 right-5 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-full group-hover:translate-y-0">
-                Join fellow gamers for an exciting convention filled with
-                tournaments, demos, and the latest gaming innovations!
-              </p>
-            </div>
-          </div>
-
-          <div className="group px-5 pb-10 relative flex flex-col justify-end rounded-[12px] bg-[url(/events/anime-con.jpg)] bg-cover bg-center bg-no-repeat w-full h-[350px] md:h-[628px] cursor-pointer transition-all duration-300">
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(13,13,13,0)_53.03%,rgba(13,13,13,0.9)_88.77%)] z-10 group-hover:bg-[linear-gradient(180deg,rgba(13,13,13,0.2)_0%,rgba(13,13,13,0.95)_100%)] transition-all duration-300" />
-            <div className="z-10">
-              <p className="font-semibold group-hover:-translate-y-16 transition-all duration-300 transform">
-                Anime con
-              </p>
-              <p className="text-[#FFFFFFCC] absolute bottom-5 left-5 right-5 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-full group-hover:translate-y-0">
-                Immerse yourself in anime culture with screenings, merchandise,
-                meet-and-greets, and cosplay competitions!
-              </p>
-            </div>
-          </div>
-
-          <div className="group px-5 pb-10 relative flex flex-col justify-end rounded-[12px] bg-[url(/events/cosplay.jpg)] bg-cover bg-center bg-no-repeat w-full h-[350px] md:h-[628px] cursor-pointer transition-all duration-300">
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(13,13,13,0)_53.03%,rgba(13,13,13,0.9)_88.77%)] z-10 group-hover:bg-[linear-gradient(180deg,rgba(13,13,13,0.2)_0%,rgba(13,13,13,0.95)_100%)] transition-all duration-300" />
-            <div className="z-10">
-              <p className="font-semibold group-hover:-translate-y-16 transition-all duration-300 transform">
-                Cosplays
-              </p>
-              <p className="text-[#FFFFFFCC] absolute bottom-5 left-5 right-5 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-full group-hover:translate-y-0">
-                Experience a day of creativity and connection at our annual
-                community event!
-              </p>
-            </div>
-          </div>
+        <section>
+          <section className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 mt-10 md:mt-24">
+            <EventCard
+              title="Game Conventions"
+              description="Join fellow gamers for an exciting convention filled with tournaments, demos, and the latest gaming innovations!"
+              image="/events/games.jpg"
+            />
+            <EventCard
+              title="Anime Con"
+              description="Immerse yourself in anime culture with screenings, merchandise, meet-and-greets, and cosplay competitions!"
+              image="/events/anime-con.jpg"
+            />
+            <EventCard
+              title="Cosplays"
+              description="Experience a day of creativity and connection at our annual community event!"
+              image="/events/cosplay.jpg"
+            />
+          </section>
         </section>
       </section>
 
