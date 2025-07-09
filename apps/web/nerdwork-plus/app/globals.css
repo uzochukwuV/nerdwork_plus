@@ -48,6 +48,7 @@
   --animate-fade-in: fade-in 0.8s ease-out forwards;
   --animate-marquee: marquee 10s linear infinite;
   --animate-marquee-reverse: marquee-reverse 10s linear infinite;
+  --animate-bounce: bounce 1.5s ease-in-out infinite;
 
   @keyframes fade-in {
     from {
@@ -75,6 +76,16 @@
     }
     100% {
       transform: translateX(100%);
+    }
+  }
+
+  @keyframes bounce {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px);
     }
   }
 }
@@ -158,5 +169,38 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Loading dots */
+.dot-animation {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #6b7280;
+  animation: dotPulse 1.5s ease-in-out infinite;
+}
+
+.dot-1 {
+  animation-delay: 0s;
+}
+
+.dot-2 {
+  animation-delay: 0.2s;
+}
+
+.dot-3 {
+  animation-delay: 0.4s;
+}
+
+@keyframes dotPulse {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
   }
 }
