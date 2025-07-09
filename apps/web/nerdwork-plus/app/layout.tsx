@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
+import LoadingProvider from "@/components/LoadingProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,7 +39,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${obostar.variable} antialiased`}
       >
-        {children}
+        <LoadingProvider logoSrc={"/nerdwork.svg"} logoAlt="Nerwork Logo">
+          {children}
+        </LoadingProvider>
       </body>
     </html>
   );
