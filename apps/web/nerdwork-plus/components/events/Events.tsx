@@ -19,7 +19,7 @@ const events = [
   },
   {
     id: 2,
-    src: TechSummit,
+    src: TechSummit,  
     alt: "tech summit",
     link: "",
     date: "---",
