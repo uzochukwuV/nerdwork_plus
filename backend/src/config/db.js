@@ -1,0 +1,15 @@
+// import { drizzle } from "drizzle-orm/neon-http";
+// import { neon } from "@neondatabase/serverless";
+import { config } from "dotenv";
+//config();
+import { Pool } from "pg";
+import { drizzle } from "drizzle-orm/node-postgres";
+config({ path: ".env.local" });
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+});
+export const db = drizzle(pool);
+// config({ path: ".env.local" }); // or .env.local
+// const sql = neon(process.env.DATABASE_URL!);
+// export const db = drizzle({ client: sql });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJkYi50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxtREFBbUQ7QUFDbkQsbURBQW1EO0FBQ25ELE9BQU8sRUFBRSxNQUFNLEVBQUUsTUFBTSxRQUFRLENBQUM7QUFDaEMsV0FBVztBQUVYLE9BQU8sRUFBRSxJQUFJLEVBQUUsTUFBTSxJQUFJLENBQUM7QUFDMUIsT0FBTyxFQUFFLE9BQU8sRUFBRSxNQUFNLDJCQUEyQixDQUFDO0FBRXBELE1BQU0sQ0FBQyxFQUFFLElBQUksRUFBRSxZQUFZLEVBQUUsQ0FBQyxDQUFDO0FBRS9CLE1BQU0sSUFBSSxHQUFHLElBQUksSUFBSSxDQUFDO0lBQ3BCLGdCQUFnQixFQUFFLE9BQU8sQ0FBQyxHQUFHLENBQUMsWUFBWTtDQUMzQyxDQUFDLENBQUM7QUFFSCxNQUFNLENBQUMsTUFBTSxFQUFFLEdBQUcsT0FBTyxDQUFDLElBQUksQ0FBQyxDQUFDO0FBRWhDLG1EQUFtRDtBQUVuRCwrQ0FBK0M7QUFDL0MsOENBQThDIiwic291cmNlc0NvbnRlbnQiOlsiLy8gaW1wb3J0IHsgZHJpenpsZSB9IGZyb20gXCJkcml6emxlLW9ybS9uZW9uLWh0dHBcIjtcclxuLy8gaW1wb3J0IHsgbmVvbiB9IGZyb20gXCJAbmVvbmRhdGFiYXNlL3NlcnZlcmxlc3NcIjtcclxuaW1wb3J0IHsgY29uZmlnIH0gZnJvbSBcImRvdGVudlwiO1xyXG4vL2NvbmZpZygpO1xyXG5cclxuaW1wb3J0IHsgUG9vbCB9IGZyb20gXCJwZ1wiO1xyXG5pbXBvcnQgeyBkcml6emxlIH0gZnJvbSBcImRyaXp6bGUtb3JtL25vZGUtcG9zdGdyZXNcIjtcclxuXHJcbmNvbmZpZyh7IHBhdGg6IFwiLmVudi5sb2NhbFwiIH0pO1xyXG5cclxuY29uc3QgcG9vbCA9IG5ldyBQb29sKHtcclxuICBjb25uZWN0aW9uU3RyaW5nOiBwcm9jZXNzLmVudi5EQVRBQkFTRV9VUkwsXHJcbn0pO1xyXG5cclxuZXhwb3J0IGNvbnN0IGRiID0gZHJpenpsZShwb29sKTtcclxuXHJcbi8vIGNvbmZpZyh7IHBhdGg6IFwiLmVudi5sb2NhbFwiIH0pOyAvLyBvciAuZW52LmxvY2FsXHJcblxyXG4vLyBjb25zdCBzcWwgPSBuZW9uKHByb2Nlc3MuZW52LkRBVEFCQVNFX1VSTCEpO1xyXG4vLyBleHBvcnQgY29uc3QgZGIgPSBkcml6emxlKHsgY2xpZW50OiBzcWwgfSk7XHJcbiJdfQ==
