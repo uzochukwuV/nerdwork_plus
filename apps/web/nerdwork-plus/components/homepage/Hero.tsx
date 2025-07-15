@@ -12,7 +12,7 @@ export default function Hero() {
           data-testid="hero"
           className="flex flex-col font-inter text-center -mb-px max-md:gap-6 md:gap-8 items-center justify-end h-screen pb-10 md:pb-32 px-7"
         >
-          <Link target="_blank" href={"https://www.tketnation.com/nwcc25"}>
+          <Link target="_blank" href={"https://www.straqa.events/nerdworkcomiccon"}>
             <Button
               variant={"primary"}
               className="max-md:text-[13px] text-base rounded-[20px] px-5 py-1.5 font-medium"
