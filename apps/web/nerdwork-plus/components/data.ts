@@ -3,7 +3,7 @@ export const eventsData = [
     id: 1,
     src: "/events/comic-con.jpg",
     alt: "Comic con",
-    link: "https://www.tketnation.com/nwcc25",
+    link: "https://www.straqa.events/nerdworkcomiccon",
     date: "September 6, 2025",
     title: "Comic Con 2025",
     subtitle:
