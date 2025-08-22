@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 
 const MyComicsEmptyState = () => {
   return (
-    <section className="max-w-[1300px] mx-auto font-inter border border-[#292A2E] rounded-[12px] flex flex-col gap-6 justify-center items-center py-16">
+    <section className="max-w-[1300px] mx-auto font-inter border border-[#292A2E] max-md:rounded-[12.75px] rounded-[12px] flex flex-col gap-6 justify-center items-center max-md:py-4 py-16 max-xl:mx-5 px-4">
       <div className="bg-[#1D1E21] rounded-full w-20 h-20 flex justify-center items-center">
         <Book />
       </div>
@@ -16,8 +16,8 @@ const MyComicsEmptyState = () => {
           your first comic series!
         </p>
       </div>
-      <Link href={"/creator/comics/new"}>
-        <Button variant={"secondary"} className="min-w-[262px]">
+      <Link href={"/creator/comics/new"} className="max-md:w-full">
+        <Button variant={"secondary"} className="min-w-[262px] max-md:w-full">
           <Plus />
           New Project
         </Button>

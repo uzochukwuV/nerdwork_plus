@@ -20,7 +20,7 @@ const SubNav = () => {
 
   return (
     <>
-      <nav className="flex justify-center w-full gap-10 font-inter text-sm pt-5 border-t border-[#292A2E]">
+      <nav className="max-md:hidden flex justify-center w-full gap-10 font-inter text-sm pt-5 border-t border-[#292A2E]">
         {navItems.map((item, index) => (
           <Link
             href={item.path}

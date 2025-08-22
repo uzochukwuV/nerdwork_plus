@@ -5,15 +5,17 @@ import Link from "next/link";
 
 const ComicsHeader = () => {
   return (
-    <section className="mx-auto max-w-[1300px] font-inter flex justify-between items-center mt-10 mb-6">
-      <div className="flex flex-col gap-2">
-        <h3 className="font-semibold text-[28px]">My Comics</h3>
+    <section className="mx-auto max-w-[1300px] font-inter flex max-md:flex-col max-md:gap-6 justify-between items-center mt-10 mb-6 max-xl:mx-5">
+      <div className="flex flex-col max-md:gap-1 gap-2">
+        <h3 className="font-semibold max-md:text-base text-[28px]">
+          My Comics
+        </h3>
         <p className="font-medium text-sm text-[#707073]">
           Welcome back, Creatorba09! Manage your comic series
         </p>
       </div>
-      <Link href={"/creator/comics/new"}>
-        <Button variant={"secondary"}>
+      <Link href={"/creator/comics/new"} className="max-md:w-full">
+        <Button variant={"secondary"} className="max-md:w-full">
           <Plus />
           New Project
         </Button>
