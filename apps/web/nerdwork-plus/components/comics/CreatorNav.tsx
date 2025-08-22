@@ -4,7 +4,7 @@ import Logo from "@/assets/nerdwork.png";
 import Link from "next/link";
 import { Menu, Search } from "lucide-react";
 import { Input } from "../ui/input";
-// import { BiCoin } from "react-icons/bi";
+import Coin from "@/assets/creator/coin.svg";
 
 export default function CreatorNav() {
   return (
@@ -27,14 +27,18 @@ export default function CreatorNav() {
       </div>
 
       <div className="flex justify-between items-center gap-3">
-        <Link href={""}>Become a Creator</Link>
-        <p className="bg-[#1D1E21] px-3 rounded-[20px]">
-          {/* 100 <BiCoin /> */}
+        <Link href={""} className="mr-3">
+          Become a Creator
+        </Link>
+        <p className="bg-[#1D1E21] px-3 py-1.5 rounded-[20px] flex items-center gap-1">
+          100 <Image src={Coin} width={16} height={16} alt="coin" />
         </p>
-        <p>C</p>
-        <p>
-          <Menu />
-        </p>
+        <button className="bg-[#545558] cursor-pointer rounded-full h-8 w-8 flex items-center justify-center">
+          C
+        </button>
+        <button className="bg-[#1D1E21] h-8 w-8 flex justify-center items-center cursor-pointer rounded-full">
+          <Menu size={16} strokeWidth={2} absoluteStrokeWidth={true} />
+        </button>
       </div>
     </nav>
   );
