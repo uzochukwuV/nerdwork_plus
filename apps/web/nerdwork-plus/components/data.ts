@@ -1,3 +1,5 @@
+import { ComicProps } from "@/app/(creator)/_components/comics/CreatorComics";
+
 export const eventsData = [
   {
     id: 1,
@@ -27,5 +29,80 @@ export const eventsData = [
     date: "June 10, 2025",
     title: "Arts & Crafts Fair 2025",
     subtitle: "Showcase your talents and discover new art at our annual fair!",
+  },
+];
+
+export const comicData: ComicProps[] = [
+  {
+    id: 1,
+    image: "/events/anime-con.jpg",
+    title: "Mystic Chronicles: The Awakening",
+    short_description: "Just a short description",
+    status: "draft",
+    chapters: 3,
+    last_updated: "24/07/2024",
+  },
+  {
+    id: 2,
+    image: "/events/anime-con.jpg",
+    title: "Mystic Chronicles: The Awakening",
+    short_description: "Just a short description",
+    status: "draft",
+    chapters: 3,
+    last_updated: "24/07/2024",
+  },
+  {
+    id: 3,
+    image: "/events/anime-con.jpg",
+    title: "Mystic Chronicles: The Awakening",
+    short_description: "Just a short description",
+    status: "published",
+    chapters: 3,
+    last_updated: "24/07/2024",
+  },
+  {
+    id: 4,
+    image: "/events/anime-con.jpg",
+    title: "Mystic Chronicles: The Awakening",
+    short_description: "Just a short description",
+    status: "published",
+    chapters: 3,
+    last_updated: "24/07/2024",
+  },
+  {
+    id: 5,
+    image: "/events/anime-con.jpg",
+    title: "Mystic Chronicles: The Awakening",
+    short_description: "Just a short description",
+    status: "scheduled",
+    chapters: 3,
+    last_updated: "24/07/2024",
+  },
+  {
+    id: 6,
+    image: "/events/anime-con.jpg",
+    title: "Mystic Chronicles: The Awakening",
+    short_description: "Just a short description",
+    status: "scheduled",
+    chapters: 3,
+    last_updated: "24/07/2024",
+  },
+  {
+    id: 7,
+    image: "/events/anime-con.jpg",
+    title: "Mystic Chronicles: The Awakening",
+    short_description: "Just a short description",
+    status: "upcoming",
+    chapters: 3,
+    last_updated: "24/07/2024",
+  },
+  {
+    id: 8,
+    image: "/events/anime-con.jpg",
+    title: "Mystic Chronicles: The Awakening",
+    short_description: "Just a short description",
+    status: "upcoming",
+    chapters: 3,
+    last_updated: "24/07/2024",
   },
 ];

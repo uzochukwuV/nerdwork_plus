@@ -14,7 +14,7 @@ import {
   UserCog,
   Wallet2,
 } from "lucide-react";
-import { Input } from "../ui/input";
+import { Input } from "../../../../components/ui/input";
 import Coin from "@/assets/creator/coin.svg";
 import {
   Menubar,
@@ -23,7 +23,7 @@ import {
   MenubarMenu,
   MenubarSeparator,
   MenubarTrigger,
-} from "../ui/menubar";
+} from "../../../../components/ui/menubar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,7 +31,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
+} from "../../../../components/ui/dropdown-menu";
 
 export default function CreatorNav() {
   return (

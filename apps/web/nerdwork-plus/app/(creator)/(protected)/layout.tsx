@@ -1,4 +1,4 @@
-import CreatorNav from "@/components/comics/CreatorNav";
+import CreatorNav from "@/app/(creator)/_components/comics/CreatorNav";
 
 export default function CreatorLayout({
   children,
