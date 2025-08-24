@@ -1,11 +1,11 @@
 import React from "react";
-import { Button } from "../ui/button";
+import { Button } from "../../../../components/ui/button";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 
 const ComicsHeader = () => {
   return (
-    <section className="mx-auto max-w-[1300px] font-inter flex max-md:flex-col max-md:gap-6 justify-between items-center mt-10 mb-6 max-xl:mx-5">
+    <section className="!mx-auto max-w-[1300px] font-inter flex max-md:flex-col max-md:gap-6 justify-between md:items-center mt-10 mb-6 max-2xl:px-5">
       <div className="flex flex-col max-md:gap-1 gap-2">
         <h3 className="font-semibold max-md:text-base text-[28px]">
           My Comics

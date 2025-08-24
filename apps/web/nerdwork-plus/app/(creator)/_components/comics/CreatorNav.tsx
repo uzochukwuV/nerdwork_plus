@@ -14,7 +14,7 @@ import {
   UserCog,
   Wallet2,
 } from "lucide-react";
-import { Input } from "../ui/input";
+import { Input } from "../../../../components/ui/input";
 import Coin from "@/assets/creator/coin.svg";
 import {
   Menubar,
@@ -23,20 +23,19 @@ import {
   MenubarMenu,
   MenubarSeparator,
   MenubarTrigger,
-} from "../ui/menubar";
+} from "../../../../components/ui/menubar";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
+} from "../../../../components/ui/dropdown-menu";
 
 export default function CreatorNav() {
   return (
     <>
-      <nav className="max-md:hidden max-w-[1300px] mx-auto font-inter flex gap-2 justify-between items-center h-[76px] max-xl:mx-5">
+      <nav className="max-md:hidden max-w-[1300px] mx-auto font-inter flex gap-2 justify-between items-center h-[76px] max-2xl:mx-5">
         <div className="flex justify-between items-center gap-10">
           <Link href={"/"}>
             <Image src={Logo} width={146} height={40} alt="Nerdwork logo" />
