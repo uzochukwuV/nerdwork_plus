@@ -1,23 +1,18 @@
 import { Badge } from "@/components/ui/badge";
-import {
-  Menubar,
-  MenubarContent,
-  MenubarItem,
-  MenubarMenu,
-  MenubarSeparator,
-  MenubarTrigger,
-} from "@/components/ui/menubar";
+import { Menubar, MenubarMenu, MenubarTrigger } from "@/components/ui/menubar";
 import {
   BookOpen,
   Calendar,
   ChartLine,
   Edit2Icon,
   EllipsisVertical,
-  Eye,
   Trash,
 } from "lucide-react";
 import Image from "next/image";
 import React from "react";
+import ComicActions from "./ComicActions";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { DialogTitle } from "@radix-ui/react-dialog";
 
 export interface ComicProps {
   id: number;
@@ -31,8 +26,8 @@ export interface ComicProps {
 
 const CreatorComics = ({ data }: { data: ComicProps[] }) => {
   return (
-    <section className="font-inter text-white mb-10 max-md:mt-5 max-xl:mx-5">
-      <section className="grid grid-cols-4 gap-3 max-lg:hidden">
+    <section className="font-inter text-white mb-10 max-md:mt-5 max-2xl:mx-5">
+      <section className="grid grid-cols-3 lg:grid-cols-4 gap-3 max-md:hidden">
         {data.map((comic) => (
           <div
             key={comic.id}
@@ -55,22 +50,7 @@ const CreatorComics = ({ data }: { data: ComicProps[] }) => {
                   <MenubarTrigger className="bg-[#1D1E21] data-[state=open]:bg-none h-8 w-8 flex justify-center items-center transition duration-300 hover:ease-in-out cursor-pointer rounded-full p-0">
                     <EllipsisVertical size={16} />
                   </MenubarTrigger>
-                  <MenubarContent className="bg-[#1D1E21] text-white border-0 absolute -right-[30px]">
-                    <MenubarItem>
-                      <Eye />
-                      View Details
-                    </MenubarItem>
-                    <MenubarItem>
-                      <Edit2Icon /> Edit Series
-                    </MenubarItem>
-                    <MenubarItem>
-                      <ChartLine /> View Stats
-                    </MenubarItem>
-                    <MenubarSeparator />
-                    <MenubarItem>
-                      <Trash /> Delete Series
-                    </MenubarItem>
-                  </MenubarContent>
+                  <ComicActions />
                 </MenubarMenu>
               </Menubar>
             </div>
@@ -90,7 +70,54 @@ const CreatorComics = ({ data }: { data: ComicProps[] }) => {
       </section>
 
       {/* Mobile comic cards */}
-      <section></section>
+      <section className="flex flex-col gap-5 md:hidden">
+        {data.map((comic) => (
+          <div key={comic.id} className="relative flex gap-5">
+            <Image
+              src={comic.image}
+              width={100}
+              height={148}
+              alt={`${comic.title} cover`}
+              className="h-[148px] object-cover rounded-[8px]"
+            />
+
+            <div className="">
+              <p className="mb-3 font-semibold">{comic.title}</p>
+              <div className="text-sm text-[#707073] flex flex-col gap-1">
+                <p className="flex items-center gap-3">
+                  <BookOpen size={16} /> {comic.chapters} Chapters
+                </p>
+                <p className="flex items-center gap-3">
+                  <Calendar size={16} /> Updated {comic.last_updated}
+                </p>
+              </div>
+            </div>
+
+            <div className="absolute right-0 bg-transparent font-inter outline-none border-none ring-0 rounded-full transition duration-300 hover:ease-in-out p-0">
+              <Sheet>
+                <SheetTrigger className="data-[state=open]:bg-none h-8 w-8 flex justify-center items-center transition duration-300 hover:ease-in-out cursor-pointer rounded-full p-0">
+                  <EllipsisVertical size={20} />
+                </SheetTrigger>
+                <SheetContent
+                  side="bottom"
+                  className="bg-[#1D1E21] p-2 text-white text-sm border-none flex flex-col gap-1"
+                >
+                  <DialogTitle className="sr-only">Comic Options</DialogTitle>
+                  <button className="flex items-center gap-2 cursor-pointer hover:bg-[#25262A] p-4 rounded-[8px]">
+                    <Edit2Icon size={16} /> Edit Series
+                  </button>
+                  <button className="flex items-center gap-2 cursor-pointer hover:bg-[#25262A] p-4 rounded-[8px]">
+                    <ChartLine size={16} /> View Stats
+                  </button>
+                  <button className="flex items-center gap-2 cursor-pointer hover:bg-[#25262A] p-4 rounded-[8px]">
+                    <Trash size={16} /> Delete Series
+                  </button>
+                </SheetContent>
+              </Sheet>
+            </div>
+          </div>
+        ))}
+      </section>
     </section>
   );
 };
