@@ -15,7 +15,7 @@ export default function EventsHero() {
       id: 1,
       src: ComicCon,
       alt: "Comic con",
-      link: "https://www.tketnation.com/nwcc2",
+      link: "https://www.straqa.events/nerdworkcomiccon",
       title: "Comic Con 2025",
       subtitle:
         "Discover one of the biggest comic conventions in Nigeria, where all geek culture collide.",
