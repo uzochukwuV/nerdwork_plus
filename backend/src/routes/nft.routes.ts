@@ -2,11 +2,9 @@ import { Router } from "express";
 import {
   createApiCollection,
   getAssetData,
-  getWalletBalance,
   mintApiNFT,
   upload,
 } from "../controller/nft.controller";
-import { authenticate } from "../middleware/common/auth";
 
 const router = Router();
 
@@ -19,7 +17,6 @@ router.post("/mint", upload.single("image"), mintApiNFT);
 router.post("/collection/create", createApiCollection);
 router.post("/asset/:assetId", getAssetData);
 router.post("/asset/owner/:ownerAddress", getAssetData);
-router.get("/wallet/balance", authenticate, getWalletBalance);
 
 router.get("/health", (req, res) => {
   res.json({ status: "ok", message: "Comic NFT Minting API is running" });
