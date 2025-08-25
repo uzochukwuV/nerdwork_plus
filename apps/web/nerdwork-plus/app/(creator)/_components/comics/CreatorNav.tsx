@@ -35,7 +35,7 @@ import {
 export default function CreatorNav() {
   return (
     <>
-      <nav className="max-md:hidden max-w-[1300px] mx-auto font-inter flex gap-2 justify-between items-center h-[76px] max-2xl:mx-5">
+      <nav className="max-md:hidden max-w-[1300px] mx-auto font-inter flex gap-2 justify-between items-center h-[76px] max-2xl:px-5">
         <div className="flex justify-between items-center gap-10">
           <Link href={"/"}>
             <Image src={Logo} width={146} height={40} alt="Nerdwork logo" />
