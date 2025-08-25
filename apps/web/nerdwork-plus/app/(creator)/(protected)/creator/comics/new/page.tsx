@@ -24,6 +24,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
 
 export const GENRES = [
   "Fantasy",
@@ -124,9 +125,11 @@ const NewComicsPage = () => {
 
   return (
     <main className="max-w-[1100px] mx-auto w-full py-10 font-inter">
-      <button className="flex items-center gap-2.5 text-sm font-medium">
-        <ArrowLeft size={16} /> back to Dashboard
-      </button>
+      <Link href={"/creator/comics"}>
+        <button className="flex items-center cursor-pointer gap-2.5 text-sm font-medium">
+          <ArrowLeft size={16} /> back to Dashboard
+        </button>
+      </Link>
       <h3 className="font-semibold text-[28px] my-6">New Series</h3>
 
       <Form {...form}>
