@@ -1,89 +1,116 @@
+import * as fs from "fs";
 
-
-import * as fs from "fs"
-
-import {eq, and} from "drizzle-orm"
-import {mplCore, create, createCollection, fetchCollection, fetchAsset, fetchAssetsByOwner, transfer, transferV1, } from "@metaplex-foundation/mpl-core";
-import {createSignerFromKeypair, signerIdentity, generateSigner, publicKey} from "@metaplex-foundation/umi";
-import {createUmi} from "@metaplex-foundation/umi-bundle-defaults";
-import {createUmi as createTestUmi} from "@metaplex-foundation/umi-bundle-tests";
+import { eq, and } from "drizzle-orm";
+import {
+  mplCore,
+  create,
+  createCollection,
+  fetchCollection,
+  fetchAsset,
+  fetchAssetsByOwner,
+  transfer,
+  transferV1,
+} from "@metaplex-foundation/mpl-core";
+import {
+  createSignerFromKeypair,
+  signerIdentity,
+  generateSigner,
+  publicKey,
+} from "@metaplex-foundation/umi";
+import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
+import { createUmi as createTestUmi } from "@metaplex-foundation/umi-bundle-tests";
 
 // import * as multer from "multer"
 import { userWallets, walletAddresses } from "../model/schema";
 import { db } from "../config/db";
-import { memoryStorage  } from "multer";
+import { memoryStorage } from "multer";
 import multer from "multer";
-import { irysUploader } from '@metaplex-foundation/umi-uploader-irys'
+import { irysUploader } from "@metaplex-foundation/umi-uploader-irys";
+import { nft } from "../model/nft";
 
-
-const umi = createUmi('http://api.devnet.solana.com')
+const umi = createUmi("http://api.devnet.solana.com")
   .use(mplCore())
-  .use(irysUploader())
+  .use(irysUploader());
 
-
-
-  const storage = multer.diskStorage({
+const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/');
+    cb(null, "uploads/");
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + '-' + file.originalname);
-  }
+    cb(null, Date.now() + "-" + file.originalname);
+  },
 });
 
 export const upload = multer({
   storage: storage,
   limits: { fileSize: 50 * 1024 * 1024 }, // 50MB limit
   fileFilter: (req, file, cb) => {
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
     if (allowedTypes.includes(file.mimetype)) {
       cb(null, true);
     } else {
-      cb(new Error('Invalid file type. Only JPEG, PNG, GIF, and WebP are allowed.'));
+      cb(
+        new Error(
+          "Invalid file type. Only JPEG, PNG, GIF, and WebP are allowed."
+        )
+      );
     }
-  }
+  },
 });
 
-if (!fs.existsSync('uploads')) {
-  fs.mkdirSync('uploads');
+if (!fs.existsSync("uploads")) {
+  fs.mkdirSync("uploads");
 }
 
- // Set up signer from private key
+// Set up signer from private key
 const keypair = umi.eddsa.createKeypairFromSecretKey(
-  new Uint8Array([52,52,212,166,63,87,120,139,26,57,91,117,243,1,251,111,227,73,73,73,230,55,67,121,81,198,187,204,217,81,252,158,132,41,222,69,230,97,134,202,186,91,158,218,90,105,179,241,113,204,215,39,54,158,233,66,129,141,95,31,203,109,193,83])
-)
-console.log(keypair)
+  new Uint8Array([
+    52, 52, 212, 166, 63, 87, 120, 139, 26, 57, 91, 117, 243, 1, 251, 111, 227,
+    73, 73, 73, 230, 55, 67, 121, 81, 198, 187, 204, 217, 81, 252, 158, 132, 41,
+    222, 69, 230, 97, 134, 202, 186, 91, 158, 218, 90, 105, 179, 241, 113, 204,
+    215, 39, 54, 158, 233, 66, 129, 141, 95, 31, 203, 109, 193, 83,
+  ])
+);
+console.log(keypair);
 const masterWallet = createSignerFromKeypair(umi, keypair);
 umi.use(signerIdentity(masterWallet));
 
-
-
 // Database helper functions
 async function getUserWalletByUserId(userProfileId) {
-  const result = await db.select().from(userWallets)
+  const result = await db
+    .select()
+    .from(userWallets)
     .where(eq(userWallets.userProfileId, userProfileId));
   return result[0];
 }
 
 async function getUserSolanaAddress(userWalletId) {
-  const result = await db.select().from(walletAddresses)
-    .where(and(
-      eq(walletAddresses.userWalletId, userWalletId),
-      eq(walletAddresses.blockchain, 'solana'),
-      eq(walletAddresses.isVerified, true)
-    ));
+  const result = await db
+    .select()
+    .from(walletAddresses)
+    .where(
+      and(
+        eq(walletAddresses.userWalletId, userWalletId),
+        eq(walletAddresses.blockchain, "solana"),
+        eq(walletAddresses.isVerified, true)
+      )
+    );
   return result[0];
 }
 
 async function getUserPrimarySolanaAddress(userWalletId) {
-  const result = await db.select().from(walletAddresses)
-    .where(and(
-      eq(walletAddresses.userWalletId, userWalletId),
-      eq(walletAddresses.blockchain, 'solana'),
-      eq(walletAddresses.isPrimary, true),
-      eq(walletAddresses.isVerified, true)
-    ));
-  return result[0] || await getUserSolanaAddress(userWalletId);
+  const result = await db
+    .select()
+    .from(walletAddresses)
+    .where(
+      and(
+        eq(walletAddresses.userWalletId, userWalletId),
+        eq(walletAddresses.blockchain, "solana"),
+        eq(walletAddresses.isPrimary, true),
+        eq(walletAddresses.isVerified, true)
+      )
+    );
+  return result[0] || (await getUserSolanaAddress(userWalletId));
 }
 
 // Helper function to upload metadata
@@ -93,15 +120,21 @@ async function uploadMetadata(imageFile, metadata) {
     const imageBuffer = fs.readFileSync(imageFile.path);
     const genericFile = {
       buffer: imageBuffer,
-      fileName: imageFile.originalname || imageFile.filename || 'image',
-      displayName: imageFile.originalname || imageFile.filename || 'image',
-      uniqueName: Date.now() + '-' + (imageFile.originalname || imageFile.filename || 'image'),
-      contentType: imageFile.mimetype || 'image/png',
-      extension: (imageFile.originalname || imageFile.filename || 'image').split('.').pop() || 'png',
-      tags: []
+      fileName: imageFile.originalname || imageFile.filename || "image",
+      displayName: imageFile.originalname || imageFile.filename || "image",
+      uniqueName:
+        Date.now() +
+        "-" +
+        (imageFile.originalname || imageFile.filename || "image"),
+      contentType: imageFile.mimetype || "image/png",
+      extension:
+        (imageFile.originalname || imageFile.filename || "image")
+          .split(".")
+          .pop() || "png",
+      tags: [],
     };
     const [imageUri] = await umi.uploader.upload([genericFile]);
-    
+
     // Create metadata JSON
     const metadataJson = {
       name: metadata.name,
@@ -109,27 +142,27 @@ async function uploadMetadata(imageFile, metadata) {
       image: imageUri,
       attributes: metadata.attributes || [],
       properties: {
-        category: 'image',
+        category: "image",
         creators: metadata.creators || [],
-        ...metadata.properties
+        ...metadata.properties,
       },
       // Comic-specific metadata
       comic: {
         issue: metadata.issue || 1,
-        series: metadata.series || '',
-        author: metadata.author || '',
-        genre: metadata.genre || '',
+        series: metadata.series || "",
+        author: metadata.author || "",
+        genre: metadata.genre || "",
         publishDate: metadata.publishDate || new Date().toISOString(),
-        pages: metadata.pages || 1
-      }
+        pages: metadata.pages || 1,
+      },
     };
 
     // Upload metadata JSON
     const metadataUri = await umi.uploader.uploadJson(metadataJson);
-    
+
     // Clean up uploaded file
     fs.unlinkSync(imageFile.path);
-    
+
     return metadataUri;
   } catch (error) {
     // Clean up file on error
@@ -142,14 +175,15 @@ async function uploadMetadata(imageFile, metadata) {
 
 // API Roter
 
-
 // Create a new collection
 export const createApiCollection = async (req, res) => {
- try {
+  try {
     const { name, description, image, userProfileId } = req.body;
-    
+
     if (!name || !description || !image) {
-      return res.status(400).json({ error: 'Name, description, and image URL are required' });
+      return res
+        .status(400)
+        .json({ error: "Name, description, and image URL are required" });
     }
 
     const metadataJson = {
@@ -158,29 +192,29 @@ export const createApiCollection = async (req, res) => {
       image,
       attributes: [],
       properties: {
-        category: 'image',
+        category: "image",
         creators: [
           {
             address: masterWallet.publicKey,
-            percentage: 100
-          }
-        ]
-      }
+            percentage: 100,
+          },
+        ],
+      },
     };
     type SolAmount = {
-    basisPoints: bigint;
-    identifier: "SOL";
-    decimals: 9;
-}
-    const amount:SolAmount = {
-       basisPoints: BigInt(9),
+      basisPoints: bigint;
+      identifier: "SOL";
+      decimals: 9;
+    };
+    const amount: SolAmount = {
+      basisPoints: BigInt(9),
       identifier: "SOL",
-      decimals: 9
-    }
-    console.log(await umi.rpc.airdrop(masterWallet.publicKey, amount))
+      decimals: 9,
+    };
+    console.log(await umi.rpc.airdrop(masterWallet.publicKey, amount));
 
     const metadataUri = await umi.uploader.uploadJson(metadataJson);
-    console.log(metadataUri)
+    console.log(metadataUri);
     const collectionSigner = generateSigner(umi);
 
     await createCollection(umi, {
@@ -189,29 +223,27 @@ export const createApiCollection = async (req, res) => {
       uri: metadataUri,
     }).sendAndConfirm(umi);
 
-
     // add crea
-    
 
     res.json({
       success: true,
       collectionId: collectionSigner.publicKey,
-      message: 'Collection created successfully'
+      message: "Collection created successfully",
     });
   } catch (error) {
-    console.error('Collection creation error:', error);
-    res.status(500).json({ error: 'Failed to create collection', details: error.message });
+    console.error("Collection creation error:", error);
+    res
+      .status(500)
+      .json({ error: "Failed to create collection", details: error.message });
   }
 };
 
-
-
 let defaultCollection;
 
-export const mintApiNFT =  async (req, res) => {
- try {
+export const mintApiNFT = async (req, res) => {
+  try {
     if (!req.file) {
-      return res.status(400).json({ error: 'Image file is required' });
+      return res.status(400).json({ error: "Image file is required" });
     }
 
     const {
@@ -226,24 +258,29 @@ export const mintApiNFT =  async (req, res) => {
       publishDate,
       collectionId,
       attributes,
-      transferImmediately = true
+      transferImmediately = true,
     } = req.body;
 
     // Validate required fields
     if (!userProfileId || !name || !description) {
-      return res.status(400).json({ error: 'userProfileId, name, and description are required' });
+      return res
+        .status(400)
+        .json({ error: "userProfileId, name, and description are required" });
     }
 
     // Get user's wallet from database
-    const userWallet = "await getUserWalletByUserId(userProfileId);"
+    const userWallet = "await getUserWalletByUserId(userProfileId);";
     if (!userWallet) {
-      return res.status(404).json({ error: 'User wallet not found' });
+      return res.status(404).json({ error: "User wallet not found" });
     }
 
     // Get user's primary Solana address
-    const userSolanaWallet = "await getUserPrimarySolanaAddress(userWallet.id);"
+    const userSolanaWallet =
+      "await getUserPrimarySolanaAddress(userWallet.id);";
     if (!userSolanaWallet) {
-      return res.status(404).json({ error: 'User has no verified Solana wallet address' });
+      return res
+        .status(404)
+        .json({ error: "User has no verified Solana wallet address" });
     }
 
     // console.log(`Minting NFT for user ${userProfileId} to address ${userSolanaWallet.address}`);
@@ -254,20 +291,20 @@ export const mintApiNFT =  async (req, res) => {
       try {
         parsedAttributes = JSON.parse(attributes);
       } catch (error) {
-        return res.status(400).json({ error: 'Invalid attributes format' });
+        return res.status(400).json({ error: "Invalid attributes format" });
       }
     }
 
     // Add comic-specific attributes
     const comicAttributes = [
-      { trait_type: 'Author', value: author || 'Unknown' },
-      { trait_type: 'Series', value: series || 'Standalone' },
-      { trait_type: 'Issue', value: issue || '1' },
-      { trait_type: 'Genre', value: genre || 'Comic' },
-      { trait_type: 'Pages', value: pages || '1' },
-      { trait_type: 'Platform', value: 'YourPlatformName' },
-      { trait_type: 'Minted By', value: 'Platform' },
-      ...parsedAttributes
+      { trait_type: "Author", value: author || "Unknown" },
+      { trait_type: "Series", value: series || "Standalone" },
+      { trait_type: "Issue", value: issue || "1" },
+      { trait_type: "Genre", value: genre || "Comic" },
+      { trait_type: "Pages", value: pages || "1" },
+      { trait_type: "Platform", value: "YourPlatformName" },
+      { trait_type: "Minted By", value: "Platform" },
+      ...parsedAttributes,
     ];
 
     // Prepare metadata
@@ -284,9 +321,9 @@ export const mintApiNFT =  async (req, res) => {
       creators: [
         {
           address: masterWallet.publicKey,
-          percentage: 100
-        }
-      ]
+          percentage: 100,
+        },
+      ],
     };
 
     // Upload metadata
@@ -300,9 +337,8 @@ export const mintApiNFT =  async (req, res) => {
       asset: assetSigner,
       name,
       uri: metadataUri,
-      owner: masterWallet.publicKey // Mint to master wallet first
+      owner: masterWallet.publicKey, // Mint to master wallet first
     };
-
 
     // Add collection if specified
     if (collectionId) {
@@ -310,7 +346,7 @@ export const mintApiNFT =  async (req, res) => {
         const collection = await fetchCollection(umi, publicKey(collectionId));
         mintParams["collection"] = collection;
       } catch (error) {
-        console.log('Collection not found, minting without collection');
+        console.log("Collection not found, minting without collection");
       }
     }
     // const userPublicKey = publicKey(userSolanaWallet.address)
@@ -318,25 +354,43 @@ export const mintApiNFT =  async (req, res) => {
     // Add royalties plugin (platform gets royalties)
     mintParams["plugins"] = [
       {
-        type: 'Royalties',
+        type: "Royalties",
         basisPoints: 500, // 5% royalty to platform
         creators: [
           {
             address: masterWallet.publicKey,
-            percentage: 100
-          }
+            percentage: 100,
+          },
         ],
-        ruleSet: { type: 'None' }
-      }
+        ruleSet: { type: "None" },
+      },
     ];
 
     // Create the asset
-    console.log('Creating NFT...');
+    console.log("Creating NFT...");
     const createResult = await create(umi, mintParams).sendAndConfirm(umi);
-    
+
+    //save nft to database
+    await db.insert(nft).values({
+      owner: userWallet, // UUID from the user wallet
+      colection: collectionId ?? "standalone", // optional or default string
+      isLimitedEdition: false, // or true if it's a limited edition
+      amount: 1, // assume 1 NFT minted
+      metadata: {
+        name,
+        description,
+        author,
+        image: req.file.path,
+        uri: metadataUri,
+        assetId: assetSigner.publicKey,
+        attributes: comicAttributes,
+        mintSignature: createResult.signature,
+      },
+      status: "completed", // or 'pending' if there's more flow
+    });
 
     let transferResult = null;
-    
+
     // Transfer to user immediately if requested
     // if (transferImmediately) {
     //   console.log('Transferring NFT to user...');
@@ -372,7 +426,7 @@ export const mintApiNFT =  async (req, res) => {
       User: ${userProfileId}
       User Wallet: ${userSolanaWallet}
       Mint Signature: ${createResult.signature}
-      Transfer Signature: ${transferResult?.signature || 'N/A'}
+      Transfer Signature: ${transferResult?.signature || "N/A"}
     `);
 
     res.json({
@@ -383,34 +437,32 @@ export const mintApiNFT =  async (req, res) => {
       metadataUri,
       // userWalletAddress: userSolanaWallet.address,
       transferred: transferImmediately,
-      message: transferImmediately ? 'Comic NFT minted and transferred to user successfully' : 'Comic NFT minted successfully (transfer pending)'
+      message: transferImmediately
+        ? "Comic NFT minted and transferred to user successfully"
+        : "Comic NFT minted successfully (transfer pending)",
     });
-
   } catch (error) {
-    console.error('Minting error:', error);
-    
+    console.error("Minting error:", error);
+
     // Clean up uploaded file on error
     if (req.file && fs.existsSync(req.file.path)) {
       fs.unlinkSync(req.file.path);
     }
-    
-    res.status(500).json({ 
-      error: 'Failed to mint NFT', 
-      details: error.message 
+
+    res.status(500).json({
+      error: "Failed to mint NFT",
+      details: error.message,
     });
   }
 };
-
-
-
 
 // Get NFT details
 export const getAssetData = async (req, res) => {
   try {
     const { assetId } = req.params;
-    
+
     const asset = await fetchAsset(umi, publicKey(assetId));
-    
+
     res.json({
       success: true,
       asset: {
@@ -419,35 +471,39 @@ export const getAssetData = async (req, res) => {
         uri: asset.uri,
         owner: asset.owner,
         updateAuthority: asset.updateAuthority,
-        plugins: asset['plugins'] || null
-      }
+        plugins: asset["plugins"] || null,
+      },
     });
   } catch (error) {
-    console.error('Fetch error:', error);
-    res.status(500).json({ error: 'Failed to fetch NFT', details: error.message });
+    console.error("Fetch error:", error);
+    res
+      .status(500)
+      .json({ error: "Failed to fetch NFT", details: error.message });
   }
 };
 
-
-
 // Get NFTs by owner
 export const getAssetByOwner = async (req, res) => {
- try {
+  try {
     const { userProfileId } = req.params;
 
     // Get user's wallet from database
     const userWallet = await getUserWalletByUserId(userProfileId);
     if (!userWallet) {
-      return res.status(404).json({ error: 'User wallet not found' });
+      return res.status(404).json({ error: "User wallet not found" });
     }
 
     // Get all user's Solana addresses
-    const userAddresses = await db.select().from(walletAddresses)
-      .where(and(
-        eq(walletAddresses.userWalletId, userWallet.id),
-        eq(walletAddresses.blockchain, 'solana'),
-        eq(walletAddresses.isVerified, true)
-      ));
+    const userAddresses = await db
+      .select()
+      .from(walletAddresses)
+      .where(
+        and(
+          eq(walletAddresses.userWalletId, userWallet.id),
+          eq(walletAddresses.blockchain, "solana"),
+          eq(walletAddresses.isVerified, true)
+        )
+      );
 
     if (userAddresses.length === 0) {
       return res.json({ success: true, assets: [] });
@@ -457,60 +513,69 @@ export const getAssetByOwner = async (req, res) => {
     const allAssets = [];
     for (const address of userAddresses) {
       try {
-        const { fetchAssetsByOwner } = require('@metaplex-foundation/mpl-core');
-        const assets = await fetchAssetsByOwner(umi, publicKey(address.address));
+        const { fetchAssetsByOwner } = require("@metaplex-foundation/mpl-core");
+        const assets = await fetchAssetsByOwner(
+          umi,
+          publicKey(address.address)
+        );
         allAssets.push(...assets);
       } catch (error) {
-        console.error(`Failed to fetch assets for address ${address.address}:`, error);
+        console.error(
+          `Failed to fetch assets for address ${address.address}:`,
+          error
+        );
       }
     }
 
     res.json({
       success: true,
-      assets: allAssets.map(asset => ({
+      assets: allAssets.map((asset) => ({
         id: asset.publicKey,
         name: asset.name,
         uri: asset.uri,
         owner: asset.owner,
-        updateAuthority: asset.updateAuthority
-      }))
+        updateAuthority: asset.updateAuthority,
+      })),
     });
-
   } catch (error) {
-    console.error('Fetch user NFTs error:', error);
-    res.status(500).json({ 
-      error: 'Failed to fetch user NFTs', 
-      details: error.message 
+    console.error("Fetch user NFTs error:", error);
+    res.status(500).json({
+      error: "Failed to fetch user NFTs",
+      details: error.message,
     });
   }
 };
 
-
-
-export const transferNft =async (req, res)=>{
-    try {
+export const transferNft = async (req, res) => {
+  try {
     const { assetId, userProfileId } = req.body;
 
     if (!assetId || !userProfileId) {
-      return res.status(400).json({ error: 'assetId and userProfileId are required' });
+      return res
+        .status(400)
+        .json({ error: "assetId and userProfileId are required" });
     }
 
     // Get user's wallet from database
     const userWallet = await getUserWalletByUserId(userProfileId);
     if (!userWallet) {
-      return res.status(404).json({ error: 'User wallet not found' });
+      return res.status(404).json({ error: "User wallet not found" });
     }
 
     // Get user's primary Solana address
     const userSolanaWallet = await getUserPrimarySolanaAddress(userWallet.id);
     if (!userSolanaWallet) {
-      return res.status(404).json({ error: 'User has no verified Solana wallet address' });
+      return res
+        .status(404)
+        .json({ error: "User has no verified Solana wallet address" });
     }
 
     // Verify the asset exists and is owned by master wallet
     const asset = await fetchAsset(umi, publicKey(assetId));
     if (asset.owner !== masterWallet.publicKey) {
-      return res.status(400).json({ error: 'Asset is not owned by platform wallet' });
+      return res
+        .status(400)
+        .json({ error: "Asset is not owned by platform wallet" });
     }
 
     // Transfer the asset
@@ -524,39 +589,64 @@ export const transferNft =async (req, res)=>{
       assetId,
       transferSignature: transferResult.signature,
       userWalletAddress: userSolanaWallet.address,
-      message: 'NFT transferred to user successfully'
+      message: "NFT transferred to user successfully",
     });
-
   } catch (error) {
-    console.error('Transfer error:', error);
-    res.status(500).json({ 
-      error: 'Failed to transfer NFT', 
-      details: error.message 
+    console.error("Transfer error:", error);
+    res.status(500).json({
+      error: "Failed to transfer NFT",
+      details: error.message,
     });
   }
-}
+};
 
-
-export const getPlatformNFTs = async (req, res)=>{
-     try {
-    const { fetchAssetsByOwner } = require('@metaplex-foundation/mpl-core');
+export const getPlatformNFTs = async (req, res) => {
+  try {
+    const { fetchAssetsByOwner } = require("@metaplex-foundation/mpl-core");
     const assets = await fetchAssetsByOwner(umi, masterWallet.publicKey);
-    
+
     res.json({
       success: true,
-      assets: assets.map(asset => ({
+      assets: assets.map((asset) => ({
         id: asset.publicKey,
         name: asset.name,
         uri: asset.uri,
         owner: asset.owner,
-        updateAuthority: asset.updateAuthority
-      }))
+        updateAuthority: asset.updateAuthority,
+      })),
     });
   } catch (error) {
-    console.error('Fetch platform NFTs error:', error);
-    res.status(500).json({ 
-      error: 'Failed to fetch platform NFTs', 
-      details: error.message 
+    console.error("Fetch platform NFTs error:", error);
+    res.status(500).json({
+      error: "Failed to fetch platform NFTs",
+      details: error.message,
     });
   }
-}
+};
+
+// get wallet balance by jwt
+
+export const getWalletBalance = async (req, res) => {
+  try {
+    if (!req.user?.id) {
+      return res.status(400).json({ message: "Invalid token payload" });
+    }
+
+    // Query wallet from DB
+    const [wallet] = await db
+      .select()
+      .from(userWallets)
+      .where(eq(userWallets.userProfileId, req.user.id))
+      .limit(1);
+
+    if (!wallet) {
+      return res.status(404).json({ message: "Wallet not found" });
+    }
+
+    // ✅ Always return a plain number
+    return res.json({ balance: Number(wallet.nwtBalance) });
+  } catch (err) {
+    console.error("Error fetching wallet balance:", err);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
