@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { ComicSeriesFormData, comicSeriesSchema } from "@/lib/schema";
-import { ArrowLeft, Image, X } from "lucide-react";
+import { ArrowLeft, Globe, Users2, X } from "lucide-react";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -25,46 +25,11 @@ import {
 } from "@/components/ui/form";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-
-export const GENRES = [
-  "Fantasy",
-  "Science Fiction",
-  "Mystery",
-  "Romance",
-  "Thriller",
-  "Horror",
-  "Adventure",
-  "Historical Fiction",
-  "Comedy",
-  "Drama",
-  "Superhero",
-  "Dystopian",
-  "Musical",
-  "Western",
-  "Biographical",
-  "Cyberpunk",
-] as const;
-
-export const LANGUAGES = [
-  { value: "en", label: "English" },
-  { value: "es", label: "Spanish" },
-  { value: "fr", label: "French" },
-] as const;
-
-export const CONTENT_RATINGS = [
-  { value: "all-ages", label: "All Ages" },
-  { value: "teens-13+", label: "Teens - Age 13+" },
-  { value: "mature-17+", label: "Mature - Age 17+" },
-  { value: "adults-18+", label: "Adults - Age 18+" },
-] as const;
+import { ImageUpload } from "@/app/(creator)/_components/comics/ImageUpload";
+import { toast } from "sonner";
+import { LANGUAGES, CONTENT_RATINGS, GENRES } from "@/lib/constants";
 
 const NewComicsPage = () => {
-  //   const [files, setFiles] = useState<File[]>([]);
-  //   const handleFileUpload = (files: File[]) => {
-  //     setFiles(files);
-  //     console.log(files);
-  //   };
-
   const [newTag, setNewTag] = useState("");
 
   const form = useForm<ComicSeriesFormData>({
@@ -81,9 +46,23 @@ const NewComicsPage = () => {
   });
 
   const onSubmit = (data: ComicSeriesFormData) => {
-    console.log(data);
-    console.log(data.coverImage);
-    alert("Series updated successfully!");
+    const formData = new FormData();
+
+    formData.append("title", data.title);
+    formData.append("language", data.language);
+    formData.append("contentRating", data.contentRating);
+    formData.append("description", data.description);
+    data.genres.forEach((genre) => formData.append("genres[]", genre));
+    data.tags.forEach((tag) => formData.append("tags[]", tag));
+    if (data.coverImage) {
+      formData.append("coverImage", data.coverImage);
+    }
+
+    for (const pair of formData.entries()) {
+      console.log(pair[0], pair[1]);
+    }
+
+    toast.success("Series updated successfully!");
   };
 
   const addTag = () => {
@@ -177,6 +156,7 @@ const NewComicsPage = () => {
                         >
                           <FormControl>
                             <SelectTrigger className="bg-[#1D1E21] border-[#292A2E] text-white">
+                              <Globe />
                               <SelectValue placeholder="Select language" />
                             </SelectTrigger>
                           </FormControl>
@@ -207,6 +187,7 @@ const NewComicsPage = () => {
                         >
                           <FormControl>
                             <SelectTrigger className="bg-[#1D1E21] border-[#292A2E] text-white">
+                              <Users2 />
                               <SelectValue placeholder="Select rating" />
                             </SelectTrigger>
                           </FormControl>
@@ -364,33 +345,7 @@ const NewComicsPage = () => {
                     Upload a cover image for your series
                   </FormDescription>
                   <FormControl className="">
-                    <div className="flex items-center justify-center w-full">
-                      <label
-                        htmlFor="dropzone"
-                        className="group  w-[352px] h-[521px] flex flex-col items-center justify-center border border-dashed rounded-lg cursor-pointer bg-transparent border-[#9D9D9F] hover:border-[#646464]"
-                      >
-                        <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                          <Image />
-                          <p className="mb-2 text-sm font-semibold text-center group-hover:opacity-75">
-                            Drag and drop
-                            <br />
-                            <span className="font-normal text-xs text-[#707073]">
-                              or Click to upload
-                            </span>
-                          </p>
-                        </div>
-                        <Input
-                          id="dropzone"
-                          type="file"
-                          accept="image/*"
-                          className="hidden"
-                          onChange={(e) => field.onChange(e.target.files)}
-                        />{" "}
-                      </label>
-                    </div>
-                    {/* <div className="w-[352px] h-[521px] mx-auto border border-dashed bg-transparent border-neutral-800 rounded-lg">
-                      <FileUpload onChange={handleFileUpload} />
-                    </div> */}
+                    <ImageUpload field={field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

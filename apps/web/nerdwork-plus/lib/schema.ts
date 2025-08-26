@@ -49,13 +49,10 @@ export const comicSeriesSchema = z.object({
 
   coverImage: z
     .any()
-    .refine((files) => files?.length === 1, "Cover image is required.")
+    .refine((file) => file instanceof File, "Cover image is required.")
+    .refine((file) => file.size <= MAX_FILE_SIZE, `Max image size is 5MB.`)
     .refine(
-      (files) => files?.[0]?.size <= MAX_FILE_SIZE,
-      `Max image size is 5MB.`
-    )
-    .refine(
-      (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
+      (file) => ACCEPTED_IMAGE_TYPES.includes(file.type),
       "Only .jpg, .jpeg, .png and .webp formats are supported."
     ),
 });
