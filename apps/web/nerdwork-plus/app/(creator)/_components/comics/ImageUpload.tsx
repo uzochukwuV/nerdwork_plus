@@ -1,11 +1,13 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Image, Trash } from "lucide-react";
+import Image from "next/image";
+import { ImageIcon, Trash } from "lucide-react";
 import { useEffect, useState } from "react";
 import { ControllerRenderProps } from "react-hook-form";
+import { ComicSeriesFormData } from "@/lib/schema";
 
 interface ImageUploadProps {
-  field: ControllerRenderProps<any, any>;
+  field: ControllerRenderProps<ComicSeriesFormData, "coverImage">;
 }
 
 export const ImageUpload = ({ field }: ImageUploadProps) => {
@@ -47,19 +49,19 @@ export const ImageUpload = ({ field }: ImageUploadProps) => {
   };
 
   return (
-    <div className="container px-4 max-w-5xl mx-auto">
+    <div className="">
       {!previewUrl ? (
         <div
           onDragOver={(e) => e.preventDefault()}
           onDrop={handleDrop}
-          className="mx-auto flex flex-col border-dashed items-center justify-center group w-[352px] h-[521px] border rounded-lg cursor-pointer bg-transparent border-[#9D9D9F] hover:border-[#646464]"
+          className="mx-auto flex flex-col border-dashed items-center justify-center group max-md:w-[335px] max-md:h-[496] md:w-[352px] md:h-[521px] border rounded-lg cursor-pointer bg-transparent border-[#9D9D9F] hover:border-[#646464]"
         >
           <label
             htmlFor="file"
             className="cursor-pointer h-full flex flex-col justify-center text-center w-full"
           >
             <div className="flex flex-col items-center justify-center pt-5 pb-6">
-              <Image />
+              <ImageIcon />
               <p className="mb-2 text-sm font-semibold text-center group-hover:opacity-75">
                 Drag and drop
                 <br />
@@ -78,10 +80,12 @@ export const ImageUpload = ({ field }: ImageUploadProps) => {
         </div>
       ) : (
         <div className="relative flex flex-col items-center">
-          <img
+          <Image
             src={previewUrl}
+            width={335}
+            height={496}
             alt="Cover Preview"
-            className="rounded-md w-[352px] h-[521px] object-cover"
+            className="rounded-md max-md:w-[335px] max-md:h-[496] md:w-[352px] md:h-[521px] object-cover"
           />
           <Button
             onClick={() => handleFileChange(null)}
