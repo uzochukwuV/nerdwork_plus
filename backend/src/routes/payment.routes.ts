@@ -1,6 +1,9 @@
 import { Router } from "express";
-import { createPaymentLink, createWebhookForPayment, handlePaymentWebhook } from "../controller/payment.controller";
-
+import {
+  createPaymentLink,
+  createWebhookForPayment,
+  handlePaymentWebhook,
+} from "../controller/payment.controller";
 
 const router = Router();
 
@@ -10,8 +13,7 @@ const router = Router();
 // The payment link can be used for various payment methods like card, bank transfer, etc.
 // The webhook is set up to listen for payment events
 router.post("/helio/link", createPaymentLink);
-router.post("/helio/webhook/create",createWebhookForPayment);
-router.post("/helio/wenhook/handle",handlePaymentWebhook)
-
+router.post("/helio/webhook/create", createWebhookForPayment);
+router.post("/helio/webhook/handle", handlePaymentWebhook);
 
 export default router;
