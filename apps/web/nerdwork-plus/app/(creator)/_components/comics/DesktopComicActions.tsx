@@ -3,18 +3,29 @@ import {
   MenubarItem,
   MenubarSeparator,
 } from "@/components/ui/menubar";
-import { SheetContent } from "@/components/ui/sheet";
 import { ChartLine, Edit2Icon, Eye, Trash } from "lucide-react";
 import React from "react";
+import { ComicProps } from "./CreatorComics";
+import Link from "next/link";
 
-const ComicActions = () => {
+const ComicActions = ({
+  comic,
+  details,
+}: {
+  comic: ComicProps;
+  details: boolean;
+}) => {
   return (
     <>
       <MenubarContent className="max-md:hidden bg-[#1D1E21] text-white border-0 absolute -right-[30px]">
-        <MenubarItem>
-          <Eye />
-          View Details
-        </MenubarItem>
+        {!details && (
+          <Link href={`/creator/comics/${comic.id}`}>
+            <MenubarItem>
+              <Eye />
+              View Details
+            </MenubarItem>
+          </Link>
+        )}
         <MenubarItem>
           <Edit2Icon /> Edit Series
         </MenubarItem>
