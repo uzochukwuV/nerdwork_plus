@@ -27,7 +27,7 @@ const Onboarding = () => {
           <br /> Reader or Creator
         </h4>
         <p className="text-[#707073] text-sm mt-3">
-          Don't worry you can change your answer later
+          Don&apos;t worry you can change your answer later
         </p>
 
         <div className="space-y-4 text-left mt-10">
@@ -40,7 +40,7 @@ const Onboarding = () => {
             onClick={() => setSelectedRole("creator")}
           >
             <h2 className="text-lg font-semibold">Creator</h2>
-            <p className="text-sm text-gray-400">
+            <p className="text-sm text-[#707073]">
               I want to create and share my content
             </p>
           </div>
@@ -54,7 +54,7 @@ const Onboarding = () => {
             onClick={() => setSelectedRole("reader")}
           >
             <h2 className="text-lg font-semibold">Reader</h2>
-            <p className="text-sm text-gray-400">
+            <p className="text-sm text-[#707073]">
               I just want to read and enjoy content
             </p>
           </div>

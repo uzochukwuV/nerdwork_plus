@@ -23,10 +23,8 @@ const allGenres = [
 ];
 
 export function ReaderGenres({
-  onNext,
   onSelectGenres,
 }: {
-  onNext: () => void;
   onSelectGenres: (genres: string[]) => void;
 }) {
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);

@@ -13,6 +13,7 @@ export function PaymentDetailsForm() {
   // use a library like @solana/wallet-adapter to check for installed wallets.
   const walletDetected = (walletName: string) => {
     // This is a placeholder. You would implement real detection logic here.
+    console.log(walletName);
     return true; // or false based on the check
   };
 
@@ -29,7 +30,8 @@ export function PaymentDetailsForm() {
           Setup your payment details
         </h1>
         <p className="text-sm text-[#707073] text-center mb-8">
-          If you don't have a wallet, choose a provider below to setup one now
+          If you don&apos;t have a wallet, choose a provider below to setup one
+          now
         </p>
 
         <div className="space-y-4 mt-10">

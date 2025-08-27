@@ -16,7 +16,7 @@ const SignUpPage = () => {
       <section className="w-full max-w-[400px] text-center flex flex-col items-center">
         <h4 className="text-2xl font-semibold">Welcome to Nerdwork+</h4>
         <p className="text-[#707073] text-sm mt-3">New here or coming back?</p>
-        <Link href={"/onboarding"} className="w-full">
+        <Link href={"/onboarding"} className="w-full flex justify-center">
           <Button
             variant={"secondary"}
             className="mt-10 max-w-[352px] w-full flex items-center"

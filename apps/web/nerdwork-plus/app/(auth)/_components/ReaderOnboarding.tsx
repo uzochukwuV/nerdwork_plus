@@ -44,12 +44,7 @@ export default function ReaderOnboardingFlow() {
       case 1:
         return <ReaderForm onNext={handleFinishProfile} />;
       case 2:
-        return (
-          <ReaderGenres
-            onNext={handleNextStep}
-            onSelectGenres={handleSelectGenres}
-          />
-        );
+        return <ReaderGenres onSelectGenres={handleSelectGenres} />;
       case 3:
         return <SetPinForm onNext={handleSetPin} />;
       default:
