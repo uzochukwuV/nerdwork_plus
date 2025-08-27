@@ -20,6 +20,10 @@ app.get("/", (req: Request, res: Response) => {
   res.status(200).json({ data: `Hello, world! - ${PORT}` });
 });
 
+app.get("/health", (req: Request, res: Response) => {
+  res.status(200).json({ status: "healthy", timestamp: new Date().toISOString() });
+});
+
 app.use(globalNotFoundHandler);
 app.use(globalErrorHandler);
 
