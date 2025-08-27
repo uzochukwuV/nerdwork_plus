@@ -14,7 +14,6 @@ const Onboarding = () => {
   const handleContinue = () => {
     if (selectedRole) {
       // Handle the role selection logic here, e.g., storing it in a cookie, context, or database
-      console.log(`User selected role: ${selectedRole}`);
       router.push(`/onboarding/${selectedRole}`);
     } else {
       alert("Please choose a role to continue.");
