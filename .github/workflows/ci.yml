@@ -8,11 +8,17 @@ on:
   push:
     branches: ['**']  # Run on push to all branches
   pull_request:
-    branches: [main]  # Run on PRs to dev or main
+    branches: [dev, main]  # Run on PRs to dev or main
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        test-type:
+          - { name: frontend-tests, path: 'apps/**', command: 'pnpm test:frontend' }
+          - { name: backend-tests, path: 'backend/**', command: 'pnpm test:backend' }
+          - { name: other-tests, path: '**', command: 'pnpm test:other' }
     steps:
       - uses: actions/checkout@v4
       - name: Setup pnpm
@@ -27,33 +33,34 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install
-      #- name: Lint
-      #  run: pnpm lint  # Restored; ensure configured in package.json
-      - name: Test
-        run: pnpm test
+      - name: Lint
+        run: pnpm lint  # Restored; ensure configured in package.json
+      - name: Run ${{ matrix.test-type.name }}
+        if: needs('changed-files').outputs.${{ matrix.test-type.name }} == 'true'
+        run: ${{ matrix.test-type.command }}
       - name: Upload test coverage (optional - for analytics)
-        if: always()  # Run even if tests fail
+        if: always() && needs('changed-files').outputs.${{ matrix.test-type.name }} == 'true'
         uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}  # Add in repo secrets
-          files: ./coverage/lcov.info  # Adjust if path differs
+          files: ./coverage/lcov.info  # Adjust per test output
       - name: Dependency vulnerability scanning (optional - for security)
-        if: always()
+        if: always() && needs('changed-files').outputs.${{ matrix.test-type.name }} == 'true'
         uses: aquasecurity/trivy-action@master
         with:
           scan-type: 'fs'
           format: 'sarif'
-          output: 'trivy-results.sarif'
+          output: 'trivy-results-${{ matrix.test-type.name }}.sarif'
       - name: Upload scan results to GitHub
-        if: always()
+        if: always() && needs('changed-files').outputs.${{ matrix.test-type.name }} == 'true'
         uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file: trivy-results.sarif
+          sarif_file: trivy-results-${{ matrix.test-type.name }}.sarif
       - name: Build (only on main - dry run for readiness)
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' && needs('changed-files').outputs.${{ matrix.test-type.name }} == 'true'
         run: |
           built_services=0
-          for service in docker/*; do  # Adjusted to docker/ based on your structure
+          for service in docker/*; do
             if [ -f "$service/Dockerfile" ]; then
               docker build --no-cache -t nerdwork-$service:test $service
               ((built_services++))
@@ -64,6 +71,27 @@ jobs:
             exit 1
           fi
           echo "✅ Build successful - $built_services services ready for deployment"
+
+  changed-files:
+    runs-on: ubuntu-latest
+    outputs:
+      frontend-tests: ${{ steps.changes.outputs.frontend }}
+      backend-tests: ${{ steps.changes.outputs.backend }}
+      other-tests: ${{ steps.changes.outputs.other }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            frontend:
+              - 'apps/**'
+            backend:
+              - 'backend/**'
+            other:
+              - '!apps/**'
+              - '!backend/**'
+              - '**'
       - name: Notify failure on PR (GitHub comment)
         if: failure() && github.event_name == 'pull_request'
         uses: actions/github-script@v7
@@ -74,7 +102,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '⚠️ CI failed on ${{ github.ref }}! @${{ github.actor }}, please fix errors. Logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+              body: '⚠️ CI failed on ${{ matrix.test-type.name }} for ${{ github.ref }}! @${{ github.actor }}, please fix errors. Logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
             })
       - name: Notify failure on non-PR push (GitHub issue)
         if: failure() && github.event_name == 'push'
@@ -86,7 +114,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               title: 'CI Failure on ${{ github.ref }} - Commit ${{ github.sha }}',
-              body: '⚠️ CI failed! @${{ github.actor }}, please fix. Logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}',
+              body: '⚠️ CI failed on ${{ matrix.test-type.name }}! @${{ github.actor }}, please fix. Logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}',
               assignees: ['${{ github.actor }}']
             })
       - name: Notify commit author on failure (push)
@@ -99,5 +127,5 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               commit_sha: context.sha,
-              body: `@${{ github.actor }} CI failed on this commit. Please check the logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}`
+              body: `@${{ github.actor }} CI failed on this commit (${{ matrix.test-type.name }}). Please check the logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}`
             })
