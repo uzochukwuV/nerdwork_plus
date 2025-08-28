@@ -30,7 +30,7 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
   --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
+  --color-nerd-muted: var(--nerd-muted);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-secondary: var(--secondary);
   --color-primary-foreground: var(--primary-foreground);
@@ -41,6 +41,8 @@
   --color-card: var(--card);
   --color-nerd-blue: var(--nerd-blue);
   --color-nerd-gray: var(--nerd-gray);
+  --color-muted: var(--muted);
+  --color-nerd-default: var(--nerd-default);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -125,6 +127,8 @@
   --sidebar-ring: oklch(0.708 0 0);
   --nerd-gray: oklch(0.3254 0.0017 286.3);
   --nerd-blue: oklch(0.5691 0.1698 259.48);
+  --nerd-muted: oklch(0.5462 0.0046 286.25);
+  --nerd-default: oklch(0.2352 0.0059 271.16);
 }
 
 .dark {
@@ -161,6 +165,8 @@
   --sidebar-ring: oklch(0.556 0 0);
   --nerd-gray: oklch(0.3254 0.0017 286.3);
   --nerd-blue: oklch(0.5691 0.1698 259.48);
+  --nerd-muted: oklch(0.5462 0.0046 286.25);
+  --nerd-default: oklch(0.2352 0.0059 271.16);
 }
 
 @layer base {

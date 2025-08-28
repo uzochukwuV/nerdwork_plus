@@ -11,12 +11,14 @@ describe("Events Page", () => {
   it("renders navigation menu", () => {
     const nav = screen.getByRole("navigation");
     const navLogo = within(nav).getAllByAltText(/nerdwork logo/i);
-    const loginButton = within(nav).getByRole("button", { name: /log in/i });
-    const signupButton = within(nav).getByRole("button", { name: /sign up/i });
+    const loginButton = within(nav).getByRole("link", { name: /log in/i });
+    const signupButton = within(nav).getByRole("link", { name: /sign up/i });
 
     expect(nav).toBeInTheDocument();
     expect(navLogo).toHaveLength(2);
-    expect(screen.getByRole("link", { name: /events/i })).toBeInTheDocument();
+    expect(
+      screen.getAllByRole("link", { name: /events/i })[0]
+    ).toBeInTheDocument();
     expect(
       screen.getAllByRole("link", { name: /nerdwork+/i })[0]
     ).toBeInTheDocument();

@@ -1,18 +1,10 @@
 import { Badge } from "@/components/ui/badge";
 import { Menubar, MenubarMenu, MenubarTrigger } from "@/components/ui/menubar";
-import {
-  BookOpen,
-  Calendar,
-  ChartLine,
-  Edit2Icon,
-  EllipsisVertical,
-  Trash,
-} from "lucide-react";
+import { BookOpen, Calendar, EllipsisVertical } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import ComicActions from "./DesktopComicActions";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { DialogTitle } from "@radix-ui/react-dialog";
+import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 import MobileComicActions from "./MobileComicActions";
 import Link from "next/link";
 

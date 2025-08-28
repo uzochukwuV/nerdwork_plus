@@ -11,8 +11,8 @@ describe("Home Page", () => {
   it("renders navigation menu", () => {
     const nav = screen.getByRole("navigation");
     const navLogo = within(nav).getAllByAltText(/nerdwork logo/i);
-    const loginButton = within(nav).getByRole("button", { name: /log in/i });
-    const signupButton = within(nav).getByRole("button", { name: /sign up/i });
+    const loginButton = within(nav).getByRole("link", { name: /log in/i });
+    const signupButton = within(nav).getByRole("link", { name: /sign up/i });
 
     expect(nav).toBeInTheDocument();
     expect(navLogo).toHaveLength(2);
@@ -41,14 +41,14 @@ describe("Home Page", () => {
   it("renders community section", () => {
     const community = screen.getByTestId("community");
     const heading = within(community).getByRole("heading", { level: 2 });
-    const joinButton = within(community).getByRole("button", {
+    const joinButton = within(community).getAllByRole("button", {
       name: /join community/i,
     });
     const comicImages = within(community).getAllByAltText(/comic con image/i);
 
     expect(community).toBeInTheDocument();
     expect(heading).toBeInTheDocument();
-    expect(joinButton).toBeInTheDocument();
+    expect(joinButton[0]).toBeInTheDocument();
     expect(comicImages).toHaveLength(7);
   });
 
