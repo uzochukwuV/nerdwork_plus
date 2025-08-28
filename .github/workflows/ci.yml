@@ -26,7 +26,7 @@ jobs:
       #- name: Lint
       #  run: pnpm lint  # Restored; ensure configured in package.json
       - name: Test
-        run: pnpm test --coverage  # Ensure coverage is generated
+        run: pnpm test
       - name: Upload test coverage (optional - for analytics)
         if: always()  # Run even if tests fail
         uses: codecov/codecov-action@v4
