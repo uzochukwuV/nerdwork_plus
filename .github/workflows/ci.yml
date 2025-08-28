@@ -1,5 +1,9 @@
 name: CI - Build and Test
 
+permissions:
+  contents: write
+  issues: write
+
 on:
   push:
     branches: ['**']  # Run on push to all branches
