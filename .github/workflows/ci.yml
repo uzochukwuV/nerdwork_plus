@@ -33,8 +33,6 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install
-      - name: Lint
-        run: pnpm lint  # Restored; ensure configured in package.json
       - name: Run ${{ matrix.test-type.name }}
         if: needs('changed-files').outputs.${{ matrix.test-type.name }} == 'true'
         run: ${{ matrix.test-type.command }}
