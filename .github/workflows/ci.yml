@@ -8,7 +8,7 @@ on:
   push:
     branches: ['**']  # Run on push to all branches
   pull_request:
-    branches: [dev, main]  # Run on PRs to dev or main
+    branches: [main]  # Run on PRs to dev or main
 
 jobs:
   build-and-test:
@@ -101,4 +101,3 @@ jobs:
               commit_sha: context.sha,
               body: `@${{ github.actor }} CI failed on this commit. Please check the logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}`
             })
-      # Removed redundant PR owner notification; covered by PR comment
