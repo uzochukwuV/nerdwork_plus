@@ -101,4 +101,3 @@ jobs:
               commit_sha: context.sha,
               body: `@${{ github.actor }} CI failed on this commit. Please check the logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}`
             })
-      # Removed redundant PR owner notification; covered by PR comment
