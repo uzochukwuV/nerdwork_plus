@@ -14,8 +14,8 @@ import {
 import { DataTable } from "@/components/data-table";
 import { columns } from "./columns";
 import { creatorTransactions } from "@/components/data";
-
-const TransactionType = ["all", "earning", "withdrawal", "gift", "purchase"];
+import PurchaseTokenModal from "@/app/(creator)/_components/wallet/PurchaseTokenModal";
+import WithdrawEarningsModal from "@/app/(creator)/_components/wallet/WithdrawEarningsModal";
 
 const WalletPage = () => {
   const [typeFilter, setTypeFilter] = useState("");
@@ -35,15 +35,8 @@ const WalletPage = () => {
             </p>
           </div>
           <div className="flex gap-2">
-            <Button
-              variant={"outline"}
-              className="bg-transparent border-[#292A2E]"
-            >
-              <WalletCardsIcon /> Buy NWT
-            </Button>
-            <Button variant={"primary"}>
-              <Send /> Withdraw Money
-            </Button>
+            <PurchaseTokenModal />
+            <WithdrawEarningsModal />
           </div>
         </div>
 
