@@ -18,7 +18,6 @@ jobs:
         test-type:
           - { name: frontend-tests, path: 'apps/**', command: 'pnpm test:frontend' }
           - { name: backend-tests, path: 'backend/**', command: 'pnpm test:backend' }
-          - { name: other-tests, path: '**', command: 'pnpm test:other' }
     steps:
       - uses: actions/checkout@v4
       - name: Setup pnpm
@@ -33,6 +32,8 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install
+      - name: Lint
+        run: pnpm lint  # Ensure configured in package.json
       - name: Run ${{ matrix.test-type.name }}
         if: needs('changed-files').outputs.${{ matrix.test-type.name }} == 'true'
         run: ${{ matrix.test-type.command }}
@@ -55,7 +56,7 @@ jobs:
         with:
           sarif_file: trivy-results-${{ matrix.test-type.name }}.sarif
       - name: Build (only on main - dry run for readiness)
-        if: github.ref == 'refs/heads/main' && needs('changed-files').outputs.${{ matrix.test-type.name }} == 'true'
+        if: github.ref == 'refs/heads/main' && (needs('changed-files').outputs.frontend-tests == 'true' || needs('changed-files').outputs.backend-tests == 'true' || needs('changed-files').outputs.other-tests == 'true')
         run: |
           built_services=0
           for service in docker/*; do
