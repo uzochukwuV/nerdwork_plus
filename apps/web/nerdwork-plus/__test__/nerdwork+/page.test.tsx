@@ -11,8 +11,8 @@ describe("Home Page", () => {
   it("renders navigation menu", () => {
     const nav = screen.getByRole("navigation");
     const navLogo = within(nav).getAllByAltText(/nerdwork logo/i);
-    const loginButton = within(nav).getByRole("button", { name: /log in/i });
-    const signupButton = within(nav).getByRole("button", { name: /sign up/i });
+    const loginButton = within(nav).getByRole("link", { name: /log in/i });
+    const signupButton = within(nav).getByRole("link", { name: /sign up/i });
 
     expect(nav).toBeInTheDocument();
     expect(navLogo).toHaveLength(2);

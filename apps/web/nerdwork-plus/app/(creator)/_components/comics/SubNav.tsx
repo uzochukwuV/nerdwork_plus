@@ -14,7 +14,7 @@ const SubNav = () => {
   ];
 
   const isActive = (path: string) => {
-    if (pathname.endsWith(path) && pathname !== "/") return true;
+    if (pathname.startsWith(path) && pathname !== "/") return true;
     return false;
   };
 

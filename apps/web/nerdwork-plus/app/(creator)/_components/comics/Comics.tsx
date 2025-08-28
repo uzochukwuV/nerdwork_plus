@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { comicData } from "@/components/data";
-import CreatorComics, { ComicProps } from "./CreatorComics";
+import CreatorComics from "./CreatorComics";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 const Comics = () => {

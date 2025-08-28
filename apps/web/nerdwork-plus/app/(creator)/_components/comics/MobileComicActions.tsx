@@ -1,7 +1,6 @@
-import { ChartLine, Edit2Icon, Eye, Trash } from "lucide-react";
+import { ChartLine, Edit2Icon, Trash } from "lucide-react";
 import React from "react";
 import { ComicProps } from "./CreatorComics";
-import Link from "next/link";
 import {
   SheetContent,
   SheetDescription,
@@ -9,6 +8,7 @@ import {
 } from "@/components/ui/sheet";
 
 const MobileComicActions = ({ comic }: { comic: ComicProps }) => {
+  console.log(comic);
   return (
     <>
       <SheetContent
