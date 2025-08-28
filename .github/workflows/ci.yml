@@ -8,7 +8,7 @@ on:
   push:
     branches: ['**']  # Run on push to all branches
   pull_request:
-    branches: [dev, main]  # Run on PRs to dev or main
+    branches: [main]  # Run on PRs to dev or main
 
 jobs:
   build-and-test:
