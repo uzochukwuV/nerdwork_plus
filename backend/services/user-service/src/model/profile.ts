@@ -3,7 +3,8 @@ import {
   uuid,
   text,
   timestamp,
-  json
+  json,
+  boolean
 } from 'drizzle-orm/pg-core';
 import { authUsers } from './auth.js';
 
@@ -22,6 +23,14 @@ export const userProfiles = pgTable('user_profiles', {
   timezone: text('timezone'),
   language: text('language').notNull(),
   preferences: json('preferences').notNull(),
+  
+  // Creator-specific fields
+  isCreator: boolean('is_creator').notNull().default(false),
+  creatorName: text('creator_name'), // Public creator name
+  creatorBio: text('creator_bio'), // Creator description
+  socialLinks: json('social_links'), // Twitter, Instagram, etc.
+  creatorVerified: boolean('creator_verified').notNull().default(false),
+  
   createdAt: timestamp('created_at', { mode: 'date' }).notNull().defaultNow(),
   updatedAt: timestamp('updated_at', { mode: 'date' }).notNull().defaultNow(),
 });

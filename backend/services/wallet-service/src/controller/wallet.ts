@@ -2,9 +2,17 @@ import { eq, desc, and, sql } from "drizzle-orm";
 import { db } from "../config/db.js";
 import { wallets, transactions, paymentMethods, nwtPricing } from "../model/wallet.js";
 import Stripe from 'stripe';
+import HelioService, { type CreatePaymentLinkRequest } from '../services/helio.service.js';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
   apiVersion: '2023-10-16',
+});
+
+// Initialize Helio service
+const helioService = new HelioService({
+  apiKey: process.env.HELIO_API_KEY || '',
+  baseUrl: process.env.HELIO_BASE_URL || 'https://api.hel.io',
+  cluster: process.env.HELIO_CLUSTER as 'devnet' | 'mainnet' || 'devnet',
 });
 
 // Get user wallet

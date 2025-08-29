@@ -18,6 +18,8 @@ export const wallets = pgTable('wallets', {
   nwtBalance: decimal('nwt_balance', { precision: 18, scale: 8 }).notNull().default('0.00000000'),
   totalEarned: decimal('total_earned', { precision: 18, scale: 8 }).notNull().default('0.00000000'),
   totalSpent: decimal('total_spent', { precision: 18, scale: 8 }).notNull().default('0.00000000'),
+  connectedWalletAddress: text('connected_wallet_address'), // Solana/Ethereum wallet address
+  walletType: text('wallet_type'), // 'phantom', 'solflare', 'metamask', etc.
   isActive: boolean('is_active').notNull().default(true),
   createdAt: timestamp('created_at', { mode: 'date' }).notNull().defaultNow(),
   updatedAt: timestamp('updated_at', { mode: 'date' }).notNull().defaultNow(),

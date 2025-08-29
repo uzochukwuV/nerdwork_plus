@@ -12,19 +12,32 @@ import { authUsers } from './auth.js';
 
 export const comics = pgTable('comics', {
   id: uuid('id').primaryKey().defaultRandom(),
+  creatorId: uuid('creator_id')
+    .notNull()
+    .references(() => authUsers.id, { onDelete: 'cascade' }), // Who created this comic
   title: text('title').notNull(),
   description: text('description'),
-  author: text('author').notNull(),
+  author: text('author').notNull(), // Can be different from creator (for collaborations)
   artist: text('artist'),
   publisher: text('publisher'),
   genre: text('genre').notNull(),
   coverUrl: text('cover_url'),
+  coverFileId: uuid('cover_file_id'), // Reference to file service
   totalPages: integer('total_pages').notNull().default(0),
   price: decimal('price', { precision: 10, scale: 2 }).notNull().default('0.00'),
   isFreemium: boolean('is_freemium').notNull().default(false),
   freePageCount: integer('free_page_count').notNull().default(0),
+  
+  // Publishing status
+  status: text('status').notNull().default('draft'), // 'draft', 'published', 'archived'
   publishedAt: timestamp('published_at', { mode: 'date' }),
   isActive: boolean('is_active').notNull().default(true),
+  
+  // NFT and Web3 integration
+  isNFTEligible: boolean('is_nft_eligible').notNull().default(false),
+  nftContractAddress: text('nft_contract_address'),
+  nftTokenId: text('nft_token_id'),
+  
   metadata: json('metadata'), // Additional metadata like tags, ratings, etc.
   createdAt: timestamp('created_at', { mode: 'date' }).notNull().defaultNow(),
   updatedAt: timestamp('updated_at', { mode: 'date' }).notNull().defaultNow(),
@@ -37,9 +50,16 @@ export const comicPages = pgTable('comic_pages', {
     .references(() => comics.id, { onDelete: 'cascade' }),
   pageNumber: integer('page_number').notNull(),
   imageUrl: text('image_url').notNull(),
+  fileId: uuid('file_id'), // Reference to file service
   altText: text('alt_text'),
   isPreview: boolean('is_preview').notNull().default(false), // For free preview pages
+  
+  // IPFS/NFT data (optional)
+  ipfsHash: text('ipfs_hash'),
+  ipfsUrl: text('ipfs_url'),
+  
   createdAt: timestamp('created_at', { mode: 'date' }).notNull().defaultNow(),
+  updatedAt: timestamp('updated_at', { mode: 'date' }).notNull().defaultNow(),
 });
 
 export const readingProgress = pgTable('reading_progress', {
