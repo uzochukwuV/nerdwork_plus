@@ -85,7 +85,7 @@ export default function RootLayout({
         <LoadingProvider logoSrc={"/nerdwork.svg"} logoAlt="Nerwork Logo">
           {children}
         </LoadingProvider>
-        <Toaster theme="dark" />
+        <Toaster richColors />
       </body>
     </html>
   );
