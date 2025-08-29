@@ -15,7 +15,7 @@ import {
   Wallet2,
 } from "lucide-react";
 import { Input } from "../../../../components/ui/input";
-import Coin from "@/assets/creator/coin.svg";
+import NWT from "@/assets/nwt.svg";
 import {
   Menubar,
   MenubarContent,
@@ -59,7 +59,7 @@ export default function CreatorNav() {
             Become a Creator
           </Link>
           <p className="bg-[#1D1E21] px-3 py-1.5 rounded-[20px] flex items-center gap-1">
-            100 <Image src={Coin} width={16} height={16} alt="coin" />
+            100 <Image src={NWT} width={16} height={16} alt="nwt" />
           </p>
           <button className="bg-[#545558] cursor-pointer rounded-full h-8 w-8 flex items-center justify-center">
             C
@@ -121,7 +121,7 @@ export default function CreatorNav() {
         <div className="flex items-center gap-3">
           <Search size={16} />
           <p className="bg-[#1D1E21] px-3 py-1.5 rounded-[20px] text-sm flex items-center gap-1">
-            100 <Image src={Coin} width={16} height={16} alt="coin" />
+            100 <Image src={NWT} width={16} height={16} alt="nwt" />
           </p>
           <DropdownMenu>
             <DropdownMenuTrigger className="bg-[#1D1E21] h-8 w-8 flex justify-center items-center cursor-pointer rounded-full outline-none border-none ring-0">

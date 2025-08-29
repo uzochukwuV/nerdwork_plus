@@ -1,13 +1,13 @@
 import { ChartLine, Edit2Icon, Trash } from "lucide-react";
 import React from "react";
-import { ComicProps } from "./CreatorComics";
 import {
   SheetContent,
   SheetDescription,
   SheetTitle,
 } from "@/components/ui/sheet";
+import { Comic } from "@/lib/types";
 
-const MobileComicActions = ({ comic }: { comic: ComicProps }) => {
+const MobileComicActions = ({ comic }: { comic: Comic }) => {
   console.log(comic.title);
   return (
     <>
