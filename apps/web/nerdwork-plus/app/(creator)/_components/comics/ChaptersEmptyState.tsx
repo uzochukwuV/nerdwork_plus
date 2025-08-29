@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 import { Button } from "../../../../components/ui/button";
 
-const ChaptersEmptyState = () => {
+const ChaptersEmptyState = ({ comicId }: { comicId: number }) => {
   return (
     <section className="max-w-[1300px] mx-auto font-inter border border-[#292A2E] max-md:rounded-[12.75px] rounded-[12px] flex flex-col gap-6 justify-center items-center max-md:py-4 py-16 md:mt-8 px-4">
       <div className="bg-[#1D1E21] rounded-full w-20 h-20 flex justify-center items-center">
@@ -26,7 +26,7 @@ const ChaptersEmptyState = () => {
             Bulk Upload
           </Button>
         </Link>
-        <Link href={"/creator/comics/new"} className="max-md:w-full">
+        <Link href={`/creator/comics/${comicId}/add`} className="max-md:w-full">
           <Button variant={"secondary"} className="min-w-[262px] max-md:w-full">
             <Plus />
             Add chapter

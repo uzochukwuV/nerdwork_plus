@@ -1,5 +1,11 @@
 import CreatorNav from "@/app/(creator)/_components/comics/CreatorNav";
 import SubNav from "../_components/comics/SubNav";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  metadataBase: new URL("https://www.nerdworkng.com/"),
+  title: "Creator Dashboard",
+};
 
 export default function CreatorLayout({
   children,
