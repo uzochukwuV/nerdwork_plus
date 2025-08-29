@@ -10,15 +10,17 @@ export const signup = async (req: any, res: any) => {
   const { email, password, fullName, username } = req.body;
 
   // Check if user exists
-  const existingUser = await db
-    .select()
-    .from(authUsers)
-    .where(eq(authUsers.email, email));
+  // const existingUser = await db
+  //   .select()
+  //   .from(authUsers)
+  //   .where(eq(authUsers.email, email));
 
-  if (existingUser.length > 0)
-    return res.status(400).json({ message: "User already exists" });
+  // if (existingUser.length > 0)
+  //   return res.status(400).json({ message: "User already exists" });
 
   const hashedPassword = await bcrypt.hash(password, 10);
+
+  console.log("DB URL in use:", process.env.DATABASE_URL);
 
   const [newUser] = await db
     .insert(authUsers)
@@ -35,11 +37,11 @@ export const signup = async (req: any, res: any) => {
 
   return res.status(201).json({ token, user: newUser });
 };
-console.log(jwt?.sign)
+console.log(jwt?.sign);
 export const login = async (req: any, res: any) => {
   const { email, password } = req.body;
 
-  console.log(jwt?.sign)
+  console.log(jwt?.sign);
 
   const [user] = await db
     .select()
@@ -58,9 +60,6 @@ export const login = async (req: any, res: any) => {
   return res.status(200).json({ token, user });
 };
 
-
-
-
 export const signup2 = async (req: any, res: any) => {
   const { email, password, fullName, username } = req.body;
 
@@ -71,7 +70,7 @@ export const signup2 = async (req: any, res: any) => {
     .where(eq(authUsers.email, email));
 
   if (existingUser.length > 0)
-    return res.status(400).json({ message: 'User already exists' });
+    return res.status(400).json({ message: "User already exists" });
 
   // 2. Create auth user
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -91,7 +90,7 @@ export const signup2 = async (req: any, res: any) => {
     .values({
       authUserId: newAuthUser.id,
       displayName: fullName || username,
-      language: 'en', // default language
+      language: "en", // default language
       preferences: {}, // empty JSON
     })
     .returning();
@@ -101,13 +100,17 @@ export const signup2 = async (req: any, res: any) => {
     userProfileId: newProfile.id,
     nwtBalance: 0,
     nwtLockedBalance: 0,
-    kycStatus: 'none',
+    kycStatus: "none",
   });
 
   // 5. Sign JWT token
-  const token = jwt.sign({ id: newAuthUser.id, email: newAuthUser.email }, JWT_SECRET, {
-    expiresIn: '7d',
-  });
+  const token = jwt.sign(
+    { id: newAuthUser.id, email: newAuthUser.email },
+    JWT_SECRET,
+    {
+      expiresIn: "7d",
+    }
+  );
 
   return res.status(201).json({
     token,

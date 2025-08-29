@@ -1,7 +1,27 @@
 import { eq } from "drizzle-orm";
 import { db } from "../config/db";
 import { userWallets } from "../model/wallet";
-import { debitWallet } from "../services/wallet.service";
+import { creditWallet, debitWallet } from "../services/wallet.service";
+
+//create wallet controller
+export async function creditWalletController(req, res) {
+  try {
+    const userId = req.user.id; // assuming `authenticate` middleware attaches user
+    const { amount } = req.body;
+
+    if (!amount || amount <= 0) {
+      return res.status(400).json({ error: "Invalid amount" });
+    }
+
+    const result = await creditWallet(userId, amount);
+    return res.status(200).json(result);
+  } catch (error: any) {
+    console.error("Error crediting wallet:", error);
+    return res
+      .status(500)
+      .json({ error: error.message || "Internal server error" });
+  }
+}
 
 // get wallet balance by jwt
 export const getWalletBalance = async (req, res) => {

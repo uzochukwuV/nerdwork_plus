@@ -1,5 +1,9 @@
 import request from "supertest";
+<<<<<<< HEAD:backend/_tests_/auth.test.ts
+import { app } from "../src/index";
+=======
 import { app } from "../../src/index.js";
+>>>>>>> main:backend/_tests_/auth/auth.test.ts
 import { describe, expect, it } from "@jest/globals";
 
 describe("Auth Endpoints", () => {

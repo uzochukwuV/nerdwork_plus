@@ -4,18 +4,27 @@ const options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "My API",
+      title: "Comic App API",
       version: "1.0.0",
-      description: "API documentation for my Comic app",
+      description: "API documentation for Comic App",
     },
-    servers: [
+    servers: [{ url: "http://localhost:5000" }],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
+    },
+    security: [
       {
-        url: "http://localhost:5000",
+        bearerAuth: [],
       },
     ],
   },
-  apis: ['./src/routes/*.ts'], // Path to the API files
-  
+  apis: ["./src/routes/*.ts"],
 };
 
 export const swaggerSpec = swaggerJSDoc(options);
