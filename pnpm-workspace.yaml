@@ -1,5 +1,13 @@
 packages:
-  - 'apps/web/*'
-  - 'services/*'
-  - 'libs/*'
-  - 'infra/*'
+  - apps/web/*
+  - services/*
+  - libs/*
+  - infra
+
+onlyBuiltDependencies:
+  - '@scarf/scarf'
+  - '@tailwindcss/oxide'
+  - bcrypt
+  - esbuild
+  - sharp
+  - unrs-resolver

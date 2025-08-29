@@ -6,12 +6,23 @@ import Card2 from "@/assets/mask.png";
 import Card3 from "@/assets/arrow.png";
 import Card4 from "@/assets/woman.png";
 import ComicCon1 from "@/assets/comic-con1.png";
+import Link from "next/link";
 
 export default function Community() {
+  const communities = [
+    "Pop Culture",
+    "Video Games",
+    "Comics",
+    "Theatre",
+    "Anime",
+    "Books",
+    "Movies",
+    "Music",
+  ];
   return (
     <section
       data-testid="community"
-      className="z-10 flex items-center max-w-[1130px] font-inter mx-auto text-white pt-12 pb-28 px-7"
+      className="z-10 flex items-center justify-center max-w-[1130px] font-inter mx-auto text-white pt-12 pb-28 px-7"
     >
       <aside className="lg:w-2/5 max-lg::w-3/5 flex flex-col max-lg:gap-4 gap-6">
         <h2 className="font-obostar text-[40px] max-md:text-2xl">
@@ -24,26 +35,21 @@ export default function Community() {
         <p className="font-semibold max-md:text-sm">
           No matter your passion, there&apos;s a community for you.
         </p>
-        <div className="flex gap-4 items-center">
-          <p className="text-[28px] max-md:text-[20px] font-medium text-[#9C9C9C] md:text-[#EDEBEB]">
-            Pop Culture
-          </p>
-          <Button
-            variant={"primary"}
-            className="max-md:hidden font-inter rounded-[12px]"
-          >
-            Join Community
-          </Button>
-        </div>
-        <ul className="text-[#9C9C9C] text-[28px] max-md:text-xl flex flex-col gap-6 font-medium">
-          <li>Video Games</li>
-          <li>Comics</li>
-          <li>Theatre</li>
-          <li>Anime</li>
-          <li>Books</li>
-          <li>Movies</li>
-          <li>Music</li>
-        </ul>
+        {communities.map((community, index) => (
+          <div key={index} className="group flex gap-4 items-center">
+            <p className="text-2xl max-md:text-lg font-medium cursor-pointer text-[#9C9C9C] md:hover:text-[#EDEBEB]">
+              {community}
+            </p>
+            <Link href={"/communities"}>
+              <Button
+                variant={"primary"}
+                className="max-md:hidden font-inter rounded-[12px] opacity-0 group-hover:opacity-100 transition duration-200 ease-in"
+              >
+                Join Community
+              </Button>
+            </Link>
+          </div>
+        ))}
       </aside>
 
       {/* Desktop image gallery */}
