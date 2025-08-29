@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/sheet";
 
 const MobileComicActions = ({ comic }: { comic: ComicProps }) => {
-  console.log(comic);
+  console.log(comic.title);
   return (
     <>
       <SheetContent
