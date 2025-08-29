@@ -1,7 +1,6 @@
 import request from "supertest";
 import { app } from "../src/index";
-import {describe, expect, it, test} from '@jest/globals';
-
+import { describe, expect, it } from "@jest/globals";
 
 describe("Auth Endpoints", () => {
   it("should sign up a new user", async () => {
