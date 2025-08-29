@@ -12,61 +12,79 @@ const faqs = [
     id: 1,
     question: "What is Nerdwork all about?",
     answer:
-      "Nerdwork is a community of creatives, enthusiasts and fun oving people who are looking to celebrate art, pop culture, and entertainment. The comic convention will feature panels, exhibits, cosplay, games, and guest appearances from creators and celebrities.",
+      "Nerdwork is a creative entertainment studio and thriving fan community, best known for its annual Nerdwork Comic-Con. Nerdwork is an intersection of storytelling, tech, culture and fandom. From cosplay Showcases and gaming tournaments to animation screenings and tech exhibitions. Nerdwork celebrates creativity in all forms. We are not just an event, we're the home for fans.",
   },
   {
     id: 2,
     question: "Do I need to be a weeb/nerd to attend a comic con?",
     answer:
-      "Nerdwork is a community of creatives, enthusiasts and fun oving people who are looking to celebrate art, pop culture, and entertainment. The comic convention will feature panels, exhibits, cosplay, games, and guest appearances from creators and celebrities.",
+      "Not at all! Comic-Con is open to everyone, whether you're deep into fandom or just curious. Come as you are and enjoy the vibe.",
   },
   {
     id: 3,
     question: "Do I have to wear a costume?",
     answer:
-      "Nerdwork is a community of creatives, enthusiasts and fun oving people who are looking to celebrate art, pop culture, and entertainment. The comic convention will feature panels, exhibits, cosplay, games, and guest appearances from creators and celebrities.",
+      "Nope! While we love seeing amazing cosplays, costumes are totally optional. Dress however you feel comfortable.",
   },
   {
     id: 4,
-    question: "Can I buy tickets at the door",
+    question: "Can I buy tickets at the door?",
     answer:
-      "Nerdwork is a community of creatives, enthusiasts and fun oving people who are looking to celebrate art, pop culture, and entertainment. The comic convention will feature panels, exhibits, cosplay, games, and guest appearances from creators and celebrities.",
+      "Absolutely! Tickets for Nerdwork Comic-Con will be available at the venue. However please note that Early Bird or Clan tickets will not be available at the door, only Regular tickets.",
   },
   {
     id: 5,
     question: "What activities can I expect at a comic con?",
-    answer:
-      "Nerdwork is a community of creatives, enthusiasts and fun oving people who are looking to celebrate art, pop culture, and entertainment. The comic convention will feature panels, exhibits, cosplay, games, and guest appearances from creators and celebrities.",
+    intro:
+      "Nerdwork Comic-Con is packed with diverse and exciting experiences. You can look forward to;",
+    answer: [
+      "Live performances",
+      "Cosplay Showcase",
+      "Gaming tournaments",
+      "Mini Sidequest games",
+      "Tabletop games",
+      "Vendor exhibitions",
+      "Anime Swap",
+      "Meet & Greets",
+      "Panel Sessions",
+      "After Party vibes",
+    ],
+    outro: "Each year comes with unique twists!",
   },
   {
     id: 6,
     question: "Are there age restrictions for attendees?",
     answer:
-      "Nerdwork is a community of creatives, enthusiasts and fun oving people who are looking to celebrate art, pop culture, and entertainment. The comic convention will feature panels, exhibits, cosplay, games, and guest appearances from creators and celebrities.",
+      "Minors under the age of 12 must be accompanied by an adult or guardian at all times.",
   },
   {
     id: 7,
     question: "Can I meet my favorite creators or celebrities?",
     answer:
-      "Nerdwork is a community of creatives, enthusiasts and fun oving people who are looking to celebrate art, pop culture, and entertainment. The comic convention will feature panels, exhibits, cosplay, games, and guest appearances from creators and celebrities.",
+      "Yes! Creators and special guests are announced ahead of time BUT don't be surprised if you spot an unannounced celeb walking around too.",
   },
   {
     id: 8,
     question: "Will there be merchandise available for purchase?",
     answer:
-      "Nerdwork is a community of creatives, enthusiasts and fun oving people who are looking to celebrate art, pop culture, and entertainment. The comic convention will feature panels, exhibits, cosplay, games, and guest appearances from creators and celebrities.",
+      "Absolutely! You'll find a lot of fandom inspired Merch, from art prints and collectibles to apparels and handmade items. Make sure to explore our Vendor section!",
   },
   {
     id: 9,
     question: "Are pets allowed at the event?",
     answer:
-      "Nerdwork is a community of creatives, enthusiasts and fun oving people who are looking to celebrate art, pop culture, and entertainment. The comic convention will feature panels, exhibits, cosplay, games, and guest appearances from creators and celebrities.",
+      "Unfortunately, no pets or animals are not allowed at Comic-Con (with exception of service animals).",
   },
   {
     id: 10,
     question: "What are the health and safety guidelines for attendees?",
-    answer:
-      "Nerdwork is a community of creatives, enthusiasts and fun oving people who are looking to celebrate art, pop culture, and entertainment. The comic convention will feature panels, exhibits, cosplay, games, and guest appearances from creators and celebrities.",
+    answer: [
+      "Security checks will be conducted at all entrances. Please cooperate with the team.",
+      "No weapons or sharp objects (real or replica) are allowed. Cosplay props will be inspected.",
+      "If you're feeling unwell or showing symptoms of illness, we kindly advise that you stay home.",
+      "Minors under 13 must be accompanied by an adult or guardian.",
+      "Use of narcotic, unprescribed drugs, edibles, cigarettes, vapes etc. are prohibited.",
+    ],
   },
 ];
 
@@ -100,7 +118,23 @@ export default function FAQ() {
               <AccordionTrigger className="font-semibold">
                 {faq.question}
               </AccordionTrigger>
-              <AccordionContent>{faq.answer}</AccordionContent>
+              <AccordionContent className="whitespace-pre-line">
+                {typeof faq.answer === "string" ? (
+                  <div>{faq.answer}</div>
+                ) : (
+                  <>
+                    <p className="mb-2">{faq.intro}</p>
+                    <ul className="list-disc pl-6 list-outside">
+                      {faq.answer.map((point, index) => (
+                        <li className="mb-1" key={index}>
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="mt-2">{faq.outro}</p>
+                  </>
+                )}
+              </AccordionContent>
             </AccordionItem>
           ))}
         </Accordion>

@@ -1,0 +1,34 @@
+
+> nerdwork-plus@0.1.0 build C:\Users\georg\Documents\work\Saas-Products\nerdwork_plus\apps\web\nerdwork-plus
+> next build
+
+   ▲ Next.js 15.3.3
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 2000ms
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/8) ...
+   Generating static pages (2/8) 
+   Generating static pages (4/8) 
+   Generating static pages (6/8) 
+ ✓ Generating static pages (8/8)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                    5.91 kB         130 kB
+├ ○ /_not-found                            977 B         103 kB
+├ ○ /communities                         3.57 kB         128 kB
+├ ○ /events                              7.56 kB         132 kB
+├ ƒ /events/[eventId]                     6.5 kB         131 kB
+└ ○ /nerdwork+                           3.72 kB         128 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/620-eabf33edb837b7aa.js       46.5 kB
+  ├ chunks/69c23a04-e03072e0b6b476eb.js  53.2 kB
+  └ other shared chunks (total)          1.98 kB
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

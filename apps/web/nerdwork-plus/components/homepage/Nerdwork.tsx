@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 const features = [
   {
@@ -31,9 +32,9 @@ const features = [
 export default function Nerdwork() {
   return (
     <section data-testid="nerdwork" className="relative min-h-screen w-full">
-      <div className="absolute inset-0 bg-[url('@/assets/gallery.png')] bg-cover md:bg-center bg-no-repeat z-0" />
+      <div className="absolute inset-0 bg-[url('/gallery.png')] bg-cover md:bg-center bg-no-repeat z-0" />
       <div className="absolute inset-0 bg-[linear-gradient(180deg,#0D0D0D_0%,rgba(13,13,13,0)_40%,#0D0D0D_66%)] z-10" />
-      <div className="relative z-20 text-white max-w-[1130px] h-screen mx-auto flex flex-col justify-between max-lg:gap-64 gap-6 font-inter py-5 px-7 text-center">
+      <div className="relative z-20 text-white max-w-[1130px] min-h-screen mx-auto flex flex-col justify-between max-lg:gap-64 gap-6 font-inter py-5 px-7 text-center">
         <div className="flex flex-col gap-6">
           <h2 className="font-obostar text-[40px] max-md:text-2xl">
             Redefining
@@ -46,8 +47,12 @@ export default function Nerdwork() {
             Step into a universe of African comics like never before.
           </p>
           <div className="flex gap-4 max-md:w-full justify-center">
-            <Button variant={"primary"}>Go to Nerdwork+</Button>
-            <Button>Learn More</Button>
+            <Link href={"/nerdwork+"}>
+              <Button variant={"primary"}>Go to Nerdwork+</Button>
+            </Link>
+            <Link href={"/nerdwork+"}>
+              <Button>Learn More</Button>
+            </Link>
           </div>
         </div>
         <div>
