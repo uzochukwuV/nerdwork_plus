@@ -3,6 +3,8 @@ name: CI - Build and Test
 permissions:
   contents: write
   issues: write
+  security-events: write
+  pull-requests: write
 
 on:
   push:
