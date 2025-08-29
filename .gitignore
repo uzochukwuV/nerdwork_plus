@@ -3,5 +3,5 @@ node_modules/
 dist/
 
 # env files
-.env.example
+.env
 .env.local  
