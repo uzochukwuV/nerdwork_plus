@@ -21,6 +21,7 @@ export const payments = pgTable('payments', {
   currency: text('currency').notNull(),
   nwtAmount: text('nwt_amount'),
   exchangeRate: text('exchange_rate'),
+  webhookId: text('webhook_id'), // Helio webhook ID
   paymentIntentId: text('payment_intent_id'),
   blockchainTxHash: text('blockchain_tx_hash'),
   status: text('status').notNull(), // 'pending', 'processing', etc.

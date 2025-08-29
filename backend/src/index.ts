@@ -2,8 +2,14 @@ import { globalErrorHandler, globalNotFoundHandler } from "./middleware/common";
 import type { Request, Response } from "express";
 import { app } from "./server";
 import authRoutes from "./routes/auth.routes";
+import paymentRoutes from "./routes/payment.routes";
+import { authenticate } from "./middleware/common/auth";
+import nftRoutes from "./routes/nft.routes";
 
 app.use("/auth", authRoutes);
+app.use("/payment", authenticate ,paymentRoutes);
+app.use("/nft", authenticate, nftRoutes)
+
 
 const PORT = 5000;
 /**
@@ -22,6 +28,7 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use(globalNotFoundHandler);
 app.use(globalErrorHandler);
+
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
