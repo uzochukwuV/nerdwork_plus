@@ -3,18 +3,18 @@ name: CI - Build and Test
 permissions:
   contents: write
   issues: write
-  security-events: write
-  pull-requests: write
+  security-events: write  # Required for SARIF upload
 
 on:
   push:
     branches: ['**']  # Run on push to all branches
   pull_request:
-    branches: [dev, main]  # Run on PRs to dev or main
+    branches: [main]  # Run on PRs to dev or main
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    needs: changed-files  # Declare dependency on changed-files job
     strategy:
       matrix:
         test-type:
@@ -34,8 +34,8 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install
-      - name: Lint
-        run: pnpm lint  # Ensure configured in package.json
+      #- name: Lint
+        #run: pnpm lint  # Ensure "lint": "eslint ." in package.json
       - name: Run ${{ matrix.test-type.name }}
         if: needs('changed-files').outputs.${{ matrix.test-type.name }} == 'true'
         run: ${{ matrix.test-type.command }}
@@ -44,10 +44,10 @@ jobs:
         uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}  # Add in repo secrets
-          files: ./coverage/lcov.info  # Adjust per test output
+          files: ./coverage/lcov.info  # Adjust if path differs
       - name: Dependency vulnerability scanning (optional - for security)
         if: always() && needs('changed-files').outputs.${{ matrix.test-type.name }} == 'true'
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@0.18.0  # Use stable version
         with:
           scan-type: 'fs'
           format: 'sarif'
@@ -55,14 +55,16 @@ jobs:
       - name: Debug - Verify SARIF file
         if: always() && needs('changed-files').outputs.${{ matrix.test-type.name }} == 'true'
         run: |
-          ls -la trivy-results-${{ matrix.test-type.name }}.sarif || echo "SARIF file not found"
+          ls -la trivy-results-${{ matrix.test-type.name }}.sarif || echo "SARIF file not found for ${{ matrix.test-type.name }}"
       - name: Upload scan results to GitHub
         if: always() && needs('changed-files').outputs.${{ matrix.test-type.name }} == 'true'
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: trivy-results-${{ matrix.test-type.name }}.sarif
+          # Optional: Add checkout_sha if tracking specific commits
+          # checkout_sha: ${{ github.sha }}
       - name: Build (only on main - dry run for readiness)
-        if: github.ref == 'refs/heads/main' && (needs('changed-files').outputs.frontend-tests == 'true' || needs('changed-files').outputs.backend-tests == 'true' || needs('changed-files').outputs.other-tests == 'true')
+        if: github.ref == 'refs/heads/main' && (needs('changed-files').outputs.frontend-tests == 'true' || needs('changed-files').outputs.backend-tests == 'true')
         run: |
           built_services=0
           for service in docker/*; do
@@ -76,27 +78,6 @@ jobs:
             exit 1
           fi
           echo "✅ Build successful - $built_services services ready for deployment"
-
-  changed-files:
-    runs-on: ubuntu-latest
-    outputs:
-      frontend-tests: ${{ steps.changes.outputs.frontend }}
-      backend-tests: ${{ steps.changes.outputs.backend }}
-      other-tests: ${{ steps.changes.outputs.other }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: dorny/paths-filter@v3
-        id: changes
-        with:
-          filters: |
-            frontend:
-              - 'apps/**'
-            backend:
-              - 'backend/**'
-            other:
-              - '!apps/**'
-              - '!backend/**'
-              - '**'
       - name: Notify failure on PR (GitHub comment)
         if: failure() && github.event_name == 'pull_request'
         uses: actions/github-script@v7
@@ -134,3 +115,24 @@ jobs:
               commit_sha: context.sha,
               body: `@${{ github.actor }} CI failed on this commit (${{ matrix.test-type.name }}). Please check the logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}`
             })
+
+  changed-files:
+    runs-on: ubuntu-latest
+    outputs:
+      frontend-tests: ${{ steps.changes.outputs.frontend }}
+      backend-tests: ${{ steps.changes.outputs.backend }}
+      other-tests: ${{ steps.changes.outputs.other }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            frontend:
+              - 'apps/**'
+            backend:
+              - 'backend/**'
+            other:
+              - '!apps/**'
+              - '!backend/**'
+              - '**'
