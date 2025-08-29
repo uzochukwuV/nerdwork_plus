@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { useForm, ControllerRenderProps } from "react-hook-form";
-import { Image as ImageIcon, Plus, X, Trash, GripVertical } from "lucide-react";
+import { ControllerRenderProps } from "react-hook-form";
+import { Image as ImageIcon, Trash, GripVertical } from "lucide-react";
 import {
   DndContext,
   closestCenter,
@@ -10,6 +10,7 @@ import {
   PointerSensor,
   useSensor,
   useSensors,
+  DragEndEvent,
 } from "@dnd-kit/core";
 import {
   SortableContext,
@@ -22,6 +23,9 @@ import { CSS } from "@dnd-kit/utilities";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { chapterSchema } from "@/lib/schema";
+import z from "zod";
+import Image from "next/image";
 
 // Define a type for the file with a preview URL
 interface FileWithPreview extends File {
@@ -30,7 +34,7 @@ interface FileWithPreview extends File {
 
 // Props for the component to integrate with React Hook Form
 interface MultiFileUploadProps {
-  field: ControllerRenderProps<any, any>;
+  field: ControllerRenderProps<z.infer<typeof chapterSchema>, "chapterPages">;
 }
 
 // The individual sortable file item
@@ -55,8 +59,10 @@ const SortableFileItem = ({
       style={style}
       className="relative w-full aspect-[2/3] group overflow-hidden border-gray-700"
     >
-      <img
+      <Image
         src={file.preview}
+        width={187}
+        height={281}
         alt={`Preview ${file.name}`}
         className="w-full h-full object-cover"
       />
@@ -133,10 +139,10 @@ export function MultiFileUpload({ field }: MultiFileUploadProps) {
     field.onChange(updatedFiles);
   };
 
-  const handleDragEnd = (event: any) => {
+  const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
 
-    if (active.id !== over.id) {
+    if (over && active.id !== over.id) {
       const oldIndex = files.findIndex(
         (file) => file.name + file.lastModified === active.id
       );
@@ -144,8 +150,10 @@ export function MultiFileUpload({ field }: MultiFileUploadProps) {
         (file) => file.name + file.lastModified === over.id
       );
 
-      const newOrder = arrayMove(files, oldIndex, newIndex);
-      field.onChange(newOrder);
+      if (oldIndex !== -1 && newIndex !== -1) {
+        const newOrder = arrayMove(files, oldIndex, newIndex);
+        field.onChange(newOrder);
+      }
     }
   };
 
