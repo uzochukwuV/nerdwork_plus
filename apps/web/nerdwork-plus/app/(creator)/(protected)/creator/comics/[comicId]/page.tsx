@@ -66,8 +66,10 @@ const ComicDetailsPage = ({
             </h3>
           </div>
           <div className="flex gap-2 my-8 max-md:w-full max-md:justify-between">
-            <Button variant={"secondary"} className="max-md:w-4/5">
-              <Plus /> Add Chapter
+            <Button asChild variant={"secondary"} className="max-md:w-4/5">
+              <Link href={`/creator/comics/${comicId}/add`}>
+                <Plus /> Add Chapter
+              </Link>
             </Button>
             {
               <Button className="max-lg:hidden">
@@ -129,7 +131,10 @@ const ComicDetailsPage = ({
         )}
       </section>
       <hr className="!text-[#292A2E] max-md:hidden h-0 border-t border-[#292A2E]" />
-
+      {comic && chapters == 0 ? (
+        <ChaptersEmptyState comicId={comic?.id} />
+      ) : (
+        <section></section>
       {chapters.length == 0 ? (
         <ChaptersEmptyState />
       ) : (
