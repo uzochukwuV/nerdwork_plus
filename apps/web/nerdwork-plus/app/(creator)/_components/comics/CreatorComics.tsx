@@ -7,18 +7,9 @@ import ComicActions from "./DesktopComicActions";
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 import MobileComicActions from "./MobileComicActions";
 import Link from "next/link";
+import { Comic } from "@/lib/types";
 
-export interface ComicProps {
-  id: number;
-  image: string;
-  title: string;
-  short_description: string;
-  status: "upcoming" | "draft" | "scheduled" | "published";
-  chapters: number;
-  last_updated: string;
-}
-
-const CreatorComics = ({ data }: { data: ComicProps[] }) => {
+const CreatorComics = ({ data }: { data: Comic[] }) => {
   return (
     <section className="font-inter text-white mb-10 max-md:mt-5 max-2xl:mx-5">
       <section className="grid grid-cols-3 lg:grid-cols-4 gap-3 max-md:hidden">

@@ -7,6 +7,10 @@ import {
   json
 } from 'drizzle-orm/pg-core';
 import { authUsers } from './auth';
+import { relations } from 'drizzle-orm';
+
+import { userWallets } from './wallet';
+
 
 export const userProfiles = pgTable('user_profiles', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -53,3 +57,18 @@ export const userProfiles = pgTable('user_profiles', {
 
 export type InsertUserProfile = typeof userProfiles.$inferInsert;
 export type SelectUserProfile = typeof userProfiles.$inferSelect;
+
+
+
+export const userProfilesRelations = relations(userProfiles, ({ one }) => ({
+  wallet: one(userWallets, {
+    fields: [userProfiles.id],
+    references: [userWallets.userProfileId],
+  }),
+  authUser: one(authUsers, {
+    fields: [userProfiles.authUserId],
+    references: [authUsers.id],
+  }),
+}));
+
+

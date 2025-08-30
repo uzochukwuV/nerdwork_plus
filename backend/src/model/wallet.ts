@@ -7,17 +7,23 @@ import {
   integer,
   json
 } from 'drizzle-orm/pg-core';
+import { userProfiles } from './profile';
+import { relations } from 'drizzle-orm';
+
 
 export const userWallets = pgTable('user_wallets', {
   id: uuid('id').primaryKey().defaultRandom(),
-  userProfileId: uuid('user_profile_id').notNull(),
-  nwtBalance: text('nwt_balance').notNull(),
-  nwtLockedBalance: text('nwt_locked_balance').notNull(),
+  userProfileId: uuid('user_profile_id')
+    .notNull()
+    .unique() // ✅ Enforce 1:1 by making this unique
+    .references(() => userProfiles.id, { onDelete: 'cascade' }),
+  nwtBalance: integer('nwt_balance').notNull(),
+  nwtLockedBalance: integer('nwt_locked_balance').notNull(),
   primaryWalletAddress: text('primary_wallet_address'),
   kycStatus: text('kyc_status').notNull(), // 'none' | 'pending' | 'verified' | 'rejected'
   kycLevel: integer('kyc_level').notNull().default(0),
-  spendingLimitDaily: text('spending_limit_daily'),
-  spendingLimitMonthly: text('spending_limit_monthly'),
+  spendingLimitDaily: integer('spending_limit_daily'),
+  spendingLimitMonthly: integer('spending_limit_monthly'),
   createdAt: timestamp('created_at', { mode: 'date' }).notNull().defaultNow(),
   updatedAt: timestamp('updated_at', { mode: 'date' }).notNull().defaultNow(),
 });
@@ -44,3 +50,14 @@ export type SelectUserWallet = typeof userWallets.$inferSelect;
 
 export type InsertWalletAddress = typeof walletAddresses.$inferInsert;
 export type SelectWalletAddress = typeof walletAddresses.$inferSelect;
+
+
+
+
+
+export const userWalletsRelations = relations(userWallets, ({ one }) => ({
+  userProfile: one(userProfiles, {
+    fields: [userWallets.userProfileId],
+    references: [userProfiles.id],
+  }),
+}));

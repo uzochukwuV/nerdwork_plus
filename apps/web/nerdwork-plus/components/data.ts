@@ -1,5 +1,5 @@
 import { Transaction } from "@/app/(creator)/(protected)/creator/wallet/columns";
-import { ComicProps } from "@/app/(creator)/_components/comics/CreatorComics";
+import { Chapter, Comic } from "@/lib/types";
 
 export const eventsData = [
   {
@@ -33,7 +33,7 @@ export const eventsData = [
   },
 ];
 
-export const comicData: ComicProps[] = [
+export const comicData: Comic[] = [
   {
     id: 1,
     image: "/events/anime-con.jpg",
@@ -220,5 +220,80 @@ export const creatorTransactions: Transaction[] = [
     description: "m@example.com",
     amount: 50,
     date: "08/04/25",
+  },
+];
+
+export const chapterData: Chapter[] = [
+  {
+    id: 1,
+    image: "/events/anime-con.jpg",
+    title: "Mystic Chronicles: The Awakening",
+    description: "Just a short description",
+    status: "draft",
+    pages: 3,
+    date: "24/07/2024",
+  },
+  {
+    id: 2,
+    image: "/events/anime-con.jpg",
+    title: "Mystic Chronicles: The Awakening",
+    description: "Just a short description",
+    status: "draft",
+    pages: 3,
+    date: "24/07/2024",
+  },
+  {
+    id: 3,
+    image: "/events/anime-con.jpg",
+    title: "Mystic Chronicles: The Awakening",
+    description: "Just a short description",
+    status: "published",
+    pages: 3,
+    date: "24/07/2024",
+  },
+  {
+    id: 4,
+    image: "/events/anime-con.jpg",
+    title: "Mystic Chronicles: The Awakening",
+    description: "Just a short description",
+    status: "published",
+    pages: 3,
+    date: "24/07/2024",
+  },
+  {
+    id: 5,
+    image: "/events/anime-con.jpg",
+    title: "Mystic Chronicles: The Awakening",
+    description: "Just a short description",
+    status: "scheduled",
+    pages: 3,
+    date: "24/07/2024",
+  },
+  {
+    id: 6,
+    image: "/events/anime-con.jpg",
+    title: "Mystic Chronicles: The Awakening",
+    description: "Just a short description",
+    status: "scheduled",
+    pages: 3,
+    date: "24/07/2024",
+  },
+  {
+    id: 7,
+    image: "/events/anime-con.jpg",
+    title: "Mystic Chronicles: The Awakening",
+    description: "Just a short description",
+    status: "scheduled",
+    pages: 3,
+    date: "24/07/2024",
+  },
+  {
+    id: 8,
+    image: "/events/anime-con.jpg",
+    title: "Mystic Chronicles: The Awakening",
+    description: "Just a short description",
+    status: "published",
+    pages: 3,
+    date: "24/07/2024",
   },
 ];
