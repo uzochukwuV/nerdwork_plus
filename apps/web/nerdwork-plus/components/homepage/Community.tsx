@@ -22,7 +22,7 @@ export default function Community() {
   return (
     <section
       data-testid="community"
-      className="z-10 flex items-center max-w-[1130px] font-inter mx-auto text-white pt-12 pb-28 px-7"
+      className="z-10 flex items-center justify-center max-w-[1130px] font-inter mx-auto text-white pt-12 pb-28 px-7"
     >
       <aside className="lg:w-2/5 max-lg::w-3/5 flex flex-col max-lg:gap-4 gap-6">
         <h2 className="font-obostar text-[40px] max-md:text-2xl">

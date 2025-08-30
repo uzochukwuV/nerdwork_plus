@@ -2,8 +2,15 @@ import { globalErrorHandler, globalNotFoundHandler } from "./middleware/common";
 import type { Request, Response } from "express";
 import { app } from "./server";
 import authRoutes from "./routes/auth.routes";
+import paymentRoutes from "./routes/payment.routes";
+import { authenticate } from "./middleware/common/auth";
+import nftRoutes from "./routes/nft.routes";
+import walletRoutes from "./routes/wallet.routes";
 
 app.use("/auth", authRoutes);
+app.use("/payment", authenticate, paymentRoutes);
+app.use("/nft", authenticate, nftRoutes);
+app.use("/wallet", authenticate, walletRoutes);
 
 const PORT = 5000;
 /**

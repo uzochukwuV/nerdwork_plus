@@ -1,4 +1,5 @@
-import { ComicProps } from "@/app/(creator)/_components/comics/CreatorComics";
+import { Transaction } from "@/app/(creator)/(protected)/creator/wallet/columns";
+import { Chapter, Comic } from "@/lib/types";
 
 export const eventsData = [
   {
@@ -32,7 +33,7 @@ export const eventsData = [
   },
 ];
 
-export const comicData: ComicProps[] = [
+export const comicData: Comic[] = [
   {
     id: 1,
     image: "/events/anime-con.jpg",
@@ -104,5 +105,195 @@ export const comicData: ComicProps[] = [
     status: "upcoming",
     chapters: 3,
     last_updated: "24/07/2024",
+  },
+];
+
+export const creatorTransactions: Transaction[] = [
+  {
+    id: "1",
+    type: "earning",
+    status: "pending",
+    description: "m@example.com",
+    amount: 50,
+    date: "08/04/25",
+  },
+  {
+    id: "2",
+    type: "earning",
+    status: "completed",
+    description: "m@example.com",
+    amount: 50,
+    date: "08/04/25",
+  },
+  {
+    id: "3",
+    type: "earning",
+    status: "pending",
+    description: "m@example.com",
+    amount: 50,
+    date: "08/04/25",
+  },
+  {
+    id: "4",
+    type: "withdrawal",
+    status: "pending",
+    description: "m@example.com",
+    amount: 50,
+    date: "08/04/25",
+  },
+  {
+    id: "5",
+    type: "withdrawal",
+    status: "pending",
+    description: "m@example.com",
+    amount: 50,
+    date: "08/04/25",
+  },
+  {
+    id: "6",
+    type: "gift",
+    status: "completed",
+    description: "m@example.com",
+    amount: 50,
+    date: "08/04/25",
+  },
+  {
+    id: "7",
+    type: "earning",
+    status: "pending",
+    description: "m@example.com",
+    amount: 50,
+    date: "08/04/25",
+  },
+  {
+    id: "8",
+    type: "purchase",
+    status: "pending",
+    description: "m@example.com",
+    amount: 50,
+    date: "08/04/25",
+  },
+  {
+    id: "9",
+    type: "earning",
+    status: "pending",
+    description: "m@example.com",
+    amount: 50,
+    date: "08/04/25",
+  },
+  {
+    id: "10",
+    type: "withdrawal",
+    status: "pending",
+    description: "m@example.com",
+    amount: 50,
+    date: "08/04/25",
+  },
+  {
+    id: "11",
+    type: "withdrawal",
+    status: "pending",
+    description: "m@example.com",
+    amount: 50,
+    date: "08/04/25",
+  },
+  {
+    id: "12",
+    type: "withdrawal",
+    status: "pending",
+    description: "m@example.com",
+    amount: 50,
+    date: "08/04/25",
+  },
+  {
+    id: "13",
+    type: "withdrawal",
+    status: "pending",
+    description: "m@example.com",
+    amount: 50,
+    date: "08/04/25",
+  },
+  {
+    id: "14",
+    type: "withdrawal",
+    status: "pending",
+    description: "m@example.com",
+    amount: 50,
+    date: "08/04/25",
+  },
+];
+
+export const chapterData: Chapter[] = [
+  {
+    id: 1,
+    image: "/events/anime-con.jpg",
+    title: "Mystic Chronicles: The Awakening",
+    description: "Just a short description",
+    status: "draft",
+    pages: 3,
+    date: "24/07/2024",
+  },
+  {
+    id: 2,
+    image: "/events/anime-con.jpg",
+    title: "Mystic Chronicles: The Awakening",
+    description: "Just a short description",
+    status: "draft",
+    pages: 3,
+    date: "24/07/2024",
+  },
+  {
+    id: 3,
+    image: "/events/anime-con.jpg",
+    title: "Mystic Chronicles: The Awakening",
+    description: "Just a short description",
+    status: "published",
+    pages: 3,
+    date: "24/07/2024",
+  },
+  {
+    id: 4,
+    image: "/events/anime-con.jpg",
+    title: "Mystic Chronicles: The Awakening",
+    description: "Just a short description",
+    status: "published",
+    pages: 3,
+    date: "24/07/2024",
+  },
+  {
+    id: 5,
+    image: "/events/anime-con.jpg",
+    title: "Mystic Chronicles: The Awakening",
+    description: "Just a short description",
+    status: "scheduled",
+    pages: 3,
+    date: "24/07/2024",
+  },
+  {
+    id: 6,
+    image: "/events/anime-con.jpg",
+    title: "Mystic Chronicles: The Awakening",
+    description: "Just a short description",
+    status: "scheduled",
+    pages: 3,
+    date: "24/07/2024",
+  },
+  {
+    id: 7,
+    image: "/events/anime-con.jpg",
+    title: "Mystic Chronicles: The Awakening",
+    description: "Just a short description",
+    status: "scheduled",
+    pages: 3,
+    date: "24/07/2024",
+  },
+  {
+    id: 8,
+    image: "/events/anime-con.jpg",
+    title: "Mystic Chronicles: The Awakening",
+    description: "Just a short description",
+    status: "published",
+    pages: 3,
+    date: "24/07/2024",
   },
 ];

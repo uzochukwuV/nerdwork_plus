@@ -4,7 +4,6 @@ import Image from "next/image";
 import Navbar from "@/components/homepage/Navbar";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import Footer from "@/components/homepage/Footer";
 
 const NotFoundPage = () => {
   return (
@@ -23,8 +22,8 @@ const NotFoundPage = () => {
           <p className="font-semibold text-2xl mb-3">This Page is Hiding!</p>
           <p className="font-light">
             Looks like this page has gone rogue and is off on its own adventure.
-            Maybe it's battling a supervillain or scouting for new heroes. While
-            we get it back on the grid, here are some options:
+            Maybe it&apos;s battling a supervillain or scouting for new heroes.
+            While we get it back on the grid, here are some options:
           </p>
         </div>
 
