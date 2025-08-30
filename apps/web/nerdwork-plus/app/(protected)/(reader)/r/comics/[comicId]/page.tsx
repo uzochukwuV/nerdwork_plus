@@ -24,10 +24,10 @@ const ComicInterface = ({
 
   return (
     <>
-      <header className="relative min-h-screen w-full">
+      <header className="relative min-h-[50vh] w-full pt-6">
         <div className="absolute inset-0 bg-[linear-gradient(180deg,#5f5f5f_0%,#151515_46.75%)] z-10" />
-        <div className="relative z-20 text-white h-screen max-w-[1000px] mx-auto">
-          <section className="flex justify-between h-full font-inter -mb-px max-md:gap-6 md:gap-8 items-center px-5">
+        <div className="relative z-20 text-white h-full max-w-[1000px] mx-auto">
+          <section className="flex max-md:flex-col-reverse justify-between h-[70vh] font-inter -mb-px max-md:gap-6 md:gap-8 items-center px-5">
             <section className="max-w-[445px] space-y-7">
               <div className="flex flex-col gap-6">
                 <h1 className="text-5xl font-bold">{comic?.title}</h1>
@@ -67,7 +67,7 @@ const ComicInterface = ({
                 width={323}
                 height={500}
                 alt={`${comic.title} cover`}
-                className="h-[500px] w-[323px] object-cover"
+                className="h-[500px] w-[323px] max-md:h-[200px] max-md:w-auto object-cover"
               />
             )}
           </section>
@@ -79,7 +79,7 @@ const ComicInterface = ({
           value={tab}
           onValueChange={setTab}
           defaultValue="chapters"
-          className="bg-transparent mt-10"
+          className="bg-transparent mt-10 px-5"
         >
           <div className="flex flex-col items-start w-full max-w-[1000px] mx-auto">
             <TabsList className="bg-transparent text-white flex lg:gap-10 p-0">
