@@ -13,9 +13,11 @@
     "migrate:dev": "drizzle-kit generate --config=./src/config/drizzle-dev.config.ts",
     "push:dev": "drizzle-kit push --config=./src/config/drizzle-dev.config.ts",
     "deploy:lambda": "serverless deploy",
-    "deploy:lambda:prod": "serverless deploy --stage production"
-    "migrate:dev": "drizzle-kit migrate --config=./src/config/drizzle-dev.config.ts",
-    "push:dev": "drizzle-kit push --config=./src/config/drizzle-dev.config.ts"
+    "deploy:lambda:prod": "serverless deploy --stage production",
+    "install:all": "npm run install:services && npm run install:tests",
+    "install:services": "cd services/auth-service && npm install && cd ../user-service && npm install && cd ../comic-service && npm install && cd ../wallet-service && npm install && cd ../event-service && npm install && cd ../ledger-service && npm install && cd ../file-service && npm install && cd ../..",
+    "install:tests": "cd tests && npm install && cd ..",
+    "install:root": "npm install"
   },
   "keywords": [],
   "author": "",
