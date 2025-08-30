@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:docs.hel.io)",
+      "WebFetch(domain:docs.magicblock.gg)",
+      "WebFetch(domain:docs.verxio.xyz)",
+      "Bash(npm install:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

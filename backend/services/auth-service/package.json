@@ -1,0 +1,40 @@
+{
+  "name": "auth-service",
+  "version": "1.0.0",
+  "description": "Authentication microservice for Nerdwork+",
+  "main": "dist/lambda.js",
+  "type": "module",
+  "scripts": {
+    "start": "npx tsx --env-file=.env --watch src/index.ts",
+    "build": "tsc",
+    "start:prod": "node dist/index.js",
+    "test": "jest",
+    "deploy": "serverless deploy",
+    "deploy:prod": "serverless deploy --stage production"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.1",
+    "bcrypt": "^6.0.0",
+    "compression": "^1.8.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "drizzle-orm": "^0.44.2",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "serverless-http": "^3.2.0"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^24.0.3",
+    "drizzle-kit": "^0.31.3",
+    "serverless": "^3.38.0",
+    "serverless-offline": "^13.3.3",
+    "serverless-plugin-typescript": "^2.1.5",
+    "typescript": "^5.0.0"
+  }
+}

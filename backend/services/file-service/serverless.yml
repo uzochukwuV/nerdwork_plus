@@ -1,0 +1,62 @@
+service: file-service
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: ${opt:region, 'us-east-1'}
+  stage: ${opt:stage, 'dev'}
+  environment:
+    DATABASE_URL: ${env:DATABASE_URL}
+    JWT_SECRET: ${env:JWT_SECRET}
+    AWS_S3_BUCKET: ${env:AWS_S3_BUCKET}
+    AWS_CLOUDFRONT_DOMAIN: ${env:AWS_CLOUDFRONT_DOMAIN}
+    PINATA_API_KEY: ${env:PINATA_API_KEY}
+    PINATA_API_SECRET: ${env:PINATA_API_SECRET}
+    PINATA_BASE_URL: ${env:PINATA_BASE_URL}
+    PINATA_DEDICATED_GATEWAY: ${env:PINATA_DEDICATED_GATEWAY}
+    ALLOWED_ORIGINS: ${env:ALLOWED_ORIGINS}
+  httpApi:
+    cors:
+      allowedOrigins:
+        - ${env:ALLOWED_ORIGINS, 'http://localhost:3000'}
+      allowedHeaders:
+        - Content-Type
+        - Authorization
+      allowedMethods:
+        - GET
+        - POST
+        - PUT
+        - DELETE
+        - OPTIONS
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - s3:GetObject
+            - s3:PutObject
+            - s3:DeleteObject
+          Resource: "arn:aws:s3:::${env:AWS_S3_BUCKET}/*"
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
+
+functions:
+  file-service:
+    handler: src/lambda.handler
+    timeout: 30
+    memorySize: 512
+    events:
+      - httpApi:
+          path: /{proxy+}
+          method: any
+      - httpApi:
+          path: /
+          method: any
+
+custom:
+  serverless-offline:
+    httpPort: 3007
