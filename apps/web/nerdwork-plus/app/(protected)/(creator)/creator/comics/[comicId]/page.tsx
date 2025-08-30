@@ -22,10 +22,9 @@ const ComicDetailsPage = ({
   const { comicId } = use(params);
 
   const [isExpanded, setIsExpanded] = useState(false);
-  const chapters = chapterData ?? [];
-
   const [tab, setTab] = useState<string>("all");
 
+  const chapters = chapterData ?? [];
   const comics = comicData ?? [];
   const comic = comics.find((c) => parseInt(comicId) === c.id);
 

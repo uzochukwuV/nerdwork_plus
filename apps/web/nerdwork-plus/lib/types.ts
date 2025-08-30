@@ -6,6 +6,7 @@ export type Comic = {
   status: "upcoming" | "draft" | "scheduled" | "published";
   chapters: number;
   last_updated: string;
+  genres?: Array<string>;
 };
 
 export type Chapter = {
