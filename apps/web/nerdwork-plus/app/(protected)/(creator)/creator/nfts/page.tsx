@@ -1,4 +1,4 @@
-import NFTsEmptyState from "@/app/(creator)/_components/nfts/NFTsEmptyState";
+import NFTsEmptyState from "@/app/(protected)/(creator)/_components/nfts/NFTsEmptyState";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import React from "react";

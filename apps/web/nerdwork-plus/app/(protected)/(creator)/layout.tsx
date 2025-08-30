@@ -1,6 +1,6 @@
-import CreatorNav from "@/app/(creator)/_components/comics/CreatorNav";
-import SubNav from "../_components/comics/SubNav";
 import { Metadata } from "next";
+import CreatorNav from "./_components/comics/CreatorNav";
+import SubNav from "./_components/comics/SubNav";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.nerdworkng.com/"),

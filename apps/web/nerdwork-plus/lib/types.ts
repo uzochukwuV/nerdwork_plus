@@ -18,3 +18,12 @@ export type Chapter = {
   date: string;
   views?: number;
 };
+
+export type Transaction = {
+  id: string;
+  type: "earning" | "withdrawal" | "gift" | "purchase";
+  amount: number;
+  status: "pending" | "completed";
+  description: string;
+  date: string;
+};
