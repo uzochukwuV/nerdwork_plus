@@ -41,6 +41,7 @@ export const comicData: Comic[] = [
     status: "draft",
     chapters: 3,
     last_updated: "24/07/2024",
+    genres: ["adventure", "fantasy", "historical"],
   },
   {
     id: 2,
@@ -50,6 +51,7 @@ export const comicData: Comic[] = [
     status: "draft",
     chapters: 3,
     last_updated: "24/07/2024",
+    genres: ["sci-fi", "romance", "thriller", "historical"],
   },
   {
     id: 3,
@@ -59,6 +61,7 @@ export const comicData: Comic[] = [
     status: "published",
     chapters: 3,
     last_updated: "24/07/2024",
+    genres: ["adventure", "sci-fi", "thriller", "historical"],
   },
   {
     id: 4,
@@ -68,6 +71,7 @@ export const comicData: Comic[] = [
     status: "published",
     chapters: 3,
     last_updated: "24/07/2024",
+    genres: ["adventure", "fantasy", "mystery", "sci-fi"],
   },
   {
     id: 5,
@@ -77,6 +81,7 @@ export const comicData: Comic[] = [
     status: "scheduled",
     chapters: 3,
     last_updated: "24/07/2024",
+    genres: ["adventure", "superhero", "historical"],
   },
   {
     id: 6,
@@ -86,6 +91,7 @@ export const comicData: Comic[] = [
     status: "scheduled",
     chapters: 3,
     last_updated: "24/07/2024",
+    genres: ["adventure", "mystery", "romance", "superhero"],
   },
   {
     id: 7,
@@ -95,6 +101,7 @@ export const comicData: Comic[] = [
     status: "upcoming",
     chapters: 3,
     last_updated: "24/07/2024",
+    genres: ["thriller", "superhero", "historical"],
   },
   {
     id: 8,
@@ -104,6 +111,7 @@ export const comicData: Comic[] = [
     status: "upcoming",
     chapters: 3,
     last_updated: "24/07/2024",
+    genres: ["adventure", "mystery", "sci-fi"],
   },
 ];
 
