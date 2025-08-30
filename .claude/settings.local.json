@@ -5,7 +5,8 @@
       "WebFetch(domain:docs.hel.io)",
       "WebFetch(domain:docs.magicblock.gg)",
       "WebFetch(domain:docs.verxio.xyz)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(chmod:*)"
     ],
     "deny": [],
     "ask": []

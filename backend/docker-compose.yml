@@ -16,6 +16,7 @@ services:
       - WALLET_SERVICE_URL=http://wallet-service:3004
       - EVENT_SERVICE_URL=http://event-service:3005
       - LEDGER_SERVICE_URL=http://ledger-service:3006
+      - FILE_SERVICE_URL=http://file-service:3007
       - JWT_SECRET=${JWT_SECRET}
     depends_on:
       - auth-service
@@ -24,6 +25,7 @@ services:
       - wallet-service
       - event-service
       - ledger-service
+      - file-service
     networks:
       - microservices-network
 
@@ -84,7 +86,31 @@ services:
       - DATABASE_URL=${DATABASE_URL}
       - JWT_SECRET=${JWT_SECRET}
       - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+      - HELIO_API_KEY=${HELIO_API_KEY}
+      - HELIO_RECEIVER_WALLET=${HELIO_RECEIVER_WALLET}
       - PORT=3004
+    networks:
+      - microservices-network
+
+  # File Service
+  file-service:
+    build:
+      context: ./services/file-service
+      dockerfile: Dockerfile
+    ports:
+      - "3007:3007"
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=${DATABASE_URL}
+      - JWT_SECRET=${JWT_SECRET}
+      - AWS_REGION=${AWS_REGION}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - S3_BUCKET_NAME=${S3_BUCKET_NAME}
+      - S3_REGION=${S3_REGION}
+      - PINATA_API_KEY=${PINATA_API_KEY}
+      - PINATA_SECRET_API_KEY=${PINATA_SECRET_API_KEY}
+      - PORT=3007
     networks:
       - microservices-network
 

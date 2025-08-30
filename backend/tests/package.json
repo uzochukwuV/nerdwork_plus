@@ -1,0 +1,52 @@
+{
+  "name": "nerdwork-plus-tests",
+  "version": "1.0.0",
+  "description": "Comprehensive user flow tests for Nerdwork+ MVP",
+  "type": "module",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:user-flow": "jest user-flow.test.ts",
+    "test:auth": "jest auth-service.test.ts",
+    "test:wallet": "jest wallet-service.test.ts",
+    "test:files": "jest file-service.test.ts",
+    "test:creator": "jest comic-creator.test.ts",
+    "test:all-services": "jest auth-service.test.ts wallet-service.test.ts file-service.test.ts comic-creator.test.ts",
+    "test:integration": "npm run test:user-flow",
+    "test:services": "npm run test:all-services"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "form-data": "^4.0.0"
+  },
+  "devDependencies": {
+    "@jest/globals": "^30.0.2",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.0.3",
+    "jest": "^30.0.2",
+    "ts-jest": "^29.4.0",
+    "typescript": "^5.0.0"
+  },
+  "jest": {
+    "preset": "ts-jest/presets/default-esm",
+    "extensionsToTreatAsEsm": [".ts"],
+    "moduleNameMapping": {
+      "^(\\.{1,2}/.*)\\.js$": "$1"
+    },
+    "testEnvironment": "node",
+    "testTimeout": 30000,
+    "setupFilesAfterEnv": ["<rootDir>/jest.setup.ts"],
+    "testMatch": [
+      "**/*.test.ts"
+    ],
+    "collectCoverageFrom": [
+      "**/*.ts",
+      "!**/*.d.ts",
+      "!**/node_modules/**"
+    ],
+    "verbose": true,
+    "detectOpenHandles": true,
+    "forceExit": true
+  }
+}
