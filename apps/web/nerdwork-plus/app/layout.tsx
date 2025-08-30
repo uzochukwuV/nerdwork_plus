@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import LoadingProvider from "@/components/LoadingProvider";
+import { Toaster } from "@/components/ui/sonner";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -84,6 +85,7 @@ export default function RootLayout({
         <LoadingProvider logoSrc={"/nerdwork.svg"} logoAlt="Nerwork Logo">
           {children}
         </LoadingProvider>
+        <Toaster richColors />
       </body>
     </html>
   );
