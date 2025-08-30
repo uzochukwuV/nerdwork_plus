@@ -5,14 +5,14 @@ import {
 } from "@/components/ui/menubar";
 import { ChartLine, Edit2Icon, Eye, Trash } from "lucide-react";
 import React from "react";
-import { ComicProps } from "./CreatorComics";
 import Link from "next/link";
+import { Comic } from "@/lib/types";
 
 const ComicActions = ({
   comic,
   details,
 }: {
-  comic: ComicProps;
+  comic: Comic;
   details: boolean;
 }) => {
   return (

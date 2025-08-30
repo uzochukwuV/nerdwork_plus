@@ -1,11 +1,13 @@
 "use client";
+import ChapterComics from "@/app/(creator)/_components/comics/ChapterComics";
 import ChaptersEmptyState from "@/app/(creator)/_components/comics/ChaptersEmptyState";
 import ComicActions from "@/app/(creator)/_components/comics/DesktopComicActions";
 import MobileComicActions from "@/app/(creator)/_components/comics/MobileComicActions";
-import { comicData } from "@/components/data";
+import { chapterData, comicData } from "@/components/data";
 import { Button } from "@/components/ui/button";
 import { Menubar, MenubarMenu, MenubarTrigger } from "@/components/ui/menubar";
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ArrowLeft, EllipsisVertical, Plus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,14 +18,28 @@ const ComicDetailsPage = ({
 }: {
   params: Promise<{ comicId: string }>;
 }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
   const { comicId } = use(params);
+
+  const [isExpanded, setIsExpanded] = useState(false);
+  const chapters = chapterData ?? [];
+
+  const [tab, setTab] = useState<string>("all");
+
   const comics = comicData ?? [];
   const comic = comics.find((c) => parseInt(comicId) === c.id);
 
-  const chapters = 0;
-
   const truncatedText = comic?.short_description.substring(0, 200);
+
+  const counts = {
+    all: chapters.length,
+    draft: chapters.filter((b) => b.status === "draft").length,
+    published: chapters.filter((b) => b.status === "published").length,
+    scheduled: chapters.filter((b) => b.status === "scheduled").length,
+  };
+
+  const filteredChapters = chapters.filter((chapter) =>
+    tab === "all" ? true : chapter.status === tab
+  );
 
   return (
     <main className="max-w-[1300px] mx-auto px-5 font-inter py-5">
@@ -114,7 +130,57 @@ const ComicDetailsPage = ({
       </section>
       <hr className="!text-[#292A2E] max-md:hidden h-0 border-t border-[#292A2E]" />
 
-      {chapters == 0 ? <ChaptersEmptyState /> : <section></section>}
+      {chapters.length == 0 ? (
+        <ChaptersEmptyState />
+      ) : (
+        <section className="py-8">
+          <h3 className="font-semibold text-2xl">
+            Chapters ({chapters.length})
+          </h3>
+          <Tabs
+            value={tab}
+            onValueChange={setTab}
+            defaultValue="all"
+            className="bg-transparent mt-10"
+          >
+            <div className="flex flex-col items-start w-full max-w-[1300px] mx-auto">
+              <TabsList className="bg-transparent text-white flex lg:gap-10 p-0">
+                <TabsTrigger
+                  className="data-[state=active]:border-b !data-[state=active]:border-white pb-5 max-md:font-normal border-white !data-[state=active]:shadow-none text-white rounded-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none !data-[state=active]:shadow-none"
+                  value="all"
+                >
+                  All ({counts.all})
+                </TabsTrigger>
+                <TabsTrigger
+                  className="data-[state=active]:border-b !data-[state=active]:border-white pb-5 max-md:font-normal border-white !data-[state=active]:shadow-none text-white rounded-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none !data-[state=active]:shadow-none"
+                  value="published"
+                >
+                  Published ({counts.published})
+                </TabsTrigger>
+                <TabsTrigger
+                  className="data-[state=active]:border-b !data-[state=active]:border-white pb-5 max-md:font-normal border-white !data-[state=active]:shadow-none text-white rounded-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none !data-[state=active]:shadow-none"
+                  value="scheduled"
+                >
+                  Scheduled ({counts.scheduled})
+                </TabsTrigger>
+                <TabsTrigger
+                  className="data-[state=active]:border-b !data-[state=active]:border-white pb-5 max-md:font-normal border-white !data-[state=active]:shadow-none text-white rounded-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none !data-[state=active]:shadow-none"
+                  value="draft"
+                >
+                  Drafts ({counts.draft})
+                </TabsTrigger>
+              </TabsList>
+            </div>
+            <hr className="!text-[#292A2E] h-0 border-t border-[#292A2E]" />
+            <div className=" max-w-[1300px] mx-auto w-full mt-8">
+              <TabsContent value={tab}>
+                <ChapterComics data={filteredChapters} />
+              </TabsContent>
+            </div>
+            <hr className="!text-[#292A2E] h-0 mb-10 border-t border-[#292A2E]" />
+          </Tabs>
+        </section>
+      )}
     </main>
   );
 };
