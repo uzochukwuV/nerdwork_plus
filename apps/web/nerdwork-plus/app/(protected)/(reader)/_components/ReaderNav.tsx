@@ -29,7 +29,7 @@ import { Input } from "@/components/ui/input";
 const ReaderNav = () => {
   return (
     <>
-      <nav className="max-md:hidden max-w-[1300px] mx-auto font-inter flex gap-2 justify-between items-center h-[76px] max-2xl:px-5">
+      <nav className="max-md:hidden fixed right-0 left-0 w-full max-w-[1300px] mx-auto font-inter flex gap-2 justify-between items-center h-[76px] max-2xl:px-5">
         <div className="flex justify-between items-center gap-10">
           <Link href={"/"}>
             <Image src={Logo} width={146} height={40} alt="Nerdwork logo" />
@@ -44,10 +44,10 @@ const ReaderNav = () => {
             </div>
           </div>
           <ul className="flex gap-4 text-sm text-nerd-muted">
-            <Link href={""}>Comics</Link>
-            <Link href={""}>Marketplace</Link>
-            <Link href={""}>Library</Link>
-            <Link href={""}>Create</Link>
+            <Link href={"/r/comics"}>Comics</Link>
+            <Link href={"/r/marketplace"}>Marketplace</Link>
+            <Link href={"/r/library"}>Library</Link>
+            <Link href={"/onboarding"}>Create</Link>
           </ul>
         </div>
 
