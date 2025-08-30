@@ -6,11 +6,13 @@ import paymentRoutes from "./routes/payment.routes";
 import { authenticate } from "./middleware/common/auth";
 import nftRoutes from "./routes/nft.routes";
 import walletRoutes from "./routes/wallet.routes";
+import profileRoutes from "./routes/profile.routes";
 
 app.use("/auth", authRoutes);
 app.use("/payment", authenticate, paymentRoutes);
 app.use("/nft", authenticate, nftRoutes);
 app.use("/wallet", authenticate, walletRoutes);
+app.use("/profile", profileRoutes);
 
 const PORT = 5000;
 /**

@@ -1,5 +1,8 @@
 import { Router } from "express";
-import { signup, login, signup2 } from "../controller/auth.controller";
+import {
+  googleLoginController,
+  googleSignup,
+} from "../controller/auth.controller";
 
 const router = Router();
 
@@ -7,92 +10,66 @@ const router = Router();
  * @swagger
  * components:
  *   schemas:
- *     SignupRequest:
+ *     GoogleSignupRequest:
  *       type: object
  *       required:
- *         - email
- *         - password
- *         - username
+ *         - idToken
  *       properties:
- *         email:
+ *         idToken:
  *           type: string
- *           format: email
- *           example: user@example.com
- *         password:
- *           type: string
- *           minLength: 6
- *           example: password123
- *         username:
- *           type: string
- *           example: comicfan2024
- *     LoginRequest:
+ *           description: Google ID token obtained from the frontend after Google Sign-In
+ *           example: "eyJhbGciOiJSUzI1NiIsImtpZCI6Ijc4OT..."
+ *
+ *     GoogleLoginRequest:
  *       type: object
  *       required:
- *         - email
- *         - password
+ *         - idToken
  *       properties:
- *         email:
+ *         idToken:
  *           type: string
- *           format: email
- *           example: user@example.com
- *         password:
- *           type: string
- *           example: password123
+ *           description: Google ID token obtained from the frontend after Google Sign-In
+ *           example: "eyJhbGciOiJSUzI1NiIsImtpZCI6Ijc4OT..."
+ *
  *     AuthResponse:
  *       type: object
  *       properties:
- *         success:
- *           type: boolean
- *           example: true
- *         data:
+ *         token:
+ *           type: string
+ *           example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+ *         user:
  *           type: object
  *           properties:
- *             token:
+ *             id:
  *               type: string
- *               example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
- *             user:
- *               type: object
- *               properties:
- *                 id:
- *                   type: string
- *                   example: "123e4567-e89b-12d3-a456-426614174000"
- *                 email:
- *                   type: string
- *                   example: user@example.com
- *                 username:
- *                   type: string
- *                   example: comicfan2024
- *         message:
- *           type: string
- *           example: "User created successfully"
+ *               example: "123e4567-e89b-12d3-a456-426614174000"
+ *             email:
+ *               type: string
+ *               example: user@example.com
+ *             username:
+ *               type: string
+ *               example: comicfan2024
+ *
  *     ErrorResponse:
  *       type: object
  *       properties:
- *         success:
- *           type: boolean
- *           example: false
  *         error:
  *           type: string
- *           example: "Invalid credentials"
- *         timestamp:
- *           type: string
- *           format: date-time
- *           example: "2024-01-01T00:00:00.000Z"
+ *           example: "Invalid Google token"
  */
 
 /**
  * @swagger
  * /auth/signup:
  *   post:
- *     summary: Create a new user account
- *     description: Register a new user for the NerdWork comic platform
+ *     summary: Sign up with Google
+ *     description: Create a new user account using Google authentication. Returns a JWT and user info.
  *     tags: [Authentication]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/SignupRequest'
+ *             $ref: '#/components/schemas/GoogleSignupRequest'
  *     responses:
  *       201:
  *         description: User account created successfully
@@ -101,7 +78,7 @@ const router = Router();
  *             schema:
  *               $ref: '#/components/schemas/AuthResponse'
  *       400:
- *         description: Invalid input data
+ *         description: Invalid Google token or missing fields
  *         content:
  *           application/json:
  *             schema:
@@ -119,21 +96,21 @@ const router = Router();
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  */
-router.post("/signup", signup);
+router.post("/signup", googleSignup);
 
 /**
  * @swagger
  * /auth/login:
  *   post:
- *     summary: Login to user account
- *     description: Authenticate user credentials and return JWT token
+ *     summary: Login with Google
+ *     description: Authenticate an existing user using Google Sign-In. Returns a JWT and user info.
  *     tags: [Authentication]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/LoginRequest'
+ *             $ref: '#/components/schemas/GoogleLoginRequest'
  *     responses:
  *       200:
  *         description: Login successful
@@ -142,13 +119,13 @@ router.post("/signup", signup);
  *             schema:
  *               $ref: '#/components/schemas/AuthResponse'
  *       401:
- *         description: Invalid email or password
+ *         description: User not found or invalid token
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  *       400:
- *         description: Missing required fields
+ *         description: Missing Google ID token
  *         content:
  *           application/json:
  *             schema:
@@ -160,6 +137,6 @@ router.post("/signup", signup);
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  */
-router.post("/login", login);
+router.post("/login", googleLoginController);
 
 export default router;
