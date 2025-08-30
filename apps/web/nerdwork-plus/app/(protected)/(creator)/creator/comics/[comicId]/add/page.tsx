@@ -25,11 +25,11 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
-import { MultiFileUpload } from "@/app/(creator)/_components/comics/MultiFileUpload";
 import { chapterSchema } from "@/lib/schema";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { use } from "react";
+import { MultiFileUpload } from "@/app/(protected)/(creator)/_components/comics/MultiFileUpload";
 
 const NewChapterPage = ({
   params,

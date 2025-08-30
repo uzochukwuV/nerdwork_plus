@@ -1,8 +1,5 @@
 "use client";
-import ChapterComics from "@/app/(creator)/_components/comics/ChapterComics";
-import ChaptersEmptyState from "@/app/(creator)/_components/comics/ChaptersEmptyState";
-import ComicActions from "@/app/(creator)/_components/comics/DesktopComicActions";
-import MobileComicActions from "@/app/(creator)/_components/comics/MobileComicActions";
+
 import { chapterData, comicData } from "@/components/data";
 import { Button } from "@/components/ui/button";
 import { Menubar, MenubarMenu, MenubarTrigger } from "@/components/ui/menubar";
@@ -12,6 +9,10 @@ import { ArrowLeft, EllipsisVertical, Plus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { use, useState } from "react";
+import ComicActions from "../../../_components/comics/DesktopComicActions";
+import MobileComicActions from "../../../_components/comics/MobileComicActions";
+import ChaptersEmptyState from "../../../_components/comics/ChaptersEmptyState";
+import ChapterComics from "../../../_components/comics/ChapterComics";
 
 const ComicDetailsPage = ({
   params,
@@ -131,12 +132,8 @@ const ComicDetailsPage = ({
         )}
       </section>
       <hr className="!text-[#292A2E] max-md:hidden h-0 border-t border-[#292A2E]" />
-      {comic && chapters == 0 ? (
+      {comic && chapters.length == 0 ? (
         <ChaptersEmptyState comicId={comic?.id} />
-      ) : (
-        <section></section>
-      {chapters.length == 0 ? (
-        <ChaptersEmptyState />
       ) : (
         <section className="py-8">
           <h3 className="font-semibold text-2xl">

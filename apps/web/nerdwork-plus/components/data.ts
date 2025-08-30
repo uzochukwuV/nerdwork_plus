@@ -1,5 +1,4 @@
-import { Transaction } from "@/app/(creator)/(protected)/creator/wallet/columns";
-import { Chapter, Comic } from "@/lib/types";
+import { Chapter, Comic, Transaction } from "@/lib/types";
 
 export const eventsData = [
   {

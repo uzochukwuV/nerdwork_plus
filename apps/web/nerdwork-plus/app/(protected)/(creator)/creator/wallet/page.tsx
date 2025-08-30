@@ -13,8 +13,8 @@ import {
 import { DataTable } from "@/components/data-table";
 import { columns } from "./columns";
 import { creatorTransactions } from "@/components/data";
-import PurchaseTokenModal from "@/app/(creator)/_components/wallet/PurchaseTokenModal";
-import WithdrawEarningsModal from "@/app/(creator)/_components/wallet/WithdrawEarningsModal";
+import PurchaseTokenModal from "@/app/(protected)/(creator)/_components/wallet/PurchaseTokenModal";
+import WithdrawEarningsModal from "@/app/(protected)/(creator)/_components/wallet/WithdrawEarningsModal";
 
 const WalletPage = () => {
   const [typeFilter, setTypeFilter] = useState("");

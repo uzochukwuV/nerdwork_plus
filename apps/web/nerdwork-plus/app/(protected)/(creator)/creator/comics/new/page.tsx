@@ -8,9 +8,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
 import Link from "next/link";
 import { toast } from "sonner";
-import NewComicStepTwo from "@/app/(creator)/_components/comics/NewComicStepTwo";
-import NewComicStepThree from "@/app/(creator)/_components/comics/NewComicStepThree";
-import NewComicStepOne from "@/app/(creator)/_components/comics/NewComicStepOne";
+import NewComicStepTwo from "@/app/(protected)/(creator)/_components/comics/NewComicStepTwo";
+import NewComicStepThree from "@/app/(protected)/(creator)/_components/comics/NewComicStepThree";
+import NewComicStepOne from "@/app/(protected)/(creator)/_components/comics/NewComicStepOne";
 import { useRouter } from "next/navigation";
 
 const NewComicsPage = () => {
