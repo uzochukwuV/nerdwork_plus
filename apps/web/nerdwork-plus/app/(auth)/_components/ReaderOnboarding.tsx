@@ -4,8 +4,11 @@ import { useState } from "react";
 import { ReaderGenres } from "./ReaderGenres";
 import { ReaderForm } from "./ReaderForm";
 import { SetPinForm } from "./SetPinForm";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function ReaderOnboardingFlow() {
+  const router = useRouter();
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<{
     fullName: string;
@@ -34,9 +37,11 @@ export default function ReaderOnboardingFlow() {
   const handleSetPin = (pin: string) => {
     setFormData((prev) => ({ ...prev, pin }));
     console.log("Final Reader Data:", { ...formData, pin });
-    alert("Account setup complete!");
+    toast.success("Account setup complete!");
     // Here you would typically redirect the user
-    // router.push('/reader-dashboard');
+    setTimeout(() => {
+      router.push("/r/comics");
+    }, 3000);
   };
 
   const renderStep = () => {

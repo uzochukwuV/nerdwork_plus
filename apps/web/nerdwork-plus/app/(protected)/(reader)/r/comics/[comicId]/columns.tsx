@@ -2,6 +2,7 @@
 
 import { Chapter } from "@/lib/types";
 import { ColumnDef } from "@tanstack/react-table";
+import ComicPaymentFlow from "../../../_components/ComicPaymentFlow";
 
 export const columns: ColumnDef<Chapter>[] = [
   {
@@ -48,9 +49,12 @@ export const columns: ColumnDef<Chapter>[] = [
     ),
     cell: ({ row }) => {
       return (
-        <div>
-          <p className="hidden">{row.original.status}</p>
-          <p>Read</p>
+        <div className="text-center">
+          {row.original.read ? (
+            <p>Read</p>
+          ) : (
+            <ComicPaymentFlow chapter={row.original} />
+          )}
         </div>
       );
     },

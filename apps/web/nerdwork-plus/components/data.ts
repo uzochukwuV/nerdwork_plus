@@ -240,6 +240,8 @@ export const chapterData: Chapter[] = [
     status: "draft",
     pages: 3,
     date: "24/07/2024",
+    read: true,
+    unlocked: true,
   },
   {
     id: 2,
@@ -249,6 +251,8 @@ export const chapterData: Chapter[] = [
     status: "draft",
     pages: 3,
     date: "24/07/2024",
+    read: true,
+    unlocked: true,
   },
   {
     id: 3,
@@ -258,6 +262,8 @@ export const chapterData: Chapter[] = [
     status: "published",
     pages: 3,
     date: "24/07/2024",
+    read: false,
+    unlocked: false,
   },
   {
     id: 4,
@@ -267,6 +273,8 @@ export const chapterData: Chapter[] = [
     status: "published",
     pages: 3,
     date: "24/07/2024",
+    read: false,
+    unlocked: false,
   },
   {
     id: 5,
@@ -276,6 +284,8 @@ export const chapterData: Chapter[] = [
     status: "scheduled",
     pages: 3,
     date: "24/07/2024",
+    read: false,
+    unlocked: false,
   },
   {
     id: 6,
@@ -285,6 +295,8 @@ export const chapterData: Chapter[] = [
     status: "scheduled",
     pages: 3,
     date: "24/07/2024",
+    read: false,
+    unlocked: false,
   },
   {
     id: 7,
@@ -294,6 +306,8 @@ export const chapterData: Chapter[] = [
     status: "scheduled",
     pages: 3,
     date: "24/07/2024",
+    read: false,
+    unlocked: false,
   },
   {
     id: 8,
@@ -303,5 +317,7 @@ export const chapterData: Chapter[] = [
     status: "published",
     pages: 3,
     date: "24/07/2024",
+    read: false,
+    unlocked: false,
   },
 ];

@@ -25,12 +25,14 @@ const ComicInterface = ({
   return (
     <>
       <header className="relative min-h-[50vh] w-full pt-6">
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,#5f5f5f_0%,#151515_46.75%)] z-10" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,#a0a0a0_0%,#151515_55.75%)] z-10" />
         <div className="relative z-20 text-white h-full max-w-[1000px] mx-auto">
           <section className="flex max-md:flex-col-reverse justify-between h-[70vh] font-inter -mb-px max-md:gap-6 md:gap-8 items-center px-5">
             <section className="max-w-[445px] space-y-7">
               <div className="flex flex-col gap-6">
-                <h1 className="text-5xl font-bold">{comic?.title}</h1>
+                <h1 className="text-5xl font-bold sticky top-0">
+                  {comic?.title}
+                </h1>
                 <p className="font-semibold capitalize">
                   {comic?.rating} Rating, {comic?.chapters} chapters,{" "}
                   {comic?.genres && comic?.genres[0]}

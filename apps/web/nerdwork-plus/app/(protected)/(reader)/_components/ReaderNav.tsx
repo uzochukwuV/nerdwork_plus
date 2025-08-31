@@ -30,7 +30,7 @@ const ReaderNav = () => {
   return (
     <>
       <nav className="max-md:hidden z-30 bg-[#151515] border-b border-nerd-default fixed right-0 left-0 w-full font-inter max-2xl:px-5">
-        <section className="max-w-[1600px] mx-auto flex gap-2 justify-between items-center h-[76px]">
+        <section className="max-w-[1200px] mx-auto flex gap-2 justify-between items-center h-[76px]">
           <div className="flex justify-between items-center gap-10">
             <Link href={"/"}>
               <Image src={Logo} width={146} height={40} alt="Nerdwork logo" />
