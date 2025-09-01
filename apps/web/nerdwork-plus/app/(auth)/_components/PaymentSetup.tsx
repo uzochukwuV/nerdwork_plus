@@ -5,9 +5,12 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import solflareLogo from "@/assets/creator/solflare.svg";
 import phantomLogo from "@/assets/creator/phantom.svg";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export function PaymentDetailsForm() {
   const [selectedWallet, setSelectedWallet] = useState<string | null>(null);
+  const router = useRouter();
 
   // A function to simulate wallet detection. In a real app, you would
   // use a library like @solana/wallet-adapter to check for installed wallets.
@@ -20,7 +23,11 @@ export function PaymentDetailsForm() {
   const handleContinue = () => {
     console.log("Selected wallet:", selectedWallet);
     // Proceed to the next step, e.g., connect to the wallet
-    alert("Proceeding to wallet connection...");
+    toast.info("Proceeding to wallet connection...");
+
+    setTimeout(() => {
+      router.push("/creator/comics");
+    }, 3000);
   };
 
   return (

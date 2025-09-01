@@ -19,6 +19,8 @@ export type Chapter = {
   status: "published" | "scheduled" | "draft";
   date: string;
   views?: number;
+  read?: boolean;
+  unlocked?: boolean;
 };
 
 export type Transaction = {
