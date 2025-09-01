@@ -11,6 +11,7 @@ import Itel from "@/assets/sponsors/itel.svg";
 import Filmhouse from "@/assets/sponsors/filmhouse.svg";
 import Tribe from "@/assets/sponsors/tribe.svg";
 import Monster from "@/assets/sponsors/monster.svg";
+import Link from "next/link";
 
 const stats = [
   {
@@ -39,7 +40,7 @@ export default function ComicCon() {
   return (
     <section
       data-testid="comic-con"
-      className="z-10 max-w-[1130px] w-full font-inter mx-auto text-white py-20 px-7 mt-32"
+      className="z-10 max-w-[1130px] w-full font-inter mx-auto text-white py-20 px-7 md:mt-32"
     >
       <h2 className="font-obostar text-[40px] max-md:text-2xl mb-4">
         EpiC Comic-Cons
@@ -53,12 +54,16 @@ export default function ComicCon() {
               Meet your favorite creators, cosplay icons, and fellow fans
             </p>
             <div className="flex flex-col gap-4">
-              <Button variant={"primary"} className="md:w-fit">
-                Register for comic con 2025
-              </Button>
-              <Button className="md:w-fit">
-                See last year&apos;s comic con
-              </Button>
+              <Link target="_blank" href={"https://www.straqa.events/nerdworkcomiccon"}>
+                <Button variant={"primary"} className="md:w-fit">
+                  Register for comic con 2025
+                </Button>
+              </Link>
+              <Link href={"/events"}>
+                <Button className="md:w-fit">
+                  See last year&apos;s comic con
+                </Button>
+              </Link>
             </div>
           </div>
 
@@ -138,37 +143,6 @@ export default function ComicCon() {
           <Image src={Monster} width={55} height={48} alt="monster logo" />
         </div>
       </section>
-      <style jsx>{`
-        @keyframes marquee {
-          0% {
-            transform: translateX(100%);
-          }
-          100% {
-            transform: translateX(-100%);
-          }
-        }
-
-        @keyframes marquee-reverse {
-          0% {
-            transform: translateX(-100%);
-          }
-          100% {
-            transform: translateX(100%);
-          }
-        }
-
-        .animate-marquee {
-          animation: marquee 10s linear infinite;
-        }
-
-        .animate-marquee-reverse {
-          animation: marquee-reverse 10s linear infinite;
-        }
-
-        .hover\\:pause:hover {
-          animation-play-state: paused;
-        }
-      `}</style>
     </section>
   );
 }

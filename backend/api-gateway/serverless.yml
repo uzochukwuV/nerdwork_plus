@@ -1,0 +1,40 @@
+service: nerdwork-api-gateway
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-east-1'}
+  memorySize: 512
+  timeout: 30
+  environment:
+    NODE_ENV: ${self:provider.stage}
+    JWT_SECRET: ${ssm:/nerdwork/${self:provider.stage}/jwt-secret}
+    AUTH_SERVICE_URL: ${ssm:/nerdwork/${self:provider.stage}/auth-service-url}
+    USER_SERVICE_URL: ${ssm:/nerdwork/${self:provider.stage}/user-service-url}
+    COMIC_SERVICE_URL: ${ssm:/nerdwork/${self:provider.stage}/comic-service-url}
+    WALLET_SERVICE_URL: ${ssm:/nerdwork/${self:provider.stage}/wallet-service-url}
+    EVENT_SERVICE_URL: ${ssm:/nerdwork/${self:provider.stage}/event-service-url}
+    LEDGER_SERVICE_URL: ${ssm:/nerdwork/${self:provider.stage}/ledger-service-url}
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
+
+functions:
+  gateway:
+    handler: src/lambda.handler
+    events:
+      - http:
+          path: /{proxy+}
+          method: ANY
+          cors: true
+    environment:
+      STAGE: ${self:provider.stage}
+
+custom:
+  serverless-offline:
+    httpPort: 3000
+    noPrependStageInUrl: true

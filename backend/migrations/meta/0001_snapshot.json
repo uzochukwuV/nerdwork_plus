@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "id": "ddc057c4-d0ac-409c-a3c9-f80b98fe1602",
+=======
+  "id": "087cd9a1-0e51-4a55-ada6-51a1b77afff4",
+>>>>>>> main
   "prevId": "8a52c1d5-1bf7-4e28-aa9f-d58d53496843",
   "version": "7",
   "dialect": "postgresql",
@@ -437,12 +441,15 @@
           "primaryKey": false,
           "notNull": false
         },
+<<<<<<< HEAD
         "webhook_id": {
           "name": "webhook_id",
           "type": "text",
           "primaryKey": false,
           "notNull": false
         },
+=======
+>>>>>>> main
         "payment_intent_id": {
           "name": "payment_intent_id",
           "type": "text",
@@ -706,6 +713,7 @@
         }
       },
       "indexes": {},
+<<<<<<< HEAD
       "foreignKeys": {
         "user_wallets_user_profile_id_user_profiles_id_fk": {
           "name": "user_wallets_user_profile_id_user_profiles_id_fk",
@@ -731,6 +739,11 @@
           ]
         }
       },
+=======
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+>>>>>>> main
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
@@ -813,6 +826,60 @@
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
+<<<<<<< HEAD
+=======
+    },
+    "public.events": {
+      "name": "events",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "date": {
+          "name": "date",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ticket_price": {
+          "name": "ticket_price",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+>>>>>>> main
     }
   },
   "enums": {},

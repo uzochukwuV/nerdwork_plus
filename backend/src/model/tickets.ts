@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { pgTable, uuid, text, integer, timestamp } from "drizzle-orm/pg-core";
 import { userProfiles } from "./profile";
 
@@ -10,4 +11,17 @@ export const tickets = pgTable("tickets", {
   quantity: integer("quantity").notNull().default(1),
   status: text("status").notNull().default("issued"), // 'issued' | 'cancelled' | 'used'
   createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+=======
+import { pgTable, uuid, text, timestamp, numeric } from "drizzle-orm/pg-core";
+import { events } from "./event";
+import { authUsers } from "./auth"; // adjust if your users table import name differs
+
+export const tickets = pgTable("tickets", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  eventId: uuid("event_id").references(() => events.id),
+  userId: uuid("user_id").references(() => authUsers.id),
+  paymentMethod: text("payment_method").notNull(),
+  amount: numeric("amount").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+>>>>>>> main
 });

@@ -1,8 +1,18 @@
 import { Router } from "express";
+<<<<<<< HEAD
 import {
   googleLoginController,
   googleSignup,
 } from "../controller/auth.controller";
+=======
+<<<<<<< HEAD
+import { signup, login, signup2 } from "../controller/auth.controller";
+=======
+import { signup, login } from "../controller/auth.js";
+import { authenticate } from "../middleware/common/auth.js";
+import { getCurrentUser } from "../controller/auth.js";
+>>>>>>> main
+>>>>>>> main
 
 const router = Router();
 
@@ -139,4 +149,9 @@ router.post("/signup", googleSignup);
  */
 router.post("/login", googleLoginController);
 
+<<<<<<< HEAD
+=======
+router.get("/me", authenticate, getCurrentUser);
+
+>>>>>>> main
 export default router;
