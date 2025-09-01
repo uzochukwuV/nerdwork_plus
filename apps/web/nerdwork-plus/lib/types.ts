@@ -8,6 +8,8 @@ export type Comic = {
   last_updated: string;
   genres?: Array<string>;
   rating?: string;
+  isPaid?: boolean;
+  isOngoing?: boolean;
 };
 
 export type Chapter = {

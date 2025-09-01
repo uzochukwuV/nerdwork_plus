@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -25,8 +26,23 @@ import {
   Wallet2,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { usePathname } from "next/navigation";
 
 const ReaderNav = () => {
+  const pathname = usePathname();
+
+  const navItems = [
+    { title: "Comics", path: "/r/comics" },
+    { title: "Marketplace", path: "/r/marketplace" },
+    { title: "Library", path: "/r/library" },
+    { title: "Create", path: "/onboarding" },
+  ];
+
+  const isActive = (path: string) => {
+    if (pathname.startsWith(path) && pathname !== "/") return true;
+    return false;
+  };
+
   return (
     <>
       <nav className="max-md:hidden z-30 bg-[#151515] border-b border-nerd-default fixed right-0 left-0 w-full font-inter max-2xl:px-5">
@@ -45,10 +61,17 @@ const ReaderNav = () => {
               </div>
             </div>
             <ul className="flex gap-4 text-sm text-nerd-muted">
-              <Link href={"/r/comics"}>Comics</Link>
-              <Link href={"/r/marketplace"}>Marketplace</Link>
-              <Link href={"/r/library"}>Library</Link>
-              <Link href={"/onboarding"}>Create</Link>
+              {navItems.map((item, index) => (
+                <Link
+                  href={item.path}
+                  key={index}
+                  className={`hover:text-neutral-400 transition-colors duration-300 cursor-pointer ${
+                    isActive(item.path) ? "text-white" : ""
+                  }`}
+                >
+                  {item.title}
+                </Link>
+              ))}
             </ul>
           </div>
 

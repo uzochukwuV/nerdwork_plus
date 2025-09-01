@@ -42,6 +42,8 @@ export const comicData: Comic[] = [
     chapters: 3,
     last_updated: "24/07/2024",
     genres: ["adventure", "fantasy", "historical"],
+    isPaid: true,
+    isOngoing: false,
   },
   {
     id: 2,
@@ -52,6 +54,10 @@ export const comicData: Comic[] = [
     chapters: 3,
     last_updated: "24/07/2024",
     genres: ["sci-fi", "romance", "thriller", "historical"],
+    rating: "Mature",
+
+    isPaid: false,
+    isOngoing: true,
   },
   {
     id: 3,
@@ -62,6 +68,10 @@ export const comicData: Comic[] = [
     chapters: 3,
     last_updated: "24/07/2024",
     genres: ["adventure", "sci-fi", "thriller", "historical"],
+    rating: "All",
+
+    isPaid: true,
+    isOngoing: false,
   },
   {
     id: 4,
@@ -73,6 +83,8 @@ export const comicData: Comic[] = [
     last_updated: "24/07/2024",
     genres: ["adventure", "fantasy", "mystery", "sci-fi"],
     rating: "12 +",
+    isPaid: false,
+    isOngoing: true,
   },
   {
     id: 5,
@@ -83,6 +95,8 @@ export const comicData: Comic[] = [
     chapters: 3,
     last_updated: "24/07/2024",
     genres: ["adventure", "superhero", "historical"],
+    isPaid: true,
+    isOngoing: false,
   },
   {
     id: 6,
@@ -93,6 +107,8 @@ export const comicData: Comic[] = [
     chapters: 3,
     last_updated: "24/07/2024",
     genres: ["adventure", "mystery", "romance", "superhero"],
+    isPaid: false,
+    isOngoing: true,
   },
   {
     id: 7,
@@ -103,6 +119,8 @@ export const comicData: Comic[] = [
     chapters: 3,
     last_updated: "24/07/2024",
     genres: ["thriller", "superhero", "historical"],
+    isPaid: true,
+    isOngoing: false,
   },
   {
     id: 8,
@@ -113,6 +131,8 @@ export const comicData: Comic[] = [
     chapters: 3,
     last_updated: "24/07/2024",
     genres: ["adventure", "mystery", "sci-fi"],
+    isPaid: false,
+    isOngoing: true,
   },
 ];
 
