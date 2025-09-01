@@ -193,7 +193,7 @@ const LibraryPage = () => {
             </DropdownMenu>
 
             <Select onValueChange={setSortFilter} value={sortFilter}>
-              <SelectTrigger className="outline-none border-none">
+              <SelectTrigger className="outline-none border-none !text-white">
                 <SelectValue placeholder="Sort:" />
               </SelectTrigger>
               <SelectContent className="bg-[#1D1E21] border-none text-white">
