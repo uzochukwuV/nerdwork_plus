@@ -5,6 +5,17 @@ import Link from "next/link";
 import { Comic } from "@/lib/types";
 
 const RComics = ({ data }: { data: Comic[] }) => {
+  if (!data || data.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center p-10 text-center">
+        <p className="text-xl font-semibold">No comics found!</p>
+        <p className="mt-2 text-sm">
+          Try adjusting your filters or search terms.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <section className="font-inter text-white mb-10 max-md:mt-5 max-2xl:mx-5">
       <section className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 ">
