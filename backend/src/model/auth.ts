@@ -6,9 +6,9 @@ import {
   uuid,
   integer,
 } from "drizzle-orm/pg-core";
-import { relations } from 'drizzle-orm';
+import { relations } from "drizzle-orm";
 
-import { userProfiles } from './profile';
+import { userProfiles } from "./profile";
 
 // ================================
 // USERS TABLE (AuthUser)
@@ -69,9 +69,6 @@ export type SelectAuthSession = typeof authSessions.$inferSelect;
 
 export type InsertPasswordReset = typeof passwordResets.$inferInsert;
 export type SelectPasswordReset = typeof passwordResets.$inferSelect;
-
-
-
 
 export const authUsersRelations = relations(authUsers, ({ one }) => ({
   profile: one(userProfiles, {

@@ -1,127 +1,99 @@
-import { eq } from "drizzle-orm";
-import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { db } from "../config/db";
-import { authUsers, userProfiles, userWallets } from "../model/schema";
+import { authUsers } from "../model/schema";
+import { loginWithGoogle } from "../services/profile.service";
+import { OAuth2Client } from "google-auth-library";
+import { eq } from "drizzle-orm";
+import { JWT_SECRET } from "../config/envs";
 
-const JWT_SECRET = process.env.JWT_SECRET!;
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
-export const signup = async (req: any, res: any) => {
-  const { email, password, fullName, username } = req.body;
+export const googleSignup = async (req, res) => {
+  try {
+    const { token } = req.body;
 
-  // Check if user exists
-  // const existingUser = await db
-  //   .select()
-  //   .from(authUsers)
-  //   .where(eq(authUsers.email, email));
+    // Verify token with Google
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
 
-  // if (existingUser.length > 0)
-  //   return res.status(400).json({ message: "User already exists" });
+    const payload = ticket.getPayload();
+    if (!payload) throw new Error("Invalid Google token");
 
-  const hashedPassword = await bcrypt.hash(password, 10);
+    const { email, sub: googleId, picture } = payload;
 
-  console.log("DB URL in use:", process.env.DATABASE_URL);
+    // Check if user exists
+    const users = await db
+      .select()
+      .from(authUsers)
+      .where(eq(authUsers.email, email));
 
-  const [newUser] = await db
-    .insert(authUsers)
-    .values({
-      email,
-      username,
-      passwordHash: hashedPassword,
-    })
-    .returning();
+    const existingUser = users[0] ?? null;
 
-  const token = jwt.sign({ id: newUser.id, email: newUser.email }, JWT_SECRET, {
-    expiresIn: "7d",
-  });
-
-  return res.status(201).json({ token, user: newUser });
-};
-console.log(jwt?.sign);
-export const login = async (req: any, res: any) => {
-  const { email, password } = req.body;
-
-  console.log(jwt?.sign);
-
-  const [user] = await db
-    .select()
-    .from(authUsers)
-    .where(eq(authUsers.email, email));
-
-  if (!user) return res.status(404).json({ message: "User not found" });
-
-  const isMatch = await bcrypt.compare(password, user.passwordHash);
-  if (!isMatch) return res.status(401).json({ message: "Invalid credentials" });
-
-  const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, {
-    expiresIn: "7d",
-  });
-
-  return res.status(200).json({ token, user });
-};
-
-export const signup2 = async (req: any, res: any) => {
-  const { email, password, fullName, username } = req.body;
-
-  // 1. Check if user exists
-  const existingUser = await db
-    .select()
-    .from(authUsers)
-    .where(eq(authUsers.email, email));
-
-  if (existingUser.length > 0)
-    return res.status(400).json({ message: "User already exists" });
-
-  // 2. Create auth user
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  const [newAuthUser] = await db
-    .insert(authUsers)
-    .values({
-      email,
-      username,
-      passwordHash: hashedPassword,
-    })
-    .returning();
-
-  // 3. Create user profile
-  const [newProfile] = await db
-    .insert(userProfiles)
-    .values({
-      authUserId: newAuthUser.id,
-      displayName: fullName || username,
-      language: "en", // default language
-      preferences: {}, // empty JSON
-    })
-    .returning();
-
-  // 4. Create wallet for profile
-  await db.insert(userWallets).values({
-    userProfileId: newProfile.id,
-    nwtBalance: 0,
-    nwtLockedBalance: 0,
-    kycStatus: "none",
-  });
-
-  // 5. Sign JWT token
-  const token = jwt.sign(
-    { id: newAuthUser.id, email: newAuthUser.email },
-    JWT_SECRET,
-    {
-      expiresIn: "7d",
+    if (existingUser) {
+      return res.status(400).json({ message: "User already exists" });
     }
-  );
 
-  return res.status(201).json({
-    token,
-    user: {
-      id: newAuthUser.id,
-      email: newAuthUser.email,
-      username: newAuthUser.username,
-      profile: {
-        id: newProfile.id,
-        displayName: newProfile.displayName,
-      },
-    },
-  });
+    const [user] = await db
+      .insert(authUsers)
+      .values({
+        email,
+        username: email.split("@")[0],
+        passwordHash: "",
+        emailVerified: true,
+        isActive: true,
+      })
+      .returning();
+
+    // Generate JWT
+    const jwtToken = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: "7d" });
+
+    return res.json({ token: jwtToken, user });
+  } catch (err) {
+    console.error(err);
+    return res.status(401).json({ message: "Google signup failed" });
+  }
 };
+
+console.log(jwt?.sign);
+
+export const googleLoginController = async (req: any, res: any) => {
+  try {
+    const { idToken } = req.body;
+
+    if (!idToken) {
+      return res.status(400).json({ error: "Google ID token required" });
+    }
+
+    // ✅ verify token with Google
+    const googleUser = await verifyGoogleToken(idToken);
+
+    // proceed with login
+    const { token, user } = await loginWithGoogle(googleUser);
+    return res.status(200).json({ token, user });
+  } catch (err: any) {
+    return res.status(400).json({ message: err.message });
+  }
+};
+
+export async function verifyGoogleToken(idToken: string) {
+  try {
+    const ticket = await client.verifyIdToken({
+      idToken,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+
+    const payload = ticket.getPayload();
+    if (!payload) throw new Error("Invalid Google token");
+
+    return {
+      email: payload.email!,
+      fullName: payload.name || "",
+      picture: payload.picture || "",
+      googleId: payload.sub,
+    };
+  } catch (error) {
+    throw new Error("Failed to verify Google token");
+  }
+}
