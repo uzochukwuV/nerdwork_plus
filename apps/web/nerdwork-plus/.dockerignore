@@ -1,0 +1,18 @@
+# Ignore dependencies
+node_modules
+.pnpm-store
+.pnpm
+
+# Ignore build caches
+**/.next/cache
+
+# Ignore system/IDE junk
+.git
+.DS_Store
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Ignore env files (keep them secret)
+.env
+.env.*
