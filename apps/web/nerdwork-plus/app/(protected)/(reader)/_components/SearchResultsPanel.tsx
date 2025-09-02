@@ -61,7 +61,10 @@ const SearchResultsPanel = ({ query }: SearchResultsPanelProps) => {
       {!isLoading && results.length > 0 && (
         <>
           <div className="p-4 border-b border-[#FFFFFF0D]">
-            <Link href={`/r/search?q=${query}`} className="hover:underline">
+            <Link
+              href={`/r/search?q=${encodeURIComponent(query)}`}
+              className="hover:underline"
+            >
               See all results
             </Link>
           </div>
