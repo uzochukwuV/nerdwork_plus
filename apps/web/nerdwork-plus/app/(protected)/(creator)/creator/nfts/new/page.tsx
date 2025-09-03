@@ -79,7 +79,7 @@ const NewNFTPage = () => {
     <>
       <main className="max-w-[1000px] mx-auto px-5 font-inter py-5">
         <Link
-          href={"/creator/comics/nfts"}
+          href={"/creator/nfts"}
           className="text-nerd-muted hover:text-white"
         >
           <button className="flex items-center cursor-pointer gap-2.5 text-sm font-medium">
