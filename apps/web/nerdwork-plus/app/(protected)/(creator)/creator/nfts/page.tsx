@@ -1,6 +1,7 @@
 import NFTsEmptyState from "@/app/(protected)/(creator)/_components/nfts/NFTsEmptyState";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
+import Link from "next/link";
 import React from "react";
 
 const NFTsPage = () => {
@@ -13,9 +14,11 @@ const NFTsPage = () => {
             Welcome back, Creatorba09! Manage your comic series
           </p>
         </div>
-        <Button variant={"secondary"}>
-          <Plus /> New Collectible
-        </Button>
+        <Link href={"/creator/nfts/new"} className="max-md:w-full">
+          <Button variant={"secondary"}>
+            <Plus /> New Collectible
+          </Button>
+        </Link>
       </section>
       <NFTsEmptyState />
     </main>
