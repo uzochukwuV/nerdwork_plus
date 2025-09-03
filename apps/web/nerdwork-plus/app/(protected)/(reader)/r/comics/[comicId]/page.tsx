@@ -30,9 +30,7 @@ const ComicInterface = ({
           <section className="flex max-md:flex-col-reverse max-md:pt-20 justify-between min-h-[70vh] font-inter -mb-px max-md:gap-6 md:gap-8 items-center px-5">
             <section className="max-w-[445px] space-y-7">
               <div className="flex flex-col gap-6">
-                <h1 className="text-5xl font-bold sticky top-0">
-                  {comic?.title}
-                </h1>
+                <h1 className="text-5xl font-bold">{comic?.title}</h1>
                 <p className="font-semibold capitalize">
                   {comic?.rating} Rating, {comic?.chapters} chapters,{" "}
                   {comic?.genres && comic?.genres[0]}

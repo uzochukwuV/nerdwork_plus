@@ -108,10 +108,13 @@ const ReaderNav = () => {
           </div>
 
           <div className="flex justify-between items-stretch gap-3 text-sm">
-            <button className="bg-[#1D1E21] cursor-pointer px-3 py-1.5 rounded-md flex items-center gap-2">
+            <Link
+              href={"/r/wallet"}
+              className="bg-[#1D1E21] cursor-pointer px-3 py-1.5 rounded-md flex items-center gap-2"
+            >
               <CreditCard size={16} /> 100{" "}
               <Image src={NWT} width={16} height={16} alt="nwt" />
-            </button>
+            </Link>
             <button className="bg-[#1D1E21] cursor-pointer px-3 py-1.5 rounded-md flex items-center gap-1">
               <span className="h-7 w-7 rounded-full bg-blue-400"></span>{" "}
               0xDEAF...fB8B
@@ -156,17 +159,20 @@ const ReaderNav = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="bg-[#1D1E21] text-white border-0 mx-5 w-[250px] mt-2">
               <DropdownMenuItem>
-                <Link className="flex items-center gap-3" href={""}>
+                <Link className="flex items-center gap-3" href={"/r/comics"}>
                   <LibraryBig className="text-white" /> Comics
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link className="flex items-center gap-3" href={""}>
+                <Link
+                  className="flex items-center gap-3"
+                  href={"/r/marketplace"}
+                >
                   <ShoppingBag className="text-white" /> Marketplace
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link className="flex items-center gap-3" href={""}>
+                <Link className="flex items-center gap-3" href={"/r/library"}>
                   <Book className="text-white" /> Library
                 </Link>
               </DropdownMenuItem>
@@ -176,7 +182,7 @@ const ReaderNav = () => {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link className="flex items-center gap-3" href={""}>
+                <Link className="flex items-center gap-3" href={"/r/wallet"}>
                   <Wallet2 className="text-white" /> Wallet
                 </Link>
               </DropdownMenuItem>
@@ -193,7 +199,7 @@ const ReaderNav = () => {
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
-                <Link className="flex items-center gap-3" href={""}>
+                <Link className="flex items-center gap-3" href={"/onboarding"}>
                   <Plus className="text-white" /> Become a Creator
                 </Link>
               </DropdownMenuItem>
