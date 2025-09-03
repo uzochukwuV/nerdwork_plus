@@ -14,11 +14,9 @@ import Success from "@/assets/sucess.svg";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import SpinLoader from "@/components/loader";
-import { Input } from "@/components/ui/input"; // Assuming you have this component
 import { SetPinForm } from "@/app/(protected)/(reader)/_components/SetPinForm";
 import { EnterPinForm } from "./EnterPinForm";
 
-// Update the type to include the new steps
 type ModalStep = "form" | "setPin" | "enterPin" | "loading" | "success";
 
 const ComicPaymentFlow = ({ chapter }: { chapter: Chapter }) => {
