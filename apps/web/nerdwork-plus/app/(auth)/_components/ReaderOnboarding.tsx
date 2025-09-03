@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { ReaderGenres } from "./ReaderGenres";
 import { ReaderForm } from "./ReaderForm";
-// import { SetPinForm } from "./SetPinForm";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
@@ -38,24 +37,12 @@ export default function ReaderOnboardingFlow() {
     }, 3000);
   };
 
-  // const handleSetPin = (pin: string) => {
-  //   setFormData((prev) => ({ ...prev, pin }));
-  //   console.log("Final Reader Data:", { ...formData, pin });
-  //   toast.success("Account setup complete!");
-  //   // Here you would typically redirect the user
-  //   setTimeout(() => {
-  //     router.push("/r/comics");
-  //   }, 3000);
-  // };
-
   const renderStep = () => {
     switch (step) {
       case 1:
         return <ReaderForm onNext={handleFinishProfile} />;
       case 2:
         return <ReaderGenres onSelectGenres={handleSelectGenres} />;
-      // case 3:
-      //   return <SetPinForm onNext={handleSetPin} />;
       default:
         return null;
     }
