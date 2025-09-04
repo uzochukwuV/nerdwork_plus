@@ -45,3 +45,15 @@ export type NFTCollectible = {
   price: number;
   commission: number;
 };
+
+export interface User {
+  id: string;
+  first_name: string | null;
+  last_name: string | null;
+  email: string;
+  profile_picture: string | null;
+  is_verified: boolean;
+  google_id: string | null;
+  role?: string;
+  isNewUser?: boolean;
+}
