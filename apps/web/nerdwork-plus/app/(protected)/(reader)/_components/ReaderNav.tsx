@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "@/assets/nerdwork.png";
 import NWT from "@/assets/nwt.svg";
 import {
@@ -57,6 +57,31 @@ const ReaderNav = () => {
 
   const [searchQuery, setSearchQuery] = React.useState("");
   const [showResults, setShowResults] = React.useState(false);
+  const [showNavbar, setShowNavbar] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const isReadingRoute = /^\/r\/comics\/[^/]+\/chapter\/[^/]+$/.test(pathname);
+
+  useEffect(() => {
+    if (!isReadingRoute) {
+      setShowNavbar(true);
+      return;
+    }
+
+    const handleScroll = () => {
+      if (window.scrollY > lastScrollY && window.scrollY > 100) {
+        setShowNavbar(false);
+      } else {
+        setShowNavbar(true);
+      }
+      setLastScrollY(window.scrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [lastScrollY, isReadingRoute]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value;
@@ -78,7 +103,11 @@ const ReaderNav = () => {
 
   return (
     <>
-      <nav className="max-md:hidden z-30 bg-[#151515] border-b border-nerd-default fixed right-0 left-0 w-full font-inter max-2xl:px-5">
+      <nav
+        className={`max-md:hidden transition-transform duration-300 ${
+          showNavbar ? "translate-y-0" : "-translate-y-full"
+        } z-30 bg-[#151515] border-b border-nerd-default fixed right-0 left-0 w-full font-inter max-2xl:px-5`}
+      >
         <section className="max-w-[1200px] mx-auto flex gap-2 justify-between items-center h-[76px]">
           <div className="flex justify-between items-center gap-10">
             <Link href={"/"}>
@@ -130,7 +159,11 @@ const ReaderNav = () => {
         </section>
       </nav>
 
-      <nav className="md:hidden z-30 fixed right-0 left-0 bg-[#151515] border-b border-nerd-default font-inter flex justify-between items-center h-[68px] px-5">
+      <nav
+        className={`md:hidden transition-transform duration-300 ${
+          showNavbar ? "translate-y-0" : "-translate-y-full"
+        } z-30 fixed right-0 left-0 bg-[#151515] border-b border-nerd-default font-inter flex justify-between items-center h-[68px] px-5`}
+      >
         <Link href={"/"}>
           <Image src={Logo} width={120} height={24} alt="Nerdwork logo" />
         </Link>

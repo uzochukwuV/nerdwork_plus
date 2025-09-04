@@ -3,6 +3,7 @@
 import { Chapter } from "@/lib/types";
 import { ColumnDef } from "@tanstack/react-table";
 import ComicPaymentFlow from "../../../_components/ComicPaymentFlow";
+import Link from "next/link";
 
 export const columns: ColumnDef<Chapter>[] = [
   {
@@ -51,7 +52,12 @@ export const columns: ColumnDef<Chapter>[] = [
       return (
         <div className="text-center">
           {row.original.read ? (
-            <p>Read</p>
+            <Link
+              className="cursor-pointer hover:opacity-75"
+              href={`/r/comics/${row.original.id}/chapter/${row.original.id}`}
+            >
+              Read
+            </Link>
           ) : (
             <ComicPaymentFlow chapter={row.original} />
           )}
