@@ -17,6 +17,7 @@ export const googleAuth = async (idToken: string) => {
       status: response?.status ?? 200,
     };
   } catch (error: unknown) {
+    console.error(error);
     if (axios.isAxiosError(error)) {
       return {
         success: false,

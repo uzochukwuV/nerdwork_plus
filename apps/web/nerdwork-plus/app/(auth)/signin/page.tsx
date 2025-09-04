@@ -40,7 +40,7 @@ const SignUpPage = () => {
             }
           }}
         >
-          <Image src={Google} width={16} height={16} alt="Google logo" />
+          <Image src={Google} width={18} height={18} alt="Google logo" />
           Continue with Google
         </LoadingButton>
       </section>
