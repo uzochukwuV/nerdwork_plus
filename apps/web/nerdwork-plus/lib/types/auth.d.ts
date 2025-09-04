@@ -1,17 +1,22 @@
+//auth.d.ts
 import { Session, type DefaultSession } from "next-auth";
 import { JWT } from "next-auth/jwt";
 
 export interface CustomJWT extends JWT {
-  id: string;
-  email?: string;
-  token?: string;
-  first_name?: string | null;
-  last_name?: string | null;
-  profile_picture?: string | null;
-  is_verified?: boolean;
+  user: {
+    id: string;
+    email?: string;
+    username?: string;
+    firstName?: string;
+    lastName?: string;
+    profilePicture?: string;
+    isVerified?: boolean;
+    googleId?: string | null;
+    role?: string;
+    isNewUser?: boolean;
+  };
   isNewUser?: boolean;
-  google_id?: string | null;
-  role?: string;
+  token?: string;
 }
 
 export interface CustomSession extends Session {
@@ -19,11 +24,11 @@ export interface CustomSession extends Session {
     id: string;
     email?: string;
     username?: string;
-    first_name?: string;
-    last_name?: string;
-    profile_picture?: string;
-    is_verified?: boolean;
-    google_id?: string | null;
+    firstName?: string;
+    lastName?: string;
+    profilePicture?: string;
+    isVerified?: boolean;
+    googleId?: string | null;
     role?: string;
     isNewUser?: boolean;
   };

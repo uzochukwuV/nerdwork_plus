@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import React from "react";
 import Logo from "@/assets/nerdwork.png";
@@ -31,8 +32,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { signOut } from "next-auth/react";
+import { toast } from "sonner";
 
 export default function CreatorNav() {
+  const handleSignOut = () => {
+    toast.success("Logging out...");
+    signOut({ callbackUrl: "/signin" });
+  };
   return (
     <>
       <nav className="max-md:hidden max-w-[1300px] mx-auto font-inter flex gap-2 justify-between items-center h-[76px] max-2xl:px-5">
@@ -93,7 +100,12 @@ export default function CreatorNav() {
                   </Link>
                 </MenubarItem>
                 <MenubarSeparator />
-                <MenubarItem className="text-[#707073]">Logout</MenubarItem>
+                <MenubarItem
+                  onClick={handleSignOut}
+                  className="text-[#707073] cursor-pointer"
+                >
+                  Logout
+                </MenubarItem>
               </MenubarContent>
             </MenubarMenu>
           </Menubar>
@@ -159,7 +171,10 @@ export default function CreatorNav() {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-[#707073]">
+              <DropdownMenuItem
+                onClick={handleSignOut}
+                className="text-[#707073] cursor-pointer"
+              >
                 Logout
               </DropdownMenuItem>
             </DropdownMenuContent>

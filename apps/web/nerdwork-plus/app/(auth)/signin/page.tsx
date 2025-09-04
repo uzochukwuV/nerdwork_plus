@@ -1,17 +1,26 @@
 "use client";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 import Logo from "@/assets/nerdwork.png";
 import Google from "@/assets/socials/google.svg";
 import Link from "next/link";
 import { LoadingButton } from "@/components/ui/LoadingButton";
-import { signIn } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
+import { signIn, useSession } from "next-auth/react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const SignUpPage = () => {
   const [isLoading, setIsLoading] = React.useState(false);
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") ?? "/onboarding";
+  const router = useRouter();
+
+  const { status, data: session } = useSession();
+
+  useEffect(() => {
+    if (status === "authenticated" && session) {
+      router.push("/onboarding");
+    }
+  }, [status, session, router]);
 
   return (
     <main className="bg-[#171719] min-h-screen w-full font-inter text-white flex flex-col items-center justify-between py-20 px-5">
