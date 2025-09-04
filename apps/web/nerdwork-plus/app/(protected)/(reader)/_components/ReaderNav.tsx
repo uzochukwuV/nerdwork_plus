@@ -12,6 +12,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarSeparator,
+  MenubarTrigger,
+} from "@/components/ui/menubar";
+import {
   Popover,
   PopoverContent,
   PopoverTrigger,
@@ -148,6 +156,51 @@ const ReaderNav = () => {
               <span className="h-7 w-7 rounded-full bg-blue-400"></span>{" "}
               0xDEAF...fB8B
             </button>
+            <Menubar className="bg-[#1D1E21] font-inter outline-none border-none ring-0 rounded-full">
+              <MenubarMenu>
+                <MenubarTrigger className="bg-[#1D1E21] data-[state=open]:bg-none h-8 w-8 flex justify-center items-center cursor-pointer rounded-full">
+                  <Menu size={16} strokeWidth={2} absoluteStrokeWidth={true} />
+                </MenubarTrigger>
+                <MenubarContent className="bg-[#1D1E21] text-white border-0 absolute -right-[30px]">
+                  <MenubarItem>
+                    <Link className="flex items-center gap-3" href={""}>
+                      <User2 className="text-white" />
+                      Profile
+                    </Link>
+                  </MenubarItem>
+                  <MenubarItem>
+                    <Link
+                      className="flex items-center gap-3"
+                      href={"/r/wallet"}
+                    >
+                      <Wallet2 className="text-white" /> Wallet
+                    </Link>
+                  </MenubarItem>
+                  <MenubarSeparator />
+                  <MenubarItem>
+                    <Link
+                      className="flex items-center gap-3"
+                      href={"/onboarding"}
+                    >
+                      <Plus className="text-white" /> Become a Creator
+                    </Link>
+                  </MenubarItem>
+                  <MenubarSeparator />
+                  {/* <MenubarItem>
+                    <Link className="flex items-center gap-3" href={""}>
+                      <UserCog className="text-white" /> Account Settings
+                    </Link>
+                  </MenubarItem>
+                  <MenubarItem>
+                    <Link className="flex items-center gap-3" href={""}>
+                      <HelpCircle className="text-white" /> Help Centre
+                    </Link>
+                  </MenubarItem>
+                  <MenubarSeparator /> */}
+                  <MenubarItem className="text-[#707073]">Logout</MenubarItem>
+                </MenubarContent>
+              </MenubarMenu>
+            </Menubar>
           </div>
         </section>
       </nav>
