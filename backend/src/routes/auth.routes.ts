@@ -1,36 +1,12 @@
 import { Router } from "express";
-<<<<<<< HEAD
-import {
-  googleLoginController,
-  googleSignup,
-} from "../controller/auth.controller";
-=======
-<<<<<<< HEAD
-import { signup, login, signup2 } from "../controller/auth.controller";
-=======
-import { signup, login } from "../controller/auth.js";
-import { authenticate } from "../middleware/common/auth.js";
-import { getCurrentUser } from "../controller/auth.js";
->>>>>>> main
->>>>>>> main
+import { googleAuthController } from "../controller/auth.controller";
 
 const router = Router();
-
 /**
  * @swagger
  * components:
  *   schemas:
- *     GoogleSignupRequest:
- *       type: object
- *       required:
- *         - idToken
- *       properties:
- *         idToken:
- *           type: string
- *           description: Google ID token obtained from the frontend after Google Sign-In
- *           example: "eyJhbGciOiJSUzI1NiIsImtpZCI6Ijc4OT..."
- *
- *     GoogleLoginRequest:
+ *     GoogleAuthRequest:
  *       type: object
  *       required:
  *         - idToken
@@ -58,6 +34,10 @@ const router = Router();
  *             username:
  *               type: string
  *               example: comicfan2024
+ *         isNewUser:
+ *           type: boolean
+ *           description: Whether this is a new signup or an existing login
+ *           example: false
  *
  *     ErrorResponse:
  *       type: object
@@ -69,20 +49,20 @@ const router = Router();
 
 /**
  * @swagger
- * /auth/signup:
+ * /auth/signin:
  *   post:
- *     summary: Sign up with Google
- *     description: Create a new user account using Google authentication. Returns a JWT and user info.
+ *     summary: Authenticate with Google
+ *     description: Sign in with Google. If user exists → logs in. If not → signs up and returns JWT, user info, and isNewUser flag.
  *     tags: [Authentication]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/GoogleSignupRequest'
+ *             $ref: '#/components/schemas/GoogleAuthRequest'
  *     responses:
- *       201:
- *         description: User account created successfully
+ *       200:
+ *         description: Authentication successful
  *         content:
  *           application/json:
  *             schema:
@@ -93,12 +73,6 @@ const router = Router();
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
- *       409:
- *         description: User already exists
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
  *       500:
  *         description: Internal server error
  *         content:
@@ -106,52 +80,6 @@ const router = Router();
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  */
-router.post("/signup", googleSignup);
+router.post("/signin", googleAuthController);
 
-/**
- * @swagger
- * /auth/login:
- *   post:
- *     summary: Login with Google
- *     description: Authenticate an existing user using Google Sign-In. Returns a JWT and user info.
- *     tags: [Authentication]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/GoogleLoginRequest'
- *     responses:
- *       200:
- *         description: Login successful
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/AuthResponse'
- *       401:
- *         description: User not found or invalid token
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
- *       400:
- *         description: Missing Google ID token
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
- *       500:
- *         description: Internal server error
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
- */
-router.post("/login", googleLoginController);
-
-<<<<<<< HEAD
-=======
-router.get("/me", authenticate, getCurrentUser);
-
->>>>>>> main
 export default router;

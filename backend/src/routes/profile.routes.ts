@@ -2,20 +2,21 @@ import express from "express";
 import {
   addCreatorProfile,
   addReaderProfile,
-  getProfile,
+  getCreatorProfile,
+  getReaderProfile,
 } from "../controller/profile.controller";
 
 const router = express.Router();
 
 /**
- * @route   POST /api/profile/creator
+ * @route   POST /profile/creator
  * @desc    Create a Creator Profile
  * @access  Private (after signup)
  */
 router.post("/creator", addCreatorProfile);
 
 /**
- * @route   POST /api/profile/reader
+ * @route   POST /profile/reader
  * @desc    Create a Reader Profile
  * @access  Private (after signup)
  */
@@ -23,12 +24,20 @@ router.post("/creator", addCreatorProfile);
 router.post("/reader", addReaderProfile);
 
 /**
- * @route   GET /api/profile/
- * @desc    Get Profile
+ * @route   GET /profile/creator
+ * @desc    Get Creator Profile
  * @access  Private (Jwt required)
  */
 
-router.post("/", getProfile);
+router.get("/creator", getCreatorProfile);
+
+/**
+ * @route   GET /profile/reader
+ * @desc    Get Reader Profile
+ * @access  Private (Jwt required)
+ */
+
+router.get("/reader", getReaderProfile);
 
 /**
  * @swagger
@@ -39,7 +48,7 @@ router.post("/", getProfile);
 
 /**
  * @swagger
- * /api/profile/creator:
+ * /profile/creator:
  *   post:
  *     summary: Create a creator profile
  *     tags: [Profiles]
@@ -72,8 +81,10 @@ router.post("/", getProfile);
  *                 type: string
  *                 example: "Comic creator focusing on sci-fi and fantasy"
  *               genres:
- *                 type: string
- *                 example: "sci-fi,fantasy"
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 example: ["fantasy", "sci-fi"]
  *     responses:
  *       200:
  *         description: Creator profile successfully created
@@ -90,10 +101,49 @@ router.post("/", getProfile);
 
 /**
  * @swagger
- * /profile:
+ * /profile/reader:
+ *   post:
+ *     summary: Create a reader profile
+ *     tags: [Profiles]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - userId
+ *               - genres
+ *             properties:
+ *               userId:
+ *                 type: string
+ *                 format: uuid
+ *                 example: "5c2f7df9-1d21-49f3-90d6-65b3e94bbfc2"
+ *               genres:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 example: ["romance", "adventure", "sci-fi"]
+ *     responses:
+ *       200:
+ *         description: Reader profile successfully created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 profile:
+ *                   $ref: '#/components/schemas/ReaderProfile'
+ *       400:
+ *         description: Failed to create reader profile
+ */
+
+/**
+ * @swagger
+ * /profile/creator:
  *   get:
- *     summary: Get the authenticated user's profile
- *     description: Retrieves the profile of the logged-in user (creator or reader) based on the JWT provided in the Authorization header.
+ *     summary: Get The authenticated creator's profile
+ *     description: Retrieves the profile of the logged-in user (creator) based on the JWT provided in the Authorization header.
  *     tags:
  *       - Profile
  *     security:
@@ -130,43 +180,37 @@ router.post("/", getProfile);
 
 /**
  * @swagger
- * /api/profile/reader:
- *   post:
- *     summary: Create a reader profile
- *     tags: [Profiles]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - userId
- *               - genres
- *               - pin
- *             properties:
- *               userId:
- *                 type: string
- *                 format: uuid
- *                 example: "5c2f7df9-1d21-49f3-90d6-65b3e94bbfc2"
- *               genres:
- *                 type: string
- *                 example: "romance,adventure"
- *               pin:
- *                 type: string
- *                 example: "1234"
+ * /profile/reader:
+ *   get:
+ *     summary: Get The authenticated reader's profile
+ *     description: Retrieves the profile of the logged-in user (reader) based on the JWT provided in the Authorization header.
+ *     tags:
+ *       - Profile
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: Reader profile successfully created
+ *         description: Successfully retrieved profile
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
+ *                 role:
+ *                   type: string
+ *                   example: creator
  *                 profile:
- *                   $ref: '#/components/schemas/ReaderProfile'
- *       400:
- *         description: Failed to create reader profile
+ *                   type: object
+ *                   example:
+ *                     id: "uuid"
+ *                     userId: "uuid"
+ *                     genres: "fantasy, sci-fi"
+ *                     walletId: "0x1234abcd"
+ *                     createdAt: "2025-08-29T12:00:00Z"
+ *       401:
+ *         description: Unauthorized (missing or invalid token)
+ *       404:
+ *         description: Profile not found
  */
 
 /**

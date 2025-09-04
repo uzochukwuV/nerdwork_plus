@@ -32,13 +32,13 @@ export const addCreatorProfile = async (req, res) => {
 
 export const addReaderProfile = async (req, res) => {
   try {
-    const { userId, genres, pin } = req.body;
+    const { userId, genres } = req.body;
 
     // Generate walletId (12 chars)
-    const walletId = crypto.randomBytes(12).toString("hex");
+    const walletId = crypto.randomBytes(6).toString("hex");
 
     // Hash pin
-    const pinHash = crypto.createHash("sha256").update(pin).digest("hex");
+    // const pinHash = crypto.createHash("sha256").update(pin).digest("hex");
 
     const [profile] = await db
       .insert(readerProfile)
@@ -46,7 +46,6 @@ export const addReaderProfile = async (req, res) => {
         userId,
         genres,
         walletId,
-        pinHash,
       })
       .returning();
 
@@ -57,7 +56,7 @@ export const addReaderProfile = async (req, res) => {
   }
 };
 
-export const getProfile = async (req, res) => {
+export const getCreatorProfile = async (req, res) => {
   try {
     const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -79,7 +78,25 @@ export const getProfile = async (req, res) => {
       return res.json({ role: "creator", profile: creator });
     }
 
-    // Try fetching reader profile
+    return res.status(404).json({ message: "Profile not found" });
+  } catch (err) {
+    console.error(err);
+    return res.status(401).json({ message: "Invalid or expired token" });
+  }
+};
+
+export const getReaderProfile = async (req, res) => {
+  try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const token = authHeader.split(" ")[1];
+    const decoded: any = jwt.verify(token, process.env.JWT_SECRET!);
+
+    const userId = decoded.userId;
+
     const [reader] = await db
       .select()
       .from(readerProfile)
