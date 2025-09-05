@@ -40,6 +40,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { usePathname } from "next/navigation";
 import SearchResultsPanel from "./SearchResultsPanel";
+import { signOut } from "next-auth/react";
+import { toast } from "sonner";
 
 const ReaderNav = () => {
   const pathname = usePathname();
@@ -54,6 +56,11 @@ const ReaderNav = () => {
   const isActive = (path: string) => {
     if (pathname.startsWith(path) && pathname !== "/") return true;
     return false;
+  };
+
+  const handleSignOut = () => {
+    toast.success("Logging out...");
+    signOut({ callbackUrl: "/signin" });
   };
 
   const [searchQuery, setSearchQuery] = React.useState("");
@@ -290,7 +297,10 @@ const ReaderNav = () => {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-[#707073]">
+              <DropdownMenuItem
+                onClick={handleSignOut}
+                className="text-[#707073] cursor-pointer"
+              >
                 Logout
               </DropdownMenuItem>
             </DropdownMenuContent>

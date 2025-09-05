@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import React from "react";
+import { toast } from "sonner";
 
 const Onboarding = () => {
   const [selectedRole, setSelectedRole] = useState<"creator" | "reader" | null>(
@@ -16,7 +17,7 @@ const Onboarding = () => {
       // Handle the role selection logic here, e.g., storing it in a cookie, context, or database
       router.push(`/onboarding/${selectedRole}`);
     } else {
-      alert("Please choose a role to continue.");
+      toast.info("Please choose a role to continue.");
     }
   };
   return (

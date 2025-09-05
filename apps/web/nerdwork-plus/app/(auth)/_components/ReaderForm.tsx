@@ -14,7 +14,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Eye } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useSession } from "next-auth/react";
 
 const finishProfileSchema = z.object({
   fullName: z
@@ -27,6 +28,8 @@ interface ReaderFormProps {
 }
 
 export function ReaderForm({ onNext }: ReaderFormProps) {
+  const { data: session } = useSession();
+  const user = session?.user;
   const form = useForm<z.infer<typeof finishProfileSchema>>({
     resolver: zodResolver(finishProfileSchema),
     defaultValues: {
@@ -36,8 +39,6 @@ export function ReaderForm({ onNext }: ReaderFormProps) {
 
   const onSubmit = (data: z.infer<typeof finishProfileSchema>) => {
     onNext(data);
-    // Redirect to the dashboard
-    // router.push("/dashboard");
   };
 
   return (
@@ -49,9 +50,19 @@ export function ReaderForm({ onNext }: ReaderFormProps) {
         <p className="text-sm text-[#707073] mb-8">Add your name and avatar</p>
 
         <div className="flex justify-center mb-6">
-          <div className="p-4 rounded-full bg-[#292A2E] border-2 border-[#292A2E]">
-            <Eye className="w-6 h-6 text-gray-400" />
-          </div>
+          <Avatar>
+            {user?.profilePicture && (
+              <AvatarImage
+                src={user?.profilePicture}
+                alt={`${user.email} profile image`}
+              />
+            )}
+            {user?.email && (
+              <AvatarFallback className="uppercase">
+                {user?.email[0]}
+              </AvatarFallback>
+            )}
+          </Avatar>
         </div>
 
         <Form {...form}>

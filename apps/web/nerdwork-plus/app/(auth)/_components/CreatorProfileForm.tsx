@@ -3,7 +3,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -15,7 +14,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Eye } from "lucide-react";
+import { useSession } from "next-auth/react";
+import { createCreatorProfile } from "@/actions/profile.actions";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { LoadingButton } from "@/components/ui/LoadingButton";
+import { useState } from "react";
+import { toast } from "sonner";
 
 const creatorProfileSchema = z.object({
   fullName: z
@@ -31,6 +35,10 @@ const creatorProfileSchema = z.object({
 });
 
 export function CreatorProfileForm({ onNext }: { onNext: () => void }) {
+  const { data: session, update } = useSession();
+  const user = session?.user;
+  const [loading, setLoading] = useState(false);
+
   const form = useForm<z.infer<typeof creatorProfileSchema>>({
     resolver: zodResolver(creatorProfileSchema),
     defaultValues: {
@@ -41,9 +49,29 @@ export function CreatorProfileForm({ onNext }: { onNext: () => void }) {
     },
   });
 
-  function onSubmit(data: z.infer<typeof creatorProfileSchema>) {
-    console.log("Creator profile data:", data);
-    onNext();
+  async function onSubmit(data: z.infer<typeof creatorProfileSchema>) {
+    setLoading(true);
+
+    try {
+      const response = await createCreatorProfile(data);
+
+      if (!response?.success) {
+        toast.error(
+          response?.message ?? "An error occurred while submitting the form."
+        );
+        return;
+      }
+
+      await update({ cProfile: true });
+
+      toast.success("Profile Updated Successfully!");
+      onNext();
+    } catch (err) {
+      toast.error("An unexpected error occurred.");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -57,9 +85,19 @@ export function CreatorProfileForm({ onNext }: { onNext: () => void }) {
         </p>
 
         <div className="flex justify-center mb-6">
-          <div className="p-4 rounded-full bg-[#1D1E21] border-2 border-[#292A2E]">
-            <Eye className="w-6 h-6 text-gray-400" />
-          </div>
+          <Avatar>
+            {user?.profilePicture && (
+              <AvatarImage
+                src={user?.profilePicture}
+                alt={`${user.email} profile image`}
+              />
+            )}
+            {user?.email && (
+              <AvatarFallback className="uppercase">
+                {user?.email[0]}
+              </AvatarFallback>
+            )}
+          </Avatar>
         </div>
 
         <Form {...form}>
@@ -135,9 +173,15 @@ export function CreatorProfileForm({ onNext }: { onNext: () => void }) {
                 </FormItem>
               )}
             />
-            <Button type="submit" variant={"primary"} className="w-full mt-4">
+            <LoadingButton
+              isLoading={loading}
+              loadingText="Processing..."
+              type="submit"
+              variant={"primary"}
+              className="w-full mt-4"
+            >
               Continue
-            </Button>
+            </LoadingButton>
           </form>
         </Form>
       </div>

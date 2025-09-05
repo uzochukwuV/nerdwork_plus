@@ -4,6 +4,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import LoadingProvider from "@/components/LoadingProvider";
 import { Toaster } from "@/components/ui/sonner";
+import QueryProvider from "@/components/providers/QueryProvider";
+import { SessionProvider } from "next-auth/react";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -82,9 +84,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} ${obostar.variable} antialiased`}>
-        <LoadingProvider logoSrc={"/nerdwork.svg"} logoAlt="Nerwork Logo">
-          {children}
-        </LoadingProvider>
+        <SessionProvider>
+          <QueryProvider>
+            <LoadingProvider logoSrc={"/nerdwork.svg"} logoAlt="Nerwork Logo">
+              {children}
+            </LoadingProvider>
+          </QueryProvider>
+        </SessionProvider>
         <Toaster richColors />
       </body>
     </html>
