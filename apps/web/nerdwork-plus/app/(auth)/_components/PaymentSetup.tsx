@@ -7,6 +7,7 @@ import solflareLogo from "@/assets/creator/solflare.svg";
 import phantomLogo from "@/assets/creator/phantom.svg";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export function PaymentDetailsForm() {
   const [selectedWallet, setSelectedWallet] = useState<string | null>(null);
@@ -17,7 +18,7 @@ export function PaymentDetailsForm() {
   const walletDetected = (walletName: string) => {
     // This is a placeholder. You would implement real detection logic here.
     console.log(walletName);
-    return true; // or false based on the check
+    return false; // or false based on the check
   };
 
   const handleContinue = () => {
@@ -98,6 +99,15 @@ export function PaymentDetailsForm() {
         >
           Continue
         </Button>
+
+        <Link href={"/creator/comics"}>
+          <Button
+            variant={"outline"}
+            className="mt-4 w-full hover:bg-nerd-default hover:text-nerd-muted"
+          >
+            Skip
+          </Button>
+        </Link>
       </div>
     </div>
   );

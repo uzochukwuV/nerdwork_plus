@@ -59,28 +59,48 @@ export const comicSeriesSchema = z.object({
 
 export type ComicSeriesFormData = z.infer<typeof comicSeriesSchema>;
 
-export const chapterSchema = z.object({
-  chapterTitle: z.string().min(1, "Chapter title is required."),
-  chapterNumber: z.number().int().min(1, "Chapter number must be at least 1."),
-  summary: z.string().optional(),
-  chapterPages: z.array(z.any()).nonempty("At least one page is required."),
-  scheduledDate: z
-    .date()
-    .optional()
-    .refine(
-      (date) => {
-        if (!date) return true;
+export const chapterSchema = z
+  .object({
+    chapterTitle: z.string().min(1, "Chapter title is required."),
+    chapterNumber: z
+      .number()
+      .int()
+      .min(1, "Chapter number must be at least 1."),
+    summary: z.string().optional(),
+    chapterPages: z.array(z.any()).nonempty("At least one page is required."),
+    chapterType: z.enum(["free", "paid"]),
+    price: z.number().optional(),
+    scheduledDate: z
+      .date()
+      .optional()
+      .refine(
+        (date) => {
+          if (!date) return true;
 
-        // Get the start of the current day to ignore time differences
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        return date >= today;
-      },
-      {
-        message: "Date cannot be in the past.",
-      }
-    ),
-});
+          // Get the start of the current day to ignore time differences
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          return date >= today;
+        },
+        {
+          message: "Date cannot be in the past.",
+        }
+      ),
+  })
+  .superRefine((data, ctx) => {
+    // Check if chapterType is 'paid' and if price is missing or invalid
+    if (
+      data.chapterType === "paid" &&
+      (data.price === undefined || data.price <= 0)
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message:
+          "Price is required for paid chapters and must be a positive number.",
+        path: ["price"],
+      });
+    }
+  });
 
 export const nftFormSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),

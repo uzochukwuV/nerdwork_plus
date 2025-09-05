@@ -13,6 +13,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Globe } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowLeft, CalendarIcon, Eye, Save, Send } from "lucide-react";
@@ -46,6 +54,7 @@ const NewChapterPage = ({
       chapterNumber: 1,
       summary: "",
       chapterPages: [],
+      price: 0,
     },
   });
 
@@ -129,6 +138,57 @@ const NewChapterPage = ({
                   </FormItem>
                 )}
               />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="chapterType"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col gap-3 mb-5">
+                    <FormLabel className="text-white">Chapter Type *</FormLabel>
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <FormControl>
+                        <SelectTrigger className="w-full bg-[#1D1E21] border-[#292A2E] text-white">
+                          <Globe />
+                          <SelectValue placeholder="Choose Chapter Type" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent className="bg-[#1D1E21] border-none text-white">
+                        <SelectItem value={"free"}>Free</SelectItem>
+                        <SelectItem value={"paid"}>Paid</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {form.watch("chapterType") == "paid" && (
+                <FormField
+                  control={form.control}
+                  name="price"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col gap-3 mb-5">
+                      <FormLabel className="text-white">
+                        Price *{" "}
+                        <span className="text-nerd-muted">(In NWT)</span>
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="number"
+                          onChange={(e) =>
+                            field.onChange(Number(e.target.value))
+                          }
+                          value={field.value}
+                          className="bg-[#1D1E21] border-[#292A2E] text-white"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
             </div>
 
             <FormField

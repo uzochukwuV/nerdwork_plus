@@ -51,7 +51,7 @@ const PurchaseTokenModal = () => {
       <Dialog>
         <form>
           <DialogTrigger asChild>
-            <Button variant="outline">
+            <Button variant="primary">
               <WalletCardsIcon size={16} /> Buy NWT
             </Button>
           </DialogTrigger>

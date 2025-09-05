@@ -72,7 +72,7 @@ const ComicDetailsPage = ({
               </Link>
             </Button>
             {
-              <Button className="max-lg:hidden">
+              <Button className="hidden">
                 <Plus /> Bulk Upload
               </Button>
             }
