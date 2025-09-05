@@ -47,7 +47,7 @@ const CreatorComics = ({ data }: { data: Comic[] }) => {
                 </p>
                 <p className="flex items-center gap-3">
                   <Calendar size={16} /> Updated{" "}
-                  {new Date(comic.updatedAt).toDateString()}
+                  {new Date(comic.updatedAt).toLocaleDateString()}
                 </p>
               </div>
             </div>
@@ -80,7 +80,7 @@ const CreatorComics = ({ data }: { data: Comic[] }) => {
                 </p>
                 <p className="flex items-center gap-3">
                   <Calendar size={16} /> Updated{" "}
-                  {new Date(comic.updatedAt).toDateString()}
+                  {new Date(comic.updatedAt).toLocaleDateString()}
                 </p>
               </div>
             </div>

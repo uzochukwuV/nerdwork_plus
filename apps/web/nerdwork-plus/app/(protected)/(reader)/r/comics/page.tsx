@@ -1,13 +1,13 @@
 "use client";
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { comicData } from "@/components/data";
+// import { comicData } from "@/components/data";
 import RComics from "../../_components/RComics";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-// import { keepPreviousData, useQuery } from "@tanstack/react-query";
-// import { getAllComicsForReader } from "@/actions/comic.actions";
-// import { Comic } from "@/lib/types";
-// import LoaderScreen from "@/components/loading-screen";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { getAllComicsForReader } from "@/actions/comic.actions";
+import { Comic } from "@/lib/types";
+import LoaderScreen from "@/components/loading-screen";
 
 const TABS = [
   "adventure",
@@ -23,24 +23,23 @@ const TABS = [
 const ReaderComics = () => {
   const [tab, setTab] = React.useState<string>("adventure");
 
-  // const {
-  //   data: comicData,
-  //   isLoading,
-  //   error,
-  // } = useQuery({
-  //   queryKey: ["comics"],
-  //   queryFn: getAllComicsForReader,
-  //   placeholderData: keepPreviousData,
-  //   refetchInterval: 2 * 60 * 1000,
-  //   refetchOnWindowFocus: true,
-  // });
+  const {
+    data: comicData,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["comics"],
+    queryFn: getAllComicsForReader,
+    placeholderData: keepPreviousData,
+    refetchInterval: 2 * 60 * 1000,
+    refetchOnWindowFocus: true,
+  });
 
-  // if (isLoading) return <LoaderScreen />;
+  if (isLoading) return <LoaderScreen />;
 
-  // const comics: Comic[] = comicData?.data.comics ?? [];
+  const comics: Comic[] = comicData?.data?.comics ?? [];
 
-  const comics = comicData ?? [];
-  const filteredComics = comics.filter((comic) => comic.genres?.includes(tab));
+  const filteredComics = comics.filter((comic) => comic.genre?.includes(tab));
 
   return (
     <div className="pt-20">

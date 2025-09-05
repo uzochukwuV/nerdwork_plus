@@ -47,7 +47,7 @@ const ComicDetailsPage = ({
   //   );
   // }
 
-  const comic = comicData?.data.comic;
+  const comic = comicData?.data?.comic;
 
   const chapters = chapterData ?? [];
   const truncatedText = comic?.description.substring(0, 200);

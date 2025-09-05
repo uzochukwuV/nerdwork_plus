@@ -7,7 +7,7 @@ export type Comic = {
   chapters: number;
   slug: string;
   updatedAt: string;
-  genres?: Array<string>;
+  genre?: Array<string>;
   rating?: string;
   isPaid?: boolean;
   isOngoing?: boolean;

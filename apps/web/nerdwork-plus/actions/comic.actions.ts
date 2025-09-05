@@ -137,7 +137,7 @@ export const getSingleComic = async (slug: string) => {
 
 export const getAllComicsForReader = async () => {
   try {
-    const response = await axiosGet("comics/all");
+    const response = await axiosGet("comics/all-comics");
 
     return {
       success: true,

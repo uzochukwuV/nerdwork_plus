@@ -165,7 +165,7 @@ const ReaderNav = () => {
               href={"/r/wallet"}
               className="bg-[#1D1E21] cursor-pointer px-3 py-1.5 rounded-md flex items-center gap-2"
             >
-              <CreditCard size={16} /> {readerProfile.walletBalance}
+              <CreditCard size={16} /> {readerProfile?.walletBalance ?? ""}
               <Image src={NWT} width={16} height={16} alt="nwt" />
             </Link>
             <button
@@ -295,7 +295,8 @@ const ReaderNav = () => {
           </Popover>
 
           <p className="bg-[#1D1E21] px-3 py-1.5 rounded-[20px] text-sm flex items-center gap-1">
-            100 <Image src={NWT} width={16} height={16} alt="nwt" />
+            {readerProfile?.walletBalance ?? ""}
+            <Image src={NWT} width={16} height={16} alt="nwt" />
           </p>
           <DropdownMenu>
             <DropdownMenuTrigger className="bg-[#1D1E21] h-8 w-8 flex justify-center items-center cursor-pointer rounded-full outline-none border-none ring-0">

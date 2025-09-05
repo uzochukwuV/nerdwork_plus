@@ -36,16 +36,15 @@ import { Calendar } from "@/components/ui/calendar";
 import { chapterSchema } from "@/lib/schema";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { use } from "react";
+import { use, useState } from "react";
 import { MultiFileUpload } from "@/app/(protected)/(creator)/_components/comics/MultiFileUpload";
+import { LoadingButton } from "@/components/ui/LoadingButton";
 
-const NewChapterPage = ({
-  params,
-}: {
-  params: Promise<{ comicId: string }>;
-}) => {
+const NewChapterPage = ({ params }: { params: Promise<{ slug: string }> }) => {
   const router = useRouter();
-  const { comicId } = use(params);
+  const { slug } = use(params);
+
+  const [loading, setLoading] = useState(false);
 
   const form = useForm<z.infer<typeof chapterSchema>>({
     resolver: zodResolver(chapterSchema),
@@ -60,28 +59,23 @@ const NewChapterPage = ({
 
   const onSubmit = (data: z.infer<typeof chapterSchema>) => {
     console.log("New Chapter data:", data);
-    // Here you would send the data to your API, likely with FormData for the files
-    const formData = new FormData();
-    formData.append("chapterTitle", data.chapterTitle);
-    formData.append("chapterNumber", data.chapterNumber.toString());
-    formData.append("summary", data.summary || "");
-    data.chapterPages.forEach((file, index) => {
-      formData.append(`chapterPages[${index}]`, file);
-    });
-    // Append the date if it's set
-    if (data.scheduledDate) {
-      formData.append("scheduledDate", data.scheduledDate.toISOString());
-    }
+
+    // if (!response?.success) {
+    //         toast.error(
+    //           response?.message ?? "An error occurred while submitting the form."
+    //         );
+    //         return;
+    //       }
 
     toast.success("Chapter created successfully");
     setTimeout(() => {
-      router.push(`/creator/comics/${comicId}`);
+      router.push(`/creator/comics/${slug}`);
     }, 3000);
   };
   return (
     <main className="max-w-[1100px] mx-auto px-5 font-inter text-white py-10">
       {/* <div className="flex flex-col text-white"> */}
-      <Link href={`/creator/comics/${comicId}`}>
+      <Link href={`/creator/comics/${slug}`}>
         <button className="flex items-center cursor-pointer gap-2.5 text-sm font-medium">
           <ArrowLeft size={16} /> back to Dashboard
         </button>
@@ -245,7 +239,7 @@ const NewChapterPage = ({
               Save as Draft
             </Button>
             {/* <div className="p-4 rounded-lg bg-[#1D1E21] border border-[#292A2E]"> */}
-            <FormField
+            {/* <FormField
               control={form.control}
               name="scheduledDate"
               render={({ field }) => (
@@ -289,18 +283,25 @@ const NewChapterPage = ({
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
             {/* </div> */}
             {form.watch("scheduledDate") ? (
-              <Button type="submit" variant={"primary"} className="">
-                <Send />
-                Schedule and Close
-              </Button>
+              // <Button type="submit" variant={"primary"} className="">
+              //   <Send />
+              //   Schedule and Close
+              // </Button>
+              <></>
             ) : (
-              <Button type="submit" variant={"primary"} className="">
+              <LoadingButton
+                isLoading={loading}
+                loadingText="Publishing..."
+                type="submit"
+                variant={"primary"}
+                className=""
+              >
                 <Send />
                 Publish Now
-              </Button>
+              </LoadingButton>
             )}
           </div>
         </form>
