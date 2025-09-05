@@ -95,7 +95,6 @@ export const createCreatorProfile = async (data: createCreatorProfileData) => {
 export const getCreatorProfile = async () => {
   try {
     const response = await axiosGet("profile/creator");
-    console.log("creator profile details: ", response.data);
 
     return {
       success: true,
@@ -126,7 +125,6 @@ export const getCreatorProfile = async () => {
 export const getReaderProfile = async () => {
   try {
     const response = await axiosGet("profile/reader");
-    console.log("reader profile details: ", response.data);
 
     return {
       success: true,

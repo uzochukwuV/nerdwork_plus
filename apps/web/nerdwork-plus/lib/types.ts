@@ -2,10 +2,11 @@ export type Comic = {
   id: number;
   image: string;
   title: string;
-  short_description: string;
+  description: string;
   status: "upcoming" | "draft" | "scheduled" | "published";
   chapters: number;
-  last_updated: string;
+  slug: string;
+  updatedAt: string;
   genres?: Array<string>;
   rating?: string;
   isPaid?: boolean;

@@ -1,13 +1,31 @@
 "use client";
 import React, { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { comicData } from "@/components/data";
 import CreatorComics from "./CreatorComics";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { getCreatorComics } from "@/actions/comic.actions";
+import { Comic } from "@/lib/types";
+import MyComicsEmptyState from "./MyComicsEmptyState";
 
 const Comics = () => {
-  const comics = comicData ?? [];
   const [tab, setTab] = useState<string>("all");
+
+  const {
+    data: comicData,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["comics"],
+    queryFn: getCreatorComics,
+    placeholderData: keepPreviousData,
+    refetchInterval: 2 * 60 * 1000,
+    refetchOnWindowFocus: true,
+  });
+
+  const comics: Comic[] = comicData?.data.comics;
+
+  if (!comics || isLoading) return <MyComicsEmptyState />;
 
   const counts = {
     all: comics.length,

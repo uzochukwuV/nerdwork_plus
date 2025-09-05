@@ -69,9 +69,6 @@ export default function CreatorNav() {
           <p className="bg-[#1D1E21] px-3 py-1.5 rounded-[20px] flex items-center gap-1">
             100 <Image src={NWT} width={16} height={16} alt="nwt" />
           </p>
-          {/* <button className="bg-[#545558] cursor-pointer rounded-full h-8 w-8 flex items-center justify-center">
-            C
-          </button> */}
           <Avatar>
             {user?.profilePicture && (
               <AvatarImage

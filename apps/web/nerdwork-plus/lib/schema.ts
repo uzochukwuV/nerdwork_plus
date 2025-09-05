@@ -48,13 +48,8 @@ export const comicSeriesSchema = z.object({
     ),
 
   coverImage: z
-    .any()
-    .refine((file) => file instanceof File, "Cover image is required.")
-    .refine((file) => file.size <= MAX_FILE_SIZE, `Max image size is 5MB.`)
-    .refine(
-      (file) => ACCEPTED_IMAGE_TYPES.includes(file.type),
-      "Only .jpg, .jpeg, .png and .webp formats are supported."
-    ),
+    .string({ message: "Cover image must be a string URL." })
+    .url({ message: "Invalid URL format." }),
 });
 
 export type ComicSeriesFormData = z.infer<typeof comicSeriesSchema>;

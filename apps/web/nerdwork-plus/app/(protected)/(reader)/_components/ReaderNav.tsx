@@ -43,10 +43,9 @@ import { usePathname } from "next/navigation";
 import SearchResultsPanel from "./SearchResultsPanel";
 import { signOut, useSession } from "next-auth/react";
 import { toast } from "sonner";
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { getReaderProfile } from "@/actions/profile.actions";
-import { Profile } from "@/lib/types/user.types";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useUserSession } from "@/lib/api/queries";
+import { Profile } from "@/lib/types/user.types";
 
 const ReaderNav = () => {
   const pathname = usePathname();
@@ -75,16 +74,9 @@ const ReaderNav = () => {
   const isReadingRoute = /^\/r\/comics\/[^/]+\/chapter\/[^/]+$/.test(pathname);
   const { data: session } = useSession();
   const user = session?.user;
+  const { profile } = useUserSession();
 
-  const { data: readerData } = useQuery({
-    queryKey: ["elections"],
-    queryFn: getReaderProfile,
-    placeholderData: keepPreviousData,
-    refetchInterval: 5 * 60 * 1000,
-    refetchOnWindowFocus: true,
-  });
-
-  const readerProfile: Profile = readerData?.data.profile ?? {};
+  const readerProfile: Profile = profile;
 
   useEffect(() => {
     if (!isReadingRoute) {
@@ -193,9 +185,11 @@ const ReaderNav = () => {
                   </AvatarFallback>
                 )}
               </Avatar>
-              {readerProfile.walletId.slice(0, 3) +
-                "..." +
-                readerProfile.walletId.slice(-3)}
+              {readerProfile?.walletId
+                ? readerProfile?.walletId.slice(0, 3) +
+                  "..." +
+                  readerProfile?.walletId.slice(-3)
+                : ""}
             </button>
             <Menubar className="bg-[#1D1E21] font-inter outline-none border-none ring-0 rounded-full">
               <MenubarMenu>

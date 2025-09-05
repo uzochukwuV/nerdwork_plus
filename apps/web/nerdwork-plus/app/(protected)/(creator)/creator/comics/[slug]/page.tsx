@@ -13,22 +13,48 @@ import ComicActions from "../../../_components/comics/DesktopComicActions";
 import MobileComicActions from "../../../_components/comics/MobileComicActions";
 import ChaptersEmptyState from "../../../_components/comics/ChaptersEmptyState";
 import ChapterComics from "../../../_components/comics/ChapterComics";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { getSingleComic } from "@/actions/comic.actions";
+import LoaderScreen from "@/components/loading-screen";
 
 const ComicDetailsPage = ({
   params,
 }: {
-  params: Promise<{ comicId: string }>;
+  params: Promise<{ slug: string }>;
 }) => {
-  const { comicId } = use(params);
-
+  const { slug } = use(params);
   const [isExpanded, setIsExpanded] = useState(false);
   const [tab, setTab] = useState<string>("all");
 
-  const chapters = chapterData ?? [];
-  const comics = comicData ?? [];
-  const comic = comics.find((c) => parseInt(comicId) === c.id);
+  const {
+    data: comicData,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["comic"],
+    queryFn: () => getSingleComic(slug),
+    placeholderData: keepPreviousData,
+    refetchInterval: 2 * 60 * 1000,
+    refetchOnWindowFocus: true,
+  });
 
-  const truncatedText = comic?.short_description.substring(0, 200);
+  if (isLoading) return <LoaderScreen />;
+
+  // if (error) {
+  //   return (
+  //     <div className="flex flex-col items-center justify-center p-10 text-center">
+  //       <p className="text-xl font-semibold">Error retrieving data</p>
+  //       <p className="mt-2 text-sm">
+  //         Try adjusting your filters or search terms.
+  //       </p>
+  //     </div>
+  //   );
+  // }
+
+  const comic = comicData?.data.comic;
+
+  const chapters = chapterData ?? [];
+  const truncatedText = comic?.description.substring(0, 200);
 
   const counts = {
     all: chapters.length,
@@ -67,7 +93,7 @@ const ComicDetailsPage = ({
           </div>
           <div className="flex gap-2 my-8 max-md:w-full max-md:justify-between">
             <Button asChild variant={"secondary"} className="max-md:w-4/5">
-              <Link href={`/creator/comics/${comicId}/add`}>
+              <Link href={`/creator/comics/${slug}/add`}>
                 <Plus /> Add Chapter
               </Link>
             </Button>
@@ -97,10 +123,10 @@ const ComicDetailsPage = ({
           </div>
           <div className="flex max-md:flex-col gap-6 md:gap-12 max-md:text-sm">
             <p className="md:hidden max-w-[505px] w-full">
-              {isExpanded ? comic?.short_description : `${truncatedText}...`}
+              {isExpanded ? comic?.description : `${truncatedText}...`}
             </p>
             <p className="max-md:hidden max-w-[505px] w-full">
-              {comic?.short_description}
+              {comic?.description}
             </p>
             <ul className={`${isExpanded ? "" : "max-md:hidden"}`}>
               <li>Fantasy, Adventure</li>

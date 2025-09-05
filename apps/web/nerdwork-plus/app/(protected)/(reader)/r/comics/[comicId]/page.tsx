@@ -37,7 +37,7 @@ const ComicInterface = ({
                 </p>
               </div>
 
-              <p>{comic?.short_description}</p>
+              <p>{comic?.description}</p>
 
               <div className="text-nerd-muted">
                 Author: <span className="text-white">John Uche</span>, Started:{" "}
