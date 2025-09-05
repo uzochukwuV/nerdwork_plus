@@ -40,8 +40,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { usePathname } from "next/navigation";
 import SearchResultsPanel from "./SearchResultsPanel";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { toast } from "sonner";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { getReaderProfile } from "@/actions/profile.actions";
+import { Profile } from "@/lib/types/user.types";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const ReaderNav = () => {
   const pathname = usePathname();
@@ -68,6 +72,18 @@ const ReaderNav = () => {
   const [showNavbar, setShowNavbar] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const isReadingRoute = /^\/r\/comics\/[^/]+\/chapter\/[^/]+$/.test(pathname);
+  const { data: session } = useSession();
+  const user = session?.user;
+
+  const { data: readerData } = useQuery({
+    queryKey: ["elections"],
+    queryFn: getReaderProfile,
+    placeholderData: keepPreviousData,
+    refetchInterval: 5 * 60 * 1000,
+    refetchOnWindowFocus: true,
+  });
+
+  const readerProfile: Profile = readerData?.data.profile ?? {};
 
   useEffect(() => {
     if (!isReadingRoute) {
@@ -159,9 +175,26 @@ const ReaderNav = () => {
               <CreditCard size={16} /> 100{" "}
               <Image src={NWT} width={16} height={16} alt="nwt" />
             </Link>
-            <button className="bg-[#1D1E21] cursor-pointer px-3 py-1.5 rounded-md flex items-center gap-1">
-              <span className="h-7 w-7 rounded-full bg-blue-400"></span>{" "}
-              0xDEAF...fB8B
+            <button
+              type="button"
+              className="bg-[#1D1E21] cursor-pointer px-3 py-1.5 rounded-md flex items-center gap-1"
+            >
+              <Avatar>
+                {user?.profilePicture && (
+                  <AvatarImage
+                    src={user?.profilePicture}
+                    alt={`${user.email} profile image`}
+                  />
+                )}
+                {user?.email && (
+                  <AvatarFallback className="uppercase">
+                    {user?.email[0]}
+                  </AvatarFallback>
+                )}
+              </Avatar>
+              {readerProfile.walletId.slice(0, 3) +
+                "..." +
+                readerProfile.walletId.slice(-3)}
             </button>
             <Menubar className="bg-[#1D1E21] font-inter outline-none border-none ring-0 rounded-full">
               <MenubarMenu>
