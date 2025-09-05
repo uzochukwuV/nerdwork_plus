@@ -48,15 +48,13 @@ export type NFTCollectible = {
 
 export interface User {
   id: string;
-  firstName: string | null;
-  lastName: string | null;
+  firstName?: string | null;
+  lastName?: string | null;
   username: string | null;
   email: string;
   profilePicture: string | null;
-  isVerified: boolean;
-  googleId: string | null;
-  role?: string;
-  isNewUser?: boolean;
+  cProfile?: boolean;
+  rProfile?: boolean;
   emailVerified?: boolean;
   twoFactorEnabled?: boolean;
   lastLoginAt?: string | null;

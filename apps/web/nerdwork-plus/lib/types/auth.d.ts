@@ -10,12 +10,12 @@ export interface CustomJWT extends JWT {
     firstName?: string;
     lastName?: string;
     profilePicture?: string;
-    isVerified?: boolean;
-    googleId?: string | null;
-    role?: string;
     isNewUser?: boolean;
+    cProfile?: boolean;
+    rProfile?: boolean;
   };
-  isNewUser?: boolean;
+  cProfile?: boolean;
+  rProfile?: boolean;
   token?: string;
 }
 
@@ -27,12 +27,11 @@ export interface CustomSession extends Session {
     firstName?: string;
     lastName?: string;
     profilePicture?: string;
-    isVerified?: boolean;
-    googleId?: string | null;
-    role?: string;
-    isNewUser?: boolean;
+    cProfile?: boolean;
+    rProfile?: boolean;
   };
-  isNewUser?: boolean;
+  cProfile?: boolean;
+  rProfile?: boolean;
   expires: DefaultSession["expires"];
   token?: string;
 }

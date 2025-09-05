@@ -8,14 +8,15 @@ import {
 import { Comic } from "@/lib/types";
 
 const MobileComicActions = ({ comic }: { comic: Comic }) => {
-  console.log(comic.title);
   return (
     <>
       <SheetContent
         side="bottom"
         className="bg-[#1D1E21] p-2 text-white text-sm border-none flex flex-col gap-1"
       >
-        <SheetTitle className="sr-only">Comic Options</SheetTitle>
+        <SheetTitle className="sr-only">
+          Comic Options for {comic.title}
+        </SheetTitle>
         <SheetDescription className="sr-only">
           These are the list of actions that can be taken on the comic
         </SheetDescription>

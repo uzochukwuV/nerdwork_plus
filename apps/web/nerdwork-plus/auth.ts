@@ -17,39 +17,46 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   debug: isDevelopment,
   callbacks: {
     async signIn({ account, profile }) {
-      console.log("signIn callback triggered.");
-      console.log("Account:", account);
-      console.log("Profile:", profile);
       if (account?.provider === "google" && profile?.email) {
         return true;
       }
       return false;
     },
-    async jwt({ token, account }) {
+    async jwt({ token, account, trigger, session }) {
       if (account?.provider === "google") {
         if (!account?.id_token) {
           return token;
         }
 
         const response = await googleAuth(account.id_token);
-        console.log("jwt callback - After API call. Response:", response);
 
         if (!response || response.success === false || !response.data) {
           console.error("Backend response was unsuccessful or missing data.");
           return token;
         }
 
-        console.log("jwt callback - Final token:", token);
-
-        const { token: backendToken, user, isNewUser } = response.data;
+        const { token: backendToken, user, cProfile, rProfile } = response.data;
 
         return {
           ...token,
           token: backendToken,
           user,
-          isNewUser,
+          cProfile,
+          rProfile,
         };
       }
+
+      // Handle the update trigger from the client
+      if (trigger === "update") {
+        // Check for each property individually before updating
+        if (session?.cProfile !== undefined) {
+          token.cProfile = session.cProfile;
+        }
+        if (session?.rProfile !== undefined) {
+          token.rProfile = session.rProfile;
+        }
+      }
+
       return token;
     },
     async session({ session, token }: { session: Session; token: JWT }) {
@@ -63,21 +70,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           firstName: customToken.user.firstName,
           lastName: customToken.user.lastName,
           profilePicture: customToken.picture,
-          isVerified: customToken.user.isVerified,
-          googleId: customToken.user.googleId,
-          role: customToken.user.role,
-          isNewUser: customToken.isNewUser,
+          cProfile: customToken.cProfile,
+          rProfile: customToken.rProfile,
         };
 
         session.token = customToken.token;
-        session.isNewUser = customToken.isNewUser;
+        session.cProfile = customToken.cProfile;
+        session.rProfile = customToken.rProfile;
       } else {
         console.warn(
           "Session token is missing user data or API token. Session will be incomplete."
         );
       }
-      console.log("Final session object:", session);
-
       return session;
     },
   },
@@ -97,12 +101,11 @@ declare module "next-auth" {
       lastName?: User["lastName"];
       username?: User["username"];
       profilePicture?: User["profilePicture"];
-      isVerified?: User["isVerified"];
-      googleId?: User["googleId"];
-      role?: User["role"];
-      isNewUser?: User["isNewUser"];
+      cProfile?: User["cProfile"];
+      rProfile?: User["rProfile"];
     } & DefaultSession["user"];
     token?: string;
-    isNewUser?: boolean;
+    cProfile?: boolean;
+    rProfile?: boolean;
   }
 }

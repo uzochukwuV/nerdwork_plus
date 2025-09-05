@@ -25,7 +25,6 @@ async function axiosPost<T>(url: string, body: T, isCustom?: boolean) {
   const fullUrl = isCustom ? url : `${apiUrl}${url}`;
 
   const response = await axios.post(fullUrl, body, config);
-  console.log("response from axios post", response);
   return response;
 }
 
@@ -38,7 +37,6 @@ async function axiosImagePost<T>(url: string, body: T, isCustom?: boolean) {
   const fullUrl = isCustom ? url : `${apiUrl}${url}`;
 
   const response = await axios.post(fullUrl, body, config);
-  console.log("response from axios post", response);
   return response;
 }
 
