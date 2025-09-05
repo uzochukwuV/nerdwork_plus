@@ -1,10 +1,10 @@
-import NFTsEmptyState from "@/app/(protected)/(creator)/_components/nfts/NFTsEmptyState";
+// import NFTsEmptyState from "@/app/(protected)/(creator)/_components/nfts/NFTsEmptyState";
 import { nftData } from "@/components/data";
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
-import Link from "next/link";
+// import { Button } from "@/components/ui/button";
+// import { Plus } from "lucide-react";
+// import Link from "next/link";
 import React from "react";
-import NFTList from "../../_components/nfts/NFTList";
+// import NFTList from "../../_components/nfts/NFTList";
 
 const NFTsPage = () => {
   const NFTs = nftData ?? [];
@@ -18,13 +18,17 @@ const NFTsPage = () => {
             Welcome back, Creatorba09! Manage your comic series
           </p>
         </div>
-        <Link href={"/creator/nfts/new"} className="max-md:w-full">
+        {/* <Link href={"/creator/nfts/new"} className="max-md:w-full">
           <Button variant={"secondary"}>
             <Plus /> New Collectible
           </Button>
-        </Link>
+        </Link> */}
+
+        <div className="flex justify-center items-center">
+          <h3 className="text-2xl">Feature coming soon ...</h3>
+        </div>
       </section>
-      {NFTs.length == 0 ? <NFTsEmptyState /> : <NFTList />}
+      {/* {NFTs.length == 0 ? <NFTsEmptyState /> : <NFTList />} */}
     </main>
   );
 };

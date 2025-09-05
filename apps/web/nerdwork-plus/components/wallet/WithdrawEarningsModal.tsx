@@ -47,7 +47,7 @@ const WithdrawEarningsModal = () => {
   const totalNWT = calculateTotal(withdrawAmount);
 
   const handleSubmit = () => {
-    console.log(totalNWT);
+    // console.log(totalNWT);
     toast.info("Proceeding to Helio for payment...");
   };
 

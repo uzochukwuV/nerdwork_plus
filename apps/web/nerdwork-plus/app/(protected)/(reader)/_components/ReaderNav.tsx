@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/popover";
 import {
   Book,
+  BookOpen,
   CreditCard,
   HelpCircle,
   LibraryBig,
@@ -54,7 +55,7 @@ const ReaderNav = () => {
     { title: "Comics", path: "/r/comics" },
     { title: "Marketplace", path: "/r/marketplace" },
     { title: "Library", path: "/r/library" },
-    { title: "Create", path: "/onboarding" },
+    // { title: "Create", path: "/onboarding" },
   ];
 
   const isActive = (path: string) => {
@@ -152,7 +153,7 @@ const ReaderNav = () => {
               </div>
               {showResults && <SearchResultsPanel query={searchQuery} />}
             </div>
-            <ul className="flex gap-4 text-sm text-nerd-muted">
+            <ul className="flex gap-4 text-sm text-nerd-muted max-lg:hidden">
               {navItems.map((item, index) => (
                 <Link
                   href={item.path}
@@ -203,6 +204,24 @@ const ReaderNav = () => {
                 </MenubarTrigger>
                 <MenubarContent className="bg-[#1D1E21] text-white border-0 absolute -right-[30px]">
                   <MenubarItem>
+                    <Link
+                      className="flex items-center gap-3"
+                      href={"/r/comics"}
+                    >
+                      <Book className="text-white" />
+                      Comics
+                    </Link>
+                  </MenubarItem>
+                  <MenubarItem>
+                    <Link
+                      className="flex items-center gap-3"
+                      href={"/r/library"}
+                    >
+                      <BookOpen className="text-white" />
+                      Library
+                    </Link>
+                  </MenubarItem>
+                  <MenubarItem>
                     <Link className="flex items-center gap-3" href={""}>
                       <User2 className="text-white" />
                       Profile
@@ -237,7 +256,12 @@ const ReaderNav = () => {
                     </Link>
                   </MenubarItem>
                   <MenubarSeparator /> */}
-                  <MenubarItem className="text-[#707073]">Logout</MenubarItem>
+                  <MenubarItem
+                    onClick={handleSignOut}
+                    className="text-[#707073] cursor-pointer"
+                  >
+                    Logout
+                  </MenubarItem>
                 </MenubarContent>
               </MenubarMenu>
             </Menubar>
