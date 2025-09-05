@@ -6,6 +6,7 @@ import {
   updateComicFile,
   deleteComicFile,
   listUserComicFiles,
+  getComicFileInfo,
   upload,
 } from "../controller/file.controller";
 
@@ -105,7 +106,7 @@ router.post("/upload-multiple", upload.array("files", 10), uploadMultipleComicFi
  * @swagger
  * /api/files/{s3Key}:
  *   get:
- *     summary: Get a comic file from S3 (returns signed URL)
+ *     summary: Get comic file URLs (CloudFront URL and/or signed URL)
  *     tags: [Files]
  *     parameters:
  *       - name: s3Key
@@ -113,13 +114,18 @@ router.post("/upload-multiple", upload.array("files", 10), uploadMultipleComicFi
  *         required: true
  *         type: string
  *         description: S3 key of the file
+ *       - name: signed
+ *         in: query
+ *         type: string
+ *         enum: ["true", "false"]
+ *         description: Whether to generate signed URL (default false)
  *       - name: expiresIn
  *         in: query
  *         type: integer
  *         description: URL expiration time in seconds (default 3600)
  *     responses:
  *       200:
- *         description: Signed URL generated successfully
+ *         description: CloudFront and/or signed URL generated successfully
  *       400:
  *         description: Bad request
  *       500:
@@ -218,6 +224,30 @@ router.get("/user/:userId", listUserComicFiles);
 
 /**
  * @swagger
+ * /api/files/info/{s3Key}:
+ *   get:
+ *     summary: Get detailed file information and metadata
+ *     tags: [Files]
+ *     parameters:
+ *       - name: s3Key
+ *         in: path
+ *         required: true
+ *         type: string
+ *         description: S3 key of the file
+ *     responses:
+ *       200:
+ *         description: File information retrieved successfully
+ *       400:
+ *         description: Bad request
+ *       404:
+ *         description: File not found
+ *       500:
+ *         description: Server error
+ */
+router.get("/info/:s3Key", getComicFileInfo);
+
+/**
+ * @swagger
  * /api/files/health:
  *   get:
  *     summary: Health check endpoint
@@ -229,10 +259,18 @@ router.get("/user/:userId", listUserComicFiles);
 router.get("/health", (req, res) => {
   res.json({ 
     status: "ok", 
-    message: "File service is running",
+    message: "File service is running with CloudFront CDN",
     timestamp: new Date().toISOString(),
-    bucket: process.env.S3_BUCKET_NAME || "nerdwork-comics",
-    region: process.env.AWS_REGION || "us-east-1"
+    configuration: {
+      bucket: process.env.S3_BUCKET_NAME || "nerdwork-comics",
+      region: process.env.AWS_REGION || "us-east-1",
+      cloudFrontDomain: process.env.CLOUDFRONT_DOMAIN || "dgumbu3t6hn53.cloudfront.net",
+      cloudFrontUrl: process.env.CLOUDFRONT_DOMAIN 
+        ? `https://${process.env.CLOUDFRONT_DOMAIN}` 
+        : "https://dgumbu3t6hn53.cloudfront.net",
+      maxFileSize: process.env.MAX_FILE_SIZE || "104857600",
+      maxFilesPerUpload: process.env.MAX_FILES_PER_UPLOAD || "20"
+    }
   });
 });
 
