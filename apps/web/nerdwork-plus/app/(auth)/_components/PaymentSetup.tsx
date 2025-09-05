@@ -17,7 +17,7 @@ export function PaymentDetailsForm() {
   // use a library like @solana/wallet-adapter to check for installed wallets.
   const walletDetected = (walletName: string) => {
     // This is a placeholder. You would implement real detection logic here.
-    console.log(walletName);
+    console.log(walletName[0]);
     return false; // or false based on the check
   };
 

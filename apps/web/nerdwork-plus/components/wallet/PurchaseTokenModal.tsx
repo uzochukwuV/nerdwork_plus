@@ -42,7 +42,7 @@ const PurchaseTokenModal = () => {
   const totalToPay = calculateTotal(nwtAmount);
 
   const handleSubmit = () => {
-    console.log(totalToPay);
+    // console.log(totalToPay);
     toast.info("Redirecting to Helio for payment...");
   };
 
