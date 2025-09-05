@@ -177,7 +177,7 @@ async function axiosDelete<T = any>(
 
   try {
     const response = await axios.delete<T>(fullUrl, config);
-    console.log("DELETE Response Data:", response.data);
+    // console.log("DELETE Response Data:", response.data);
 
     return response;
   } catch (error) {
