@@ -4,13 +4,5 @@ dist/
 
 # env files
 .env
-<<<<<<< HEAD
-.env.local  
-=======
-<<<<<<< HEAD
 .env.local
 .env.development.local
-=======
-.env.local
->>>>>>> 004ff6c30f4d32dcf48f7cdf1fe72a20a8117e77
->>>>>>> main
