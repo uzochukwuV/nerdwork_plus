@@ -14,7 +14,7 @@ const Comics = () => {
   const {
     data: comicData,
     isLoading,
-    error,
+    // error,
   } = useQuery({
     queryKey: ["comics"],
     queryFn: getCreatorComics,
@@ -23,7 +23,7 @@ const Comics = () => {
     refetchOnWindowFocus: true,
   });
 
-  const comics: Comic[] = comicData?.data.comics;
+  const comics: Comic[] = comicData?.data.comics ?? [];
 
   if (!comics || isLoading) return <MyComicsEmptyState />;
 

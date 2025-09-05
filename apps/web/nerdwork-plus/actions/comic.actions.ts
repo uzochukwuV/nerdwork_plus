@@ -134,3 +134,33 @@ export const getSingleComic = async (slug: string) => {
     };
   }
 };
+
+export const getAllComicsForReader = async () => {
+  try {
+    const response = await axiosGet("comics/all");
+
+    return {
+      success: true,
+      data: response.data,
+      message: "Creator comics retrieved successfully.",
+    };
+  } catch (error: unknown) {
+    console.error("Creator comics retrieval failed:", error);
+
+    if (axios.isAxiosError(error)) {
+      return {
+        success: false,
+        status: error?.status,
+        message:
+          error?.response?.data?.detail ||
+          error?.response?.data?.message ||
+          "Failed to retrieve creator comics. Please try again.",
+      };
+    }
+    return {
+      success: false,
+      status: 500,
+      message: "Failed to retrieve creator comics. Please try again.",
+    };
+  }
+};

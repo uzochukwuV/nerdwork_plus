@@ -1,6 +1,6 @@
 "use client";
 
-import { chapterData, comicData } from "@/components/data";
+import { chapterData } from "@/components/data";
 import { Button } from "@/components/ui/button";
 import { Menubar, MenubarMenu, MenubarTrigger } from "@/components/ui/menubar";
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
@@ -26,11 +26,7 @@ const ComicDetailsPage = ({
   const [isExpanded, setIsExpanded] = useState(false);
   const [tab, setTab] = useState<string>("all");
 
-  const {
-    data: comicData,
-    isLoading,
-    error,
-  } = useQuery({
+  const { data: comicData, isLoading } = useQuery({
     queryKey: ["comic"],
     queryFn: () => getSingleComic(slug),
     placeholderData: keepPreviousData,
