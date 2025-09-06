@@ -19,6 +19,7 @@ app.use("/file", fileRoutes);
 app.use("/comics", comicRoutes);
 
 const PORT = process.env.PORT || 5000;
+console.log(PORT)
 /**
  * @swagger
  * /users:

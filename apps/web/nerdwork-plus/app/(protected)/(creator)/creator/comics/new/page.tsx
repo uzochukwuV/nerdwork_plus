@@ -12,6 +12,7 @@ import NewComicStepTwo from "@/app/(protected)/(creator)/_components/comics/NewC
 import NewComicStepThree from "@/app/(protected)/(creator)/_components/comics/NewComicStepThree";
 import NewComicStepOne from "@/app/(protected)/(creator)/_components/comics/NewComicStepOne";
 import { useRouter } from "next/navigation";
+import { comicsApi, fileApi } from "@/lib/api/comics";
 
 const NewComicsPage = () => {
   const [newTag, setNewTag] = useState("");
@@ -51,28 +52,56 @@ const NewComicsPage = () => {
     setCurrentStep((prev) => prev - 1);
   };
 
-  const onSubmit = (data: ComicSeriesFormData) => {
-    console.log(data);
-    const formData = new FormData();
+  const onSubmit = async (data: ComicSeriesFormData) => {
+    console.log("Form data:", data);
+    
+    try {
+      // First, upload the cover image if provided
+      let imageUrl = "";
+      if (data.coverImage) {
+        toast.loading("Uploading cover image...");
+        const uploadResponse = await fileApi.uploadToS3(data.coverImage);
+        if (uploadResponse.success) {
+          imageUrl = uploadResponse.url;
+          toast.success("Cover image uploaded!");
+        } else {
+          throw new Error("Failed to upload cover image");
+        }
+      }
 
-    formData.append("title", data.title);
-    formData.append("language", data.language);
-    formData.append("contentRating", data.contentRating);
-    formData.append("description", data.description);
-    data.genres.forEach((genre) => formData.append("genres[]", genre));
-    data.tags.forEach((tag) => formData.append("tags[]", tag));
-    if (data.coverImage) {
-      formData.append("coverImage", data.coverImage);
+      // Get auth token (you'll need to implement your auth context)
+      const token = localStorage.getItem("authToken"); // Replace with your auth system
+      if (!token) {
+        toast.error("Please log in to create a comic");
+        return;
+      }
+
+      // Create comic with backend API
+      toast.loading("Creating comic...");
+      const comicData = {
+        title: data.title,
+        language: data.language,
+        ageRating: data.contentRating,
+        description: data.description,
+        image: imageUrl,
+        genre: data.genres,
+        tags: data.tags,
+      };
+
+      const response = await comicsApi.createComic(comicData, token);
+      
+      if (response.success) {
+        toast.success("Comic created successfully!");
+        setTimeout(() => {
+          router.push("/creator/comics");
+        }, 2000);
+      } else {
+        throw new Error(response.message || "Failed to create comic");
+      }
+    } catch (error) {
+      console.error("Error creating comic:", error);
+      toast.error(error instanceof Error ? error.message : "Failed to create comic");
     }
-
-    // for (const pair of formData.entries()) {
-    //   console.log(pair[0], pair[1]);
-    // }
-    toast.success("Series updated successfully!");
-
-    setTimeout(() => {
-      router.push("/creator/comics");
-    }, 3000);
   };
 
   const addTag = () => {
