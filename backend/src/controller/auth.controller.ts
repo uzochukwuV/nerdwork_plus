@@ -89,8 +89,6 @@ export const googleAuthController = async (req, res) => {
   }
 };
 
-console.log(jwt?.sign);
-
 export async function verifyGoogleToken(idToken: string) {
   try {
     const ticket = await client.verifyIdToken({
