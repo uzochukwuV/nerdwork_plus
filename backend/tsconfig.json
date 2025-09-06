@@ -11,5 +11,13 @@
     "skipLibCheck": true,
     // "strict": true,
     "outDir": "./dist"
-  }
+  },
+  "exclude": [
+    "services/**/*",
+    "node_modules",
+    "dist",
+    "_test_/**/*",
+    "_test_/*",
+
+  ]
 }

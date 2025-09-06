@@ -1,6 +1,6 @@
 import { Router } from "express";
 import multer from "multer";
-import { uploadToS3 } from "../controller/file.controller";
+import { uploadComicFile } from "../controller/file.controller";
 
 const router = Router();
 
@@ -77,6 +77,6 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 // Endpoint
-router.post("/media", upload.single("file"), uploadToS3);
+router.post("/media", upload.single("file"), uploadComicFile);
 
 export default router;
