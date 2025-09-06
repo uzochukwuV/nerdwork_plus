@@ -18,6 +18,10 @@
     "dist",
     "_test_/**/*",
     "_test_/*",
+    "api-gateway/**/*",
+    "api-gateway/*",
+    "api-gateway",
+    "deployment"
 
   ]
 }
