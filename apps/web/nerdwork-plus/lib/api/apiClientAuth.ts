@@ -4,6 +4,7 @@ import { auth } from "@/auth";
 import axios, { AxiosResponse } from "axios";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 async function getToken(): Promise<string> {
   try {
     if (typeof window !== "undefined") {
@@ -25,6 +26,7 @@ async function getToken(): Promise<string> {
     return "";
   }
 }
+
 async function getAuthHeader(): Promise<Record<string, string>> {
   if (typeof window !== "undefined") {
     try {
@@ -40,9 +42,12 @@ async function getAuthHeader(): Promise<Record<string, string>> {
   const token = await getToken();
   return token ? { Authorization: `Bearer ${token}` } : {};
 }
+
+// All axios functions are now simplified to use apiUrl as the base URL.
+// The isCustom parameter has been completely removed.
+
 async function axiosGet<T = any>(
   url: string,
-  isCustom?: boolean,
   params = {},
   contentType?: string,
   otherHeaders = {}
@@ -57,7 +62,7 @@ async function axiosGet<T = any>(
     },
     params,
   };
-  const fullUrl = isCustom ? url : `${apiUrl}${url}`;
+  const fullUrl = `${apiUrl}${url}`;
   try {
     const response = await axios.get<T>(fullUrl, config);
     return response;
@@ -66,10 +71,10 @@ async function axiosGet<T = any>(
     throw error;
   }
 }
+
 async function axiosPost<T = any, D = any>(
   url: string,
   body: D,
-  isCustom?: boolean,
   params = {}
 ): Promise<AxiosResponse<T>> {
   const headers = await getAuthHeader();
@@ -80,7 +85,7 @@ async function axiosPost<T = any, D = any>(
     },
     params,
   };
-  const fullUrl = isCustom ? url : `${apiUrl}${url}`;
+  const fullUrl = `${apiUrl}${url}`;
   try {
     const response = await axios.post<T>(fullUrl, body, config);
     return response;
@@ -93,7 +98,6 @@ async function axiosPost<T = any, D = any>(
 async function axiosPatch<T = any, D = any>(
   url: string,
   body: D,
-  isCustom?: boolean,
   params = {}
 ): Promise<AxiosResponse<T>> {
   const headers = await getAuthHeader();
@@ -104,7 +108,7 @@ async function axiosPatch<T = any, D = any>(
     },
     params,
   };
-  const fullUrl = isCustom ? url : `${apiUrl}${url}`;
+  const fullUrl = `${apiUrl}${url}`;
   try {
     const response = await axios.patch<T>(fullUrl, body, config);
     return response;
@@ -117,7 +121,6 @@ async function axiosPatch<T = any, D = any>(
 async function axiosPostData<T = any>(
   url: string,
   body: FormData,
-  isCustom?: boolean,
   params = {}
 ): Promise<AxiosResponse<T>> {
   const headers = await getAuthHeader();
@@ -128,7 +131,7 @@ async function axiosPostData<T = any>(
     },
     params,
   };
-  const fullUrl = isCustom ? url : `${apiUrl}${url}`;
+  const fullUrl = `${apiUrl}${url}`;
   try {
     const response = await axios.post<T>(fullUrl, body, config);
     return response;
@@ -137,32 +140,9 @@ async function axiosPostData<T = any>(
     throw error;
   }
 }
-async function axiosPostFormData<T = any>(
-  url: string,
-  body: FormData,
-  isCustom?: boolean,
-  params = {}
-): Promise<AxiosResponse<T>> {
-  const headers = await getAuthHeader();
-  const config = {
-    headers: {
-      // No Content-Type needed for FormData (browser sets it with boundary)
-      ...headers,
-    },
-    params,
-  };
-  const fullUrl = isCustom ? url : `${apiUrl}${url}`;
-  try {
-    const response = await axios.post<T>(fullUrl, body, config);
-    return response;
-  } catch (error) {
-    console.error(`Error in FormData POST request to ${fullUrl}:`, error);
-    throw error;
-  }
-}
+
 async function axiosDelete<T = any>(
   url: string,
-  isCustom?: boolean,
   params = {}
 ): Promise<AxiosResponse<T>> {
   const headers = await getAuthHeader();
@@ -173,12 +153,9 @@ async function axiosDelete<T = any>(
     },
     params,
   };
-  const fullUrl = isCustom ? url : `${apiUrl}${url}`;
-
+  const fullUrl = `${apiUrl}${url}`;
   try {
     const response = await axios.delete<T>(fullUrl, config);
-    // console.log("DELETE Response Data:", response.data);
-
     return response;
   } catch (error) {
     console.error(`Error in DELETE request to ${fullUrl}:`, error);
@@ -186,11 +163,4 @@ async function axiosDelete<T = any>(
   }
 }
 
-export {
-  axiosGet,
-  axiosPost,
-  axiosPostData,
-  axiosPatch,
-  axiosPostFormData,
-  axiosDelete,
-};
+export { axiosGet, axiosPost, axiosPatch, axiosPostData, axiosDelete };
