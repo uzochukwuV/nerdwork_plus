@@ -68,7 +68,8 @@ async function axiosGet<T = any>(
     return response;
   } catch (error) {
     console.error(
-      `Error in GET request to ${encodeURIComponent(fullUrl)}:`,
+      "Error in GET request to %s:",
+      encodeURIComponent(fullUrl),
       error
     );
     throw error;
