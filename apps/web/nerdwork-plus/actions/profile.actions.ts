@@ -1,7 +1,7 @@
 "use server";
 
 import { auth } from "@/auth";
-import { axiosPost } from "@/lib/api/apiClientAuth";
+import { axiosGet, axiosPost } from "@/lib/api/apiClientAuth";
 import axios from "axios";
 
 type createReaderProfileData = {
@@ -88,6 +88,66 @@ export const createCreatorProfile = async (data: createCreatorProfileData) => {
       success: false,
       status: 500,
       message: "Failed to create creator profile. Please try again.",
+    };
+  }
+};
+
+export const getCreatorProfile = async () => {
+  try {
+    const response = await axiosGet("profile/creator");
+
+    return {
+      success: true,
+      data: response.data,
+      message: "Profile details retrieved successfully.",
+    };
+  } catch (error: unknown) {
+    console.error("Profile details retrieval failed:", error);
+
+    if (axios.isAxiosError(error)) {
+      return {
+        success: false,
+        status: error?.status,
+        message:
+          error?.response?.data?.detail ||
+          error?.response?.data?.message ||
+          "Failed to retrieve creator profile. Please try again.",
+      };
+    }
+    return {
+      success: false,
+      status: 500,
+      message: "Failed to retrieve creator profile. Please try again.",
+    };
+  }
+};
+
+export const getReaderProfile = async () => {
+  try {
+    const response = await axiosGet("profile/reader");
+
+    return {
+      success: true,
+      data: response.data,
+      message: "Profile details retrieved successfully.",
+    };
+  } catch (error: unknown) {
+    console.error("Profile details retrieval failed:", error);
+
+    if (axios.isAxiosError(error)) {
+      return {
+        success: false,
+        status: error?.status,
+        message:
+          error?.response?.data?.detail ||
+          error?.response?.data?.message ||
+          "Failed to retrieve reader profile. Please try again.",
+      };
+    }
+    return {
+      success: false,
+      status: 500,
+      message: "Failed to retrieve reader profile. Please try again.",
     };
   }
 };

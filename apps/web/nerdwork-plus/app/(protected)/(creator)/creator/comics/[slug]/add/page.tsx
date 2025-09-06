@@ -23,29 +23,52 @@ import {
 import { Globe } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft, CalendarIcon, Eye, Save, Send } from "lucide-react";
-import { format } from "date-fns";
-import Link from "next/link";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
-import { Calendar } from "@/components/ui/calendar";
+  ArrowLeft,
+  // CalendarIcon,
+  Eye,
+  Save,
+  Send,
+} from "lucide-react";
+// import { format } from "date-fns";
+import Link from "next/link";
+// import {
+//   Popover,
+//   PopoverContent,
+//   PopoverTrigger,
+// } from "@/components/ui/popover";
+// import { cn } from "@/lib/utils";
+// import { Calendar } from "@/components/ui/calendar";
 import { chapterSchema } from "@/lib/schema";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { use } from "react";
+import { use, useState } from "react";
 import { MultiFileUpload } from "@/app/(protected)/(creator)/_components/comics/MultiFileUpload";
+import { LoadingButton } from "@/components/ui/LoadingButton";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import {
+  createComicChapter,
+  createDraftChapter,
+  getSingleComic,
+} from "@/actions/comic.actions";
+import { Comic } from "@/lib/types";
 
-const NewChapterPage = ({
-  params,
-}: {
-  params: Promise<{ comicId: string }>;
-}) => {
+const NewChapterPage = ({ params }: { params: Promise<{ slug: string }> }) => {
   const router = useRouter();
-  const { comicId } = use(params);
+  const { slug } = use(params);
+
+  const { data: comicData } = useQuery({
+    queryKey: ["comic"],
+    queryFn: () => getSingleComic(slug),
+    placeholderData: keepPreviousData,
+    refetchInterval: 2 * 60 * 1000,
+    refetchOnWindowFocus: true,
+  });
+
+  const comic: Comic = comicData?.data?.comic;
+  const comicId = comic?.id;
+
+  const [loading, setLoading] = useState(false);
 
   const form = useForm<z.infer<typeof chapterSchema>>({
     resolver: zodResolver(chapterSchema),
@@ -58,30 +81,55 @@ const NewChapterPage = ({
     },
   });
 
-  const onSubmit = (data: z.infer<typeof chapterSchema>) => {
-    console.log("New Chapter data:", data);
-    // Here you would send the data to your API, likely with FormData for the files
-    const formData = new FormData();
-    formData.append("chapterTitle", data.chapterTitle);
-    formData.append("chapterNumber", data.chapterNumber.toString());
-    formData.append("summary", data.summary || "");
-    data.chapterPages.forEach((file, index) => {
-      formData.append(`chapterPages[${index}]`, file);
-    });
-    // Append the date if it's set
-    if (data.scheduledDate) {
-      formData.append("scheduledDate", data.scheduledDate.toISOString());
-    }
+  const handleDraftChapter = async () => {
+    setLoading(true);
+    const data = form.getValues();
+    try {
+      const response = await createDraftChapter(data, comicId);
 
-    toast.success("Chapter created successfully");
-    setTimeout(() => {
-      router.push(`/creator/comics/${comicId}`);
-    }, 3000);
+      if (!response?.success) {
+        toast.error(
+          response?.message ?? "An error occurred while submitting the form."
+        );
+        return;
+      }
+
+      toast.success("Draft saved successfully!");
+      router.push(`/creator/comics/${slug}`);
+    } catch (err) {
+      toast.error("An unexpected error occurred.");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const onSubmit = async (data: z.infer<typeof chapterSchema>) => {
+    console.log("New Chapter data:", data);
+    setLoading(true);
+    try {
+      const response = await createComicChapter(data, comicId);
+
+      if (!response?.success) {
+        toast.error(
+          response?.message ?? "An error occurred while submitting the form."
+        );
+        return;
+      }
+
+      toast.success("Chapter created successfully");
+      router.push(`/creator/comics/${slug}`);
+    } catch (err) {
+      toast.error("An unexpected error occurred.");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   };
   return (
     <main className="max-w-[1100px] mx-auto px-5 font-inter text-white py-10">
       {/* <div className="flex flex-col text-white"> */}
-      <Link href={`/creator/comics/${comicId}`}>
+      <Link href={`/creator/comics/${slug}`}>
         <button className="flex items-center cursor-pointer gap-2.5 text-sm font-medium">
           <ArrowLeft size={16} /> back to Dashboard
         </button>
@@ -240,12 +288,16 @@ const NewChapterPage = ({
               <Eye />
               Preview Chapter
             </Button>
-            <Button variant="outline">
+            <Button
+              type="button"
+              onClick={handleDraftChapter}
+              variant="outline"
+            >
               <Save />
               Save as Draft
             </Button>
             {/* <div className="p-4 rounded-lg bg-[#1D1E21] border border-[#292A2E]"> */}
-            <FormField
+            {/* <FormField
               control={form.control}
               name="scheduledDate"
               render={({ field }) => (
@@ -289,18 +341,25 @@ const NewChapterPage = ({
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
             {/* </div> */}
             {form.watch("scheduledDate") ? (
-              <Button type="submit" variant={"primary"} className="">
-                <Send />
-                Schedule and Close
-              </Button>
+              // <Button type="submit" variant={"primary"} className="">
+              //   <Send />
+              //   Schedule and Close
+              // </Button>
+              <></>
             ) : (
-              <Button type="submit" variant={"primary"} className="">
+              <LoadingButton
+                isLoading={loading}
+                loadingText="Publishing..."
+                type="submit"
+                variant={"primary"}
+                className=""
+              >
                 <Send />
                 Publish Now
-              </Button>
+              </LoadingButton>
             )}
           </div>
         </form>

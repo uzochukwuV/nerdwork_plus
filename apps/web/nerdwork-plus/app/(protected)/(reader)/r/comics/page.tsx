@@ -1,9 +1,13 @@
 "use client";
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { comicData } from "@/components/data";
+// import { comicData } from "@/components/data";
 import RComics from "../../_components/RComics";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { getAllComicsForReader } from "@/actions/comic.actions";
+import { Comic } from "@/lib/types";
+import LoaderScreen from "@/components/loading-screen";
 
 const TABS = [
   "adventure",
@@ -19,9 +23,25 @@ const TABS = [
 const ReaderComics = () => {
   const [tab, setTab] = React.useState<string>("adventure");
 
-  const comics = comicData ?? [];
+  const {
+    data: comicData,
+    isLoading,
+    // error,
+  } = useQuery({
+    queryKey: ["comics"],
+    queryFn: getAllComicsForReader,
+    placeholderData: keepPreviousData,
+    refetchInterval: 2 * 60 * 1000,
+    refetchOnWindowFocus: true,
+  });
 
-  const filteredComics = comics.filter((comic) => comic.genres?.includes(tab));
+  if (isLoading) return <LoaderScreen />;
+
+  const comics: Comic[] = comicData?.data?.comics ?? [];
+
+  const filteredComics = comics.filter((comic) =>
+    comic.genre?.some((genre) => genre.toLowerCase() === tab.toLowerCase())
+  );
 
   return (
     <div className="pt-20">
@@ -53,9 +73,20 @@ const ReaderComics = () => {
           </div>
           <hr className="!text-[#292A2E] h-0 border-t border-[#292A2E]" />
           <div className=" max-w-[1200px] mx-auto w-full mt-8">
-            <TabsContent value={tab}>
-              <RComics data={filteredComics} />
-            </TabsContent>
+            {comics.length == 0 ? (
+              <>
+                <div className="flex flex-col items-center justify-center p-10 text-center">
+                  <p className="text-xl font-semibold">No comics found!</p>
+                  <p className="mt-2 text-sm">
+                    Try again later. Seems creators are on a holiday
+                  </p>
+                </div>
+              </>
+            ) : (
+              <TabsContent value={tab}>
+                <RComics data={filteredComics} />
+              </TabsContent>
+            )}
           </div>
           <hr className="!text-[#292A2E] h-0 mb-10 border-t border-[#292A2E]" />
         </Tabs>
