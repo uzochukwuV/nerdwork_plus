@@ -6,3 +6,5 @@ export * from "./wallet";
 export * from "./loyaltyPoints";
 export * from "./event";
 export * from "./tickets";
+export * from "./comic";
+export * from "./chapter";

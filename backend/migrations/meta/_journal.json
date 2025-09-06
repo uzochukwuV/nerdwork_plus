@@ -43,6 +43,13 @@
       "when": 1757139171162,
       "tag": "0005_chubby_ricochet",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1757144862654,
+      "tag": "0006_noisy_lockjaw",
+      "breakpoints": true
     }
   ]
 }
