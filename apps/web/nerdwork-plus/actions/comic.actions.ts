@@ -1,7 +1,7 @@
 "use server";
 
 import { axiosGet, axiosPost, axiosPostData } from "@/lib/api/apiClientAuth";
-import { ComicSeriesFormData } from "@/lib/schema";
+import { ChapterFormData, ComicSeriesFormData } from "@/lib/schema";
 import axios from "axios";
 
 export const uploadImage = async (data: FormData) => {
@@ -149,6 +149,150 @@ export const getAllComicsForReader = async () => {
     };
   } catch (error: unknown) {
     console.error("Creator comics retrieval failed:", error);
+
+    if (axios.isAxiosError(error)) {
+      return {
+        success: false,
+        status: error?.status,
+        message:
+          error?.response?.data?.detail ||
+          error?.response?.data?.message ||
+          "Failed to retrieve creator comics. Please try again.",
+      };
+    }
+    return {
+      success: false,
+      status: 500,
+      message: "Failed to retrieve creator comics. Please try again.",
+    };
+  }
+};
+
+export const createDraftChapter = async (
+  data: ChapterFormData,
+  comicId: string
+) => {
+  try {
+    const requestBody = {
+      title: data.chapterTitle,
+      chapterType: data.chapterType,
+      price: data.price,
+      summary: data.summary,
+      pages: data.chapterPages,
+      comicId: comicId,
+    };
+
+    const response = await axiosPost("chapters/draft", requestBody);
+
+    return {
+      success: true,
+      data: response.data,
+      message: "Comic created successfully.",
+    };
+  } catch (error: unknown) {
+    console.error("Comic creation failed:", error);
+
+    if (axios.isAxiosError(error)) {
+      return {
+        success: false,
+        status: error?.status,
+        message:
+          error?.response?.data?.detail ||
+          error?.response?.data?.message ||
+          "Failed to create comic. Please try again.",
+      };
+    }
+    return {
+      success: false,
+      status: 500,
+      message: "Failed to create comic. Please try again.",
+    };
+  }
+};
+
+export const createComicChapter = async (
+  data: ChapterFormData,
+  comicId: string
+) => {
+  try {
+    const requestBody = {
+      title: data.chapterTitle,
+      chapterType: data.chapterType,
+      price: data.price,
+      summary: data.summary,
+      pages: data.chapterPages,
+      comicId: comicId,
+    };
+
+    const response = await axiosPost("chapters/create", requestBody);
+
+    return {
+      success: true,
+      data: response.data,
+      message: "Comic created successfully.",
+    };
+  } catch (error: unknown) {
+    console.error("Comic creation failed:", error);
+
+    if (axios.isAxiosError(error)) {
+      return {
+        success: false,
+        status: error?.status,
+        message:
+          error?.response?.data?.detail ||
+          error?.response?.data?.message ||
+          "Failed to create comic. Please try again.",
+      };
+    }
+    return {
+      success: false,
+      status: 500,
+      message: "Failed to create comic. Please try again.",
+    };
+  }
+};
+
+export const getComicChaptersBySlug = async (slug: string) => {
+  try {
+    const response = await axiosGet(`chapters/by-comic/${slug}`);
+
+    return {
+      success: true,
+      data: response.data,
+      message: "Comic chapters retrieved successfully.",
+    };
+  } catch (error: unknown) {
+    console.error("Comic chapters retrieval failed:", error);
+
+    if (axios.isAxiosError(error)) {
+      return {
+        success: false,
+        status: error?.status,
+        message:
+          error?.response?.data?.detail ||
+          error?.response?.data?.message ||
+          "Failed to retrieve creator comics. Please try again.",
+      };
+    }
+    return {
+      success: false,
+      status: 500,
+      message: "Failed to retrieve creator comics. Please try again.",
+    };
+  }
+};
+
+export const getChapterPages = async (code: string) => {
+  try {
+    const response = await axiosGet(`chapters/by-code/${code}`);
+
+    return {
+      success: true,
+      data: response.data,
+      message: "Comic chapters retrieved successfully.",
+    };
+  } catch (error: unknown) {
+    console.error("Comic chapters retrieval failed:", error);
 
     if (axios.isAxiosError(error)) {
       return {

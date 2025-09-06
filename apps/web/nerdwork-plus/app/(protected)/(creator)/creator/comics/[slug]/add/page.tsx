@@ -23,26 +23,50 @@ import {
 import { Globe } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft, CalendarIcon, Eye, Save, Send } from "lucide-react";
-import { format } from "date-fns";
-import Link from "next/link";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
-import { Calendar } from "@/components/ui/calendar";
+  ArrowLeft,
+  // CalendarIcon,
+  Eye,
+  Save,
+  Send,
+} from "lucide-react";
+// import { format } from "date-fns";
+import Link from "next/link";
+// import {
+//   Popover,
+//   PopoverContent,
+//   PopoverTrigger,
+// } from "@/components/ui/popover";
+// import { cn } from "@/lib/utils";
+// import { Calendar } from "@/components/ui/calendar";
 import { chapterSchema } from "@/lib/schema";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { use, useState } from "react";
 import { MultiFileUpload } from "@/app/(protected)/(creator)/_components/comics/MultiFileUpload";
 import { LoadingButton } from "@/components/ui/LoadingButton";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import {
+  createComicChapter,
+  createDraftChapter,
+  getSingleComic,
+} from "@/actions/comic.actions";
+import { Comic } from "@/lib/types";
 
 const NewChapterPage = ({ params }: { params: Promise<{ slug: string }> }) => {
   const router = useRouter();
   const { slug } = use(params);
+
+  const { data: comicData } = useQuery({
+    queryKey: ["comic"],
+    queryFn: () => getSingleComic(slug),
+    placeholderData: keepPreviousData,
+    refetchInterval: 2 * 60 * 1000,
+    refetchOnWindowFocus: true,
+  });
+
+  const comic: Comic = comicData?.data?.comic;
+  const comicId = comic?.id;
 
   const [loading, setLoading] = useState(false);
 
@@ -57,20 +81,50 @@ const NewChapterPage = ({ params }: { params: Promise<{ slug: string }> }) => {
     },
   });
 
-  const onSubmit = (data: z.infer<typeof chapterSchema>) => {
-    console.log("New Chapter data:", data);
+  const handleDraftChapter = async () => {
+    setLoading(true);
+    const data = form.getValues();
+    try {
+      const response = await createDraftChapter(data, comicId);
 
-    // if (!response?.success) {
-    //         toast.error(
-    //           response?.message ?? "An error occurred while submitting the form."
-    //         );
-    //         return;
-    //       }
+      if (!response?.success) {
+        toast.error(
+          response?.message ?? "An error occurred while submitting the form."
+        );
+        return;
+      }
 
-    toast.success("Chapter created successfully");
-    setTimeout(() => {
+      toast.success("Draft saved successfully!");
       router.push(`/creator/comics/${slug}`);
-    }, 3000);
+    } catch (err) {
+      toast.error("An unexpected error occurred.");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const onSubmit = async (data: z.infer<typeof chapterSchema>) => {
+    console.log("New Chapter data:", data);
+    setLoading(true);
+    try {
+      const response = await createComicChapter(data, comicId);
+
+      if (!response?.success) {
+        toast.error(
+          response?.message ?? "An error occurred while submitting the form."
+        );
+        return;
+      }
+
+      toast.success("Chapter created successfully");
+      router.push(`/creator/comics/${slug}`);
+    } catch (err) {
+      toast.error("An unexpected error occurred.");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   };
   return (
     <main className="max-w-[1100px] mx-auto px-5 font-inter text-white py-10">
@@ -234,7 +288,11 @@ const NewChapterPage = ({ params }: { params: Promise<{ slug: string }> }) => {
               <Eye />
               Preview Chapter
             </Button>
-            <Button variant="outline">
+            <Button
+              type="button"
+              onClick={handleDraftChapter}
+              variant="outline"
+            >
               <Save />
               Save as Draft
             </Button>

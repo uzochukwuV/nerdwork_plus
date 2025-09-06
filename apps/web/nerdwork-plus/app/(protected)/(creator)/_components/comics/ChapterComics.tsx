@@ -5,8 +5,9 @@ import { Calendar, Edit2, Eye, ImageIcon, Send } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import ChapterActions from "./ChapterActions";
+import Link from "next/link";
 
-const ChapterComics = ({ data }: { data: Chapter[] }) => {
+const ChapterComics = ({ data, slug }: { data: Chapter[]; slug: string }) => {
   return (
     <main className="flex flex-col gap-10 pb-10">
       {data.map((chapter) => (
@@ -63,10 +64,12 @@ const ChapterComics = ({ data }: { data: Chapter[] }) => {
             </div>
           </div>
           <div className="md:w-[20%] md:justify-end flex gap-2">
-            <Button className="bg-nerd-default">
-              <Eye />
-              View
-            </Button>
+            <Link href={`/r/comics/${slug}/chapter/${chapter?.code}`}>
+              <Button className="bg-nerd-default">
+                <Eye />
+                View
+              </Button>
+            </Link>
             <Button className="bg-nerd-default">
               {chapter.status == "published" ? <Edit2 /> : <Send />}
 

@@ -26,7 +26,7 @@ const ReaderComics = () => {
   const {
     data: comicData,
     isLoading,
-    error,
+    // error,
   } = useQuery({
     queryKey: ["comics"],
     queryFn: getAllComicsForReader,

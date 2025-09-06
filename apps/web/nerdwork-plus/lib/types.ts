@@ -1,5 +1,5 @@
 export type Comic = {
-  id: number;
+  id: string;
   image: string;
   title: string;
   description: string;
@@ -7,8 +7,10 @@ export type Comic = {
   chapters: number;
   slug: string;
   updatedAt: string;
+  createdAt: string;
+  creatorName: string;
   genre?: Array<string>;
-  rating?: string;
+  ageRating?: string;
   isPaid?: boolean;
   isOngoing?: boolean;
 };
@@ -24,6 +26,9 @@ export type Chapter = {
   views?: number;
   read?: boolean;
   unlocked?: boolean;
+  code?: string;
+  comicSlug?: string;
+  chapterPages: string[];
 };
 
 export type Transaction = {

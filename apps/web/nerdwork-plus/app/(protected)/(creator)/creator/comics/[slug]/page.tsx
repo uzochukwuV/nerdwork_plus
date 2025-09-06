@@ -1,6 +1,4 @@
 "use client";
-
-import { chapterData } from "@/components/data";
 import { Button } from "@/components/ui/button";
 import { Menubar, MenubarMenu, MenubarTrigger } from "@/components/ui/menubar";
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
@@ -14,8 +12,13 @@ import MobileComicActions from "../../../_components/comics/MobileComicActions";
 import ChaptersEmptyState from "../../../_components/comics/ChaptersEmptyState";
 import ChapterComics from "../../../_components/comics/ChapterComics";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { getSingleComic } from "@/actions/comic.actions";
+import {
+  getComicChaptersBySlug,
+  getSingleComic,
+} from "@/actions/comic.actions";
 import LoaderScreen from "@/components/loading-screen";
+import { Chapter, Comic } from "@/lib/types";
+import { toast } from "sonner";
 
 const ComicDetailsPage = ({
   params,
@@ -26,7 +29,11 @@ const ComicDetailsPage = ({
   const [isExpanded, setIsExpanded] = useState(false);
   const [tab, setTab] = useState<string>("all");
 
-  const { data: comicData, isLoading } = useQuery({
+  const {
+    data: comicData,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ["comic"],
     queryFn: () => getSingleComic(slug),
     placeholderData: keepPreviousData,
@@ -34,7 +41,24 @@ const ComicDetailsPage = ({
     refetchOnWindowFocus: true,
   });
 
-  if (isLoading) return <LoaderScreen />;
+  const {
+    data: chaptersData,
+    isLoading: isChaptersLoading,
+    error: chapterError,
+  } = useQuery({
+    queryKey: ["chapters"],
+    queryFn: () => getComicChaptersBySlug(slug),
+    placeholderData: keepPreviousData,
+    refetchInterval: 2 * 60 * 1000,
+    refetchOnWindowFocus: true,
+  });
+
+  if (isLoading || isChaptersLoading) return <LoaderScreen />;
+
+  if (error || chapterError)
+    toast.error(
+      error?.message || chapterError?.message || "Error getting chapter details"
+    );
 
   // if (error) {
   //   return (
@@ -47,9 +71,9 @@ const ComicDetailsPage = ({
   //   );
   // }
 
-  const comic = comicData?.data?.comic;
+  const comic: Comic = comicData?.data?.comic;
+  const chapters: Chapter[] = chaptersData?.data?.chapters ?? [];
 
-  const chapters = chapterData ?? [];
   const truncatedText = comic?.description.substring(0, 200);
 
   const counts = {
@@ -125,13 +149,23 @@ const ComicDetailsPage = ({
               {comic?.description}
             </p>
             <ul className={`${isExpanded ? "" : "max-md:hidden"}`}>
-              <li>Fantasy, Adventure</li>
-              <li>Magic, Adventure, Young Adult</li>
-              <li>10 SOL</li>
-              <li>Released 10 July, 2025</li>
+              <li>
+                {comic?.genre?.map((gen, index) => (
+                  <span key={index} className="text-white capitalize">
+                    {gen},{" "}
+                  </span>
+                ))}
+              </li>
+              {/* <li>10 SOL</li> */}
+              <li>
+                Released{" "}
+                <span className="text-white">
+                  {new Date(comic.createdAt).toDateString()}
+                </span>
+              </li>
               <li>{comic?.chapters} chapters</li>
-              <li>Rated PG - 13 Teen</li>
-              <li>Collaborators: Creator, Artist, Copywriter</li>
+              <li>{comic?.ageRating} Rating</li>
+              <li>Creator: {comic?.creatorName ?? ""}</li>
             </ul>
             <button
               className="md:hidden cursor-pointer text-left text-[#707073] font-normal"
@@ -154,7 +188,7 @@ const ComicDetailsPage = ({
       </section>
       <hr className="!text-[#292A2E] max-md:hidden h-0 border-t border-[#292A2E]" />
       {comic && chapters.length == 0 ? (
-        <ChaptersEmptyState comicId={comic?.id} />
+        <ChaptersEmptyState comicId={comic?.slug} />
       ) : (
         <section className="py-8">
           <h3 className="font-semibold text-2xl">
@@ -197,7 +231,7 @@ const ComicDetailsPage = ({
             <hr className="!text-[#292A2E] h-0 border-t border-[#292A2E]" />
             <div className=" max-w-[1300px] mx-auto w-full mt-8">
               <TabsContent value={tab}>
-                <ChapterComics data={filteredChapters} />
+                <ChapterComics slug={slug} data={filteredChapters} />
               </TabsContent>
             </div>
             <hr className="!text-[#292A2E] h-0 mb-10 border-t border-[#292A2E]" />

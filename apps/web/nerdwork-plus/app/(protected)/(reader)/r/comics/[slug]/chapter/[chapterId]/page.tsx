@@ -1,5 +1,4 @@
 "use client";
-import { chapterData } from "@/components/data";
 import Image from "next/image";
 import React, { use, useEffect, useRef, useState } from "react";
 import {
@@ -12,6 +11,10 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import ComicInfo from "@/app/(protected)/(reader)/_components/ComicInfo";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { getChapterPages } from "@/actions/comic.actions";
+import LoaderScreen from "@/components/loading-screen";
+import { Chapter } from "@/lib/types";
 
 const ComicReader = ({
   params,
@@ -19,22 +22,6 @@ const ComicReader = ({
   params: Promise<{ chapterId: string }>;
 }) => {
   const { chapterId } = use(params);
-  const chapterPages = [
-    "/events/anime-con.jpg",
-    "/events/comic-con.jpg",
-    "/events/anime-con.jpg",
-    "/events/anime-con.jpg",
-    "/events/anime-con.jpg",
-    "/events/anime-con.jpg",
-    "/events/anime-con.jpg",
-    "/events/anime-con.jpg",
-    "/events/anime-con.jpg",
-    "/events/anime-con.jpg",
-    "/events/anime-con.jpg",
-  ];
-  const chapters = chapterData ?? [];
-  const chapter = chapters.find((c) => parseInt(chapterId) === c.id);
-
   const [readingMode, setReadingMode] = useState("horizontal");
   const [sizing, setSizing] = useState("auto");
   const [currentPage, setCurrentPage] = useState(0);
@@ -45,8 +32,6 @@ const ComicReader = ({
 
   const containerRef = useRef<HTMLDivElement>(null);
   const pageRefs = useRef<Array<HTMLElement | null>>([]);
-
-  const totalPages = chapterPages.length;
 
   useEffect(() => {
     if (!isReadingRoute) {
@@ -99,6 +84,21 @@ const ComicReader = ({
       container.removeEventListener("scroll", handleScroll);
     };
   }, [readingMode]);
+
+  const { data: pagesData, isLoading } = useQuery({
+    queryKey: ["pages"],
+    queryFn: () => getChapterPages(chapterId),
+    placeholderData: keepPreviousData,
+    refetchInterval: 2 * 60 * 1000,
+    refetchOnWindowFocus: true,
+  });
+
+  if (isLoading) return <LoaderScreen />;
+
+  const chapter: Chapter = pagesData?.data?.chapter ?? [];
+  const chapterPages: string[] = chapter?.chapterPages;
+
+  const totalPages = chapterPages.length;
 
   const handleNextPage = () => {
     if (currentPage + 2 < totalPages) {
