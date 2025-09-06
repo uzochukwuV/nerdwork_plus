@@ -1,0 +1,10 @@
+import multer from "multer";
+export declare const upload: multer.Multer;
+export declare const uploadComicFile: (req: any, res: any) => Promise<any>;
+export declare const uploadMultipleComicFiles: (req: any, res: any) => Promise<any>;
+export declare const getComicFile: (req: any, res: any) => Promise<any>;
+export declare const updateComicFile: (req: any, res: any) => Promise<any>;
+export declare const deleteComicFile: (req: any, res: any) => Promise<any>;
+export declare const listUserComicFiles: (req: any, res: any) => Promise<any>;
+export declare const getComicFileInfo: (req: any, res: any) => Promise<any>;
+export declare const uploadToS3: (req: any, res: any) => Promise<any>;

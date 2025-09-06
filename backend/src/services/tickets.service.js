@@ -1,0 +1,15 @@
+import { db } from "../config/db";
+import { tickets } from "../model/tickets";
+export async function issueTicket(userId, eventId, paymentMethod, amount) {
+    const [ticket] = await db
+        .insert(tickets)
+        .values({
+        userId,
+        eventId,
+        paymentMethod,
+        amount,
+    })
+        .returning();
+    return ticket;
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidGlja2V0cy5zZXJ2aWNlLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsidGlja2V0cy5zZXJ2aWNlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLE9BQU8sRUFBRSxFQUFFLEVBQUUsTUFBTSxjQUFjLENBQUM7QUFDbEMsT0FBTyxFQUFFLE9BQU8sRUFBRSxNQUFNLGtCQUFrQixDQUFDO0FBRTNDLE1BQU0sQ0FBQyxLQUFLLFVBQVUsV0FBVyxDQUMvQixNQUFjLEVBQ2QsT0FBZSxFQUNmLGFBQXFCLEVBQ3JCLE1BQWM7SUFFZCxNQUFNLENBQUMsTUFBTSxDQUFDLEdBQUcsTUFBTSxFQUFFO1NBQ3RCLE1BQU0sQ0FBQyxPQUFPLENBQUM7U0FDZixNQUFNLENBQUM7UUFDTixNQUFNO1FBQ04sT0FBTztRQUNQLGFBQWE7UUFDYixNQUFNO0tBQ1AsQ0FBQztTQUNELFNBQVMsRUFBRSxDQUFDO0lBRWYsT0FBTyxNQUFNLENBQUM7QUFDaEIsQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IGRiIH0gZnJvbSBcIi4uL2NvbmZpZy9kYlwiO1xyXG5pbXBvcnQgeyB0aWNrZXRzIH0gZnJvbSBcIi4uL21vZGVsL3RpY2tldHNcIjtcclxuXHJcbmV4cG9ydCBhc3luYyBmdW5jdGlvbiBpc3N1ZVRpY2tldChcclxuICB1c2VySWQ6IHN0cmluZyxcclxuICBldmVudElkOiBzdHJpbmcsXHJcbiAgcGF5bWVudE1ldGhvZDogc3RyaW5nLFxyXG4gIGFtb3VudDogc3RyaW5nXHJcbikge1xyXG4gIGNvbnN0IFt0aWNrZXRdID0gYXdhaXQgZGJcclxuICAgIC5pbnNlcnQodGlja2V0cylcclxuICAgIC52YWx1ZXMoe1xyXG4gICAgICB1c2VySWQsXHJcbiAgICAgIGV2ZW50SWQsXHJcbiAgICAgIHBheW1lbnRNZXRob2QsXHJcbiAgICAgIGFtb3VudCxcclxuICAgIH0pXHJcbiAgICAucmV0dXJuaW5nKCk7XHJcblxyXG4gIHJldHVybiB0aWNrZXQ7XHJcbn1cclxuIl19

@@ -3,11 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "start": "npx tsx --env-file=.env.local --watch  src/index.ts",
     "build": "tsc",
-    "start:prod": "node dist/index.js",
+    "start:prod": "node dist/src/index.js",
     "test": "jest",
     "generate:dev": "drizzle-kit generate --config=./src/config/drizzle-dev.config.ts",
     "migrate:dev": "drizzle-kit generate --config=./src/config/drizzle-dev.config.ts",
