@@ -14,7 +14,7 @@ app.use("/nft", authenticate, nftRoutes);
 app.use("/wallet", authenticate, walletRoutes);
 app.use("/profile", profileRoutes);
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 /**
  * @swagger
  * /users:
