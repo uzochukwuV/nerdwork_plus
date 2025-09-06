@@ -7,12 +7,14 @@ import { authenticate } from "./middleware/common/auth";
 import nftRoutes from "./routes/nft.routes";
 import walletRoutes from "./routes/wallet.routes";
 import profileRoutes from "./routes/profile.routes";
+import fileRoutes from "./routes/file.routes";
 
 app.use("/auth", authRoutes);
 app.use("/payment", authenticate, paymentRoutes);
 app.use("/nft", authenticate, nftRoutes);
 app.use("/wallet", authenticate, walletRoutes);
 app.use("/profile", profileRoutes);
+app.use("/file", fileRoutes);
 
 const PORT = process.env.PORT || 5000;
 /**
