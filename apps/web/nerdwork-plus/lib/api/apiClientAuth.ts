@@ -67,7 +67,10 @@ async function axiosGet<T = any>(
     const response = await axios.get<T>(fullUrl, config);
     return response;
   } catch (error) {
-    console.error(`Error in GET request to ${fullUrl}:`, error);
+    console.error(
+      `Error in GET request to ${encodeURIComponent(fullUrl)}:`,
+      error
+    );
     throw error;
   }
 }
