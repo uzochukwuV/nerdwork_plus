@@ -1,116 +1,13 @@
-// "use client";
-// import { Button } from "@/components/ui/button";
-// import Image from "next/image";
-// import { ImageIcon, Trash } from "lucide-react";
-// import { useEffect, useState } from "react";
-// import { ControllerRenderProps } from "react-hook-form";
-// import { ComicSeriesFormData, NFTFormData } from "@/lib/schema";
-
-// interface ImageUploadProps {
-//   field:
-//     | ControllerRenderProps<ComicSeriesFormData, "coverImage">
-//     | ControllerRenderProps<NFTFormData, "coverImage">;
-// }
-
-// export const ImageUpload = ({ field }: ImageUploadProps) => {
-//   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-
-//   useEffect(() => {
-//     // Clean up the URL when the component unmounts or the file changes
-//     return () => {
-//       if (previewUrl) {
-//         URL.revokeObjectURL(previewUrl);
-//       }
-//     };
-//   }, [previewUrl]);
-
-//   const handleFileChange = (file: File | null) => {
-//     if (file) {
-//       // Update form state with the File object
-//       field.onChange(file);
-//       // Create and set the URL for the local preview
-//       setPreviewUrl(URL.createObjectURL(file));
-//     } else {
-//       // Clear the form state and preview
-//       field.onChange(null);
-//       setPreviewUrl(null);
-//     }
-//   };
-
-//   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-//     e.preventDefault();
-//     const droppedFile = e.dataTransfer.files[0];
-//     if (droppedFile) {
-//       handleFileChange(droppedFile);
-//     }
-//   };
-
-//   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     const selectedFile = e.target.files?.[0] || null;
-//     handleFileChange(selectedFile);
-//   };
-
-//   return (
-//     <div className="">
-//       {!previewUrl ? (
-//         <div
-//           onDragOver={(e) => e.preventDefault()}
-//           onDrop={handleDrop}
-//           className="mx-auto flex flex-col border-dashed items-center justify-center group max-md:w-[335px] max-md:h-[496] md:w-[352px] md:h-[521px] border rounded-lg cursor-pointer bg-transparent border-[#9D9D9F] hover:border-[#646464]"
-//         >
-//           <label
-//             htmlFor="file"
-//             className="cursor-pointer h-full flex flex-col justify-center text-center w-full"
-//           >
-//             <div className="flex flex-col items-center justify-center pt-5 pb-6">
-//               <ImageIcon />
-//               <p className="mb-2 text-sm font-semibold text-center group-hover:opacity-75">
-//                 Drag and drop
-//                 <br />
-//                 <span className="font-normal text-xs text-[#707073]">
-//                   or Click to upload
-//                 </span>
-//               </p>
-//             </div>
-//           </label>
-//           <input
-//             id="file"
-//             type="file"
-//             className="hidden"
-//             onChange={handleFileSelect}
-//           />
-//         </div>
-//       ) : (
-//         <div className="relative flex flex-col items-center">
-//           <Image
-//             src={previewUrl}
-//             width={335}
-//             height={496}
-//             alt="Cover Preview"
-//             className="rounded-md max-md:w-[335px] max-md:h-[496] md:w-[352px] md:h-[521px] object-cover"
-//           />
-//           <Button
-//             onClick={() => handleFileChange(null)}
-//             className="absolute right-0 left-0 top-1/2 w-fit mx-auto px-7 flex items-center"
-//           >
-//             <Trash />
-//             Delete
-//           </Button>
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
 "use client";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { ImageIcon, Trash } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef } from "react";
 import { ControllerRenderProps } from "react-hook-form";
 import { ComicSeriesFormData, NFTFormData } from "@/lib/schema";
-import { uploadImage } from "@/actions/comic.actions";
 import { toast } from "sonner";
+import { useQueryClient } from "@tanstack/react-query";
+import { useUploadImage } from "@/lib/api/mutations";
 
 interface ImageUploadProps {
   field:
@@ -119,91 +16,96 @@ interface ImageUploadProps {
 }
 
 export const ImageUpload = ({ field }: ImageUploadProps) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const queryClient = useQueryClient();
 
-  const uploadFile = async (file: File) => {
-    setIsLoading(true);
-    try {
-      const formData = new FormData();
-      formData.append("file", file);
+  const {
+    mutate,
+    isPending,
+    isSuccess,
+    error,
+    data: uploadedData,
+    reset,
+  } = useUploadImage();
 
-      // Call the server action directly
-      const response = await uploadImage(formData);
-
-      console.log(response.data);
-      if (!response?.success) {
-        toast.error(
-          response?.message ?? "An error occurred while submitting the form."
-        );
-        return;
+  useEffect(() => {
+    if (isSuccess && uploadedData) {
+      if (uploadedData.success) {
+        toast.success("Image uploaded successfully!");
+        field.onChange(uploadedData.data);
+      } else {
+        toast.error(uploadedData.message || "Upload failed.");
+        field.onChange(null);
       }
-
-      toast.success("Image uploaded successfully!");
-      field.onChange(response.data);
-    } catch (error) {
+    }
+    if (error) {
       console.error("Upload error:", error);
-      field.onChange(null);
-    } finally {
-      setIsLoading(false);
+      toast.error("An unexpected error occurred during upload.");
     }
-  };
-
-  const handleFileChange = (file: File | null) => {
-    if (file) {
-      uploadFile(file);
-    } else {
-      field.onChange(null);
-    }
-  };
-
-  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    const droppedFile = e.dataTransfer.files[0];
-    if (droppedFile) {
-      handleFileChange(droppedFile);
-    }
-  };
+  }, [isSuccess, uploadedData, error, field]);
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0] || null;
-    handleFileChange(selectedFile);
+    if (selectedFile) {
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+      mutate(formData);
+    }
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    const droppedFile = e.dataTransfer.files?.[0] || null;
+    if (droppedFile) {
+      const formData = new FormData();
+      formData.append("file", droppedFile);
+      mutate(formData);
+    }
+  };
+
+  const handleDelete = () => {
+    field.onChange(null);
+    reset();
+    queryClient.resetQueries();
   };
 
   return (
     <div className="">
       {!field.value ? (
-        <div
+        <label
+          htmlFor="file-upload"
           onDragOver={(e) => e.preventDefault()}
           onDrop={handleDrop}
           className="mx-auto flex flex-col border-dashed items-center justify-center group max-md:w-[335px] max-md:h-[496] md:w-[352px] md:h-[521px] border rounded-lg cursor-pointer bg-transparent border-[#9D9D9F] hover:border-[#646464]"
         >
-          {isLoading ? (
-            <p className="text-sm font-semibold">Uploading...</p>
+          {isPending ? (
+            <div className="flex flex-col items-center justify-center pt-5 pb-6">
+              <p className="text-sm font-semibold text-center">Uploading...</p>
+            </div>
           ) : (
-            <label
-              htmlFor="file"
-              className="cursor-pointer h-full flex flex-col justify-center text-center w-full"
-            >
-              <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                <ImageIcon />
-                <p className="mb-2 text-sm font-semibold text-center group-hover:opacity-75">
-                  Drag and drop
-                  <br />
-                  <span className="font-normal text-xs text-[#707073]">
-                    or Click to upload
-                  </span>
-                </p>
-              </div>
-            </label>
+            <div className="flex flex-col items-center justify-center pt-5 pb-6">
+              <ImageIcon />
+              <p className="mb-2 text-sm font-semibold text-center group-hover:opacity-75">
+                Drag and drop
+                <br />
+                <span className="font-normal text-xs text-[#707073]">
+                  or Click to upload
+                </span>
+              </p>
+            </div>
           )}
           <input
-            id="file"
+            id="file-upload"
+            ref={fileInputRef}
             type="file"
             className="hidden"
             onChange={handleFileSelect}
-            disabled={isLoading}
+            disabled={isPending}
           />
-        </div>
+        </label>
       ) : (
         <div className="relative flex flex-col items-center">
           <Image
@@ -214,9 +116,9 @@ export const ImageUpload = ({ field }: ImageUploadProps) => {
             className="rounded-md max-md:w-[335px] max-md:h-[496] md:w-[352px] md:h-[521px] object-cover"
           />
           <Button
-            onClick={() => handleFileChange(null)}
+            onClick={handleDelete}
             className="absolute right-0 left-0 top-1/2 w-fit mx-auto px-7 flex items-center"
-            disabled={isLoading}
+            disabled={isPending}
           >
             <Trash />
             Delete

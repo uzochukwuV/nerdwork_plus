@@ -147,7 +147,7 @@ const ComicDetailsPage = ({
             src={comic?.image}
             width={322}
             height={477}
-            alt=""
+            alt={`${comic.title} cover image`}
             className="w-[322px] h-[477px] rounded-[8px] object-cover max-md:hidden"
           />
         )}

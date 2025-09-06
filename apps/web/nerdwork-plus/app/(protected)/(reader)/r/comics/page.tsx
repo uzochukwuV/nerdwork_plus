@@ -39,7 +39,9 @@ const ReaderComics = () => {
 
   const comics: Comic[] = comicData?.data?.comics ?? [];
 
-  const filteredComics = comics.filter((comic) => comic.genre?.includes(tab));
+  const filteredComics = comics.filter((comic) =>
+    comic.genre?.some((genre) => genre.toLowerCase() === tab.toLowerCase())
+  );
 
   return (
     <div className="pt-20">

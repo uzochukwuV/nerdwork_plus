@@ -3,6 +3,11 @@ import type { NextConfig } from "next";
 const isDevelopment = process.env.NODE_ENV === "development";
 
 const nextConfig: NextConfig = {
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "30mb",
+    },
+  },
   images: {
     remotePatterns: [
       {
@@ -20,6 +25,12 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "cdn.example.com",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "dgumbu3t6hn53.cloudfront.net",
         port: "",
         pathname: "/**",
       },

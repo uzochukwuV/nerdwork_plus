@@ -6,13 +6,16 @@ import axios from "axios";
 
 export const uploadImage = async (data: FormData) => {
   try {
-    console.log(data);
-    // const response = await axiosPostData("elections/upload", data);
+    const file = data.get("file") as File;
+
+    if (!file) {
+      return { error: "No file provided." };
+    }
+    const response = await axiosPostData("file-upload/media", data);
 
     return {
       success: true,
-      //   data: response.data,
-      data: "https://lh3.googleusercontent.com/a/ACg8ocLGqFhB_pRTuIdO7gzwJpEWSAIK5DZVLjAt0UhbqeqFUTOlEA=s96-c",
+      data: "https://" + response.data.url,
       message: "Image uploaded successfully",
     };
   } catch (error: unknown) {
