@@ -39,7 +39,7 @@ const ComicDetailsPage = ({
     queryKey: ["comic"],
     queryFn: () => getSingleComic(slug),
     placeholderData: keepPreviousData,
-    refetchInterval: 2 * 60 * 1000,
+    refetchInterval: 5 * 60 * 1000,
     refetchOnWindowFocus: true,
   });
 
@@ -51,7 +51,7 @@ const ComicDetailsPage = ({
     queryKey: ["chapters"],
     queryFn: () => getComicChaptersBySlug(slug),
     placeholderData: keepPreviousData,
-    refetchInterval: 2 * 60 * 1000,
+    refetchInterval: 5 * 60 * 1000,
     refetchOnWindowFocus: true,
   });
 

@@ -3,7 +3,7 @@
 import { Chapter } from "@/lib/types";
 import { ColumnDef } from "@tanstack/react-table";
 import ComicPaymentFlow from "../../../_components/ComicPaymentFlow";
-import Link from "next/link";
+import ReadButton from "../../../_components/ReadButton";
 
 export const columns: ColumnDef<Chapter>[] = [
   {
@@ -12,7 +12,7 @@ export const columns: ColumnDef<Chapter>[] = [
     cell: ({ row }) => {
       return (
         <div className="text-left capitalize text-nerd-muted font-normal">
-          # {row.original.id.slice(0, 4)}
+          # {row.original.serialNo ?? 1}
         </div>
       );
     },
@@ -52,12 +52,7 @@ export const columns: ColumnDef<Chapter>[] = [
       return (
         <div className="text-center">
           {row.original.chapterType == "free" ? (
-            <Link
-              className="cursor-pointer hover:opacity-75"
-              href={`/r/comics/${row.original.slug}/chapter/${row.original.uniqueCode}`}
-            >
-              Read
-            </Link>
+            <ReadButton chapterCode={row.original.uniqueCode ?? ""} />
           ) : (
             <ComicPaymentFlow chapter={row.original} />
           )}

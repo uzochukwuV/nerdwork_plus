@@ -89,7 +89,7 @@ const ComicReader = ({
     queryKey: ["pages"],
     queryFn: () => getChapterPages(chapterId),
     placeholderData: keepPreviousData,
-    refetchInterval: 2 * 60 * 1000,
+    refetchInterval: 5 * 60 * 1000,
     refetchOnWindowFocus: true,
   });
 

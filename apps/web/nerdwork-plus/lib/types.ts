@@ -17,6 +17,7 @@ export type Comic = {
 
 export type Chapter = {
   id: string;
+  serialNo: number;
   image: string;
   title: string;
   summary: string;
@@ -30,6 +31,7 @@ export type Chapter = {
   slug?: string;
   chapterPages: string[];
   chapterType?: "free" | "paid";
+  price?: number;
   updatedAt: string;
 };
 

@@ -17,7 +17,7 @@ const ChapterComics = ({ data, slug }: { data: Chapter[]; slug: string }) => {
         >
           <div className="md:w-[80%] text-nerd-muted flex gap-8">
             <Image
-              src={chapter?.image}
+              src={chapter.image ?? null}
               width={92}
               height={132}
               alt="Chapter cover"
@@ -43,7 +43,7 @@ const ChapterComics = ({ data, slug }: { data: Chapter[]; slug: string }) => {
               <div className="flex gap-5 text-sm">
                 <span className="flex items-center gap-1">
                   <ImageIcon size={16} />
-                  {data.length} pages
+                  {chapter.pages.length} pages
                 </span>
                 <span className="flex items-center gap-1">
                   <Calendar size={16} />
