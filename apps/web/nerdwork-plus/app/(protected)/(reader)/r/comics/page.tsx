@@ -6,7 +6,7 @@ import RComics from "../../_components/RComics";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { getAllComicsForReader } from "@/actions/comic.actions";
-import { Comic } from "@/lib/types";
+import {  Comic } from "@/lib/types";
 import LoaderScreen from "@/components/loading-screen";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -24,19 +24,19 @@ const TABS = [
   "historical",
 ];
 
-interface Comic {
-  id: string;
-  title: string;
-  description: string;
-  image: string;
-  genre: string[];
-  tags: string[];
-  slug: string;
-  isDraft: boolean;
-  publishedAt: string | null;
-  createdAt: string;
-  chapters?: number; // We'll calculate this from chapters data
-}
+// interface Comic {
+//   id: string;
+//   title: string;
+//   description: string;
+//   image: string;
+//   genre: string[];
+//   tags: string[];
+//   slug: string;
+//   isDraft: boolean;
+//   publishedAt: string | null;
+//   createdAt: string;
+//   chapters?: number; // We'll calculate this from chapters data
+// }
 
 const ReaderComics = () => {
   const [tab, setTab] = useState<string>("all");
