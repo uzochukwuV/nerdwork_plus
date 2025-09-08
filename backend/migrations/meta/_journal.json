@@ -50,6 +50,13 @@
       "when": 1757144862654,
       "tag": "0006_noisy_lockjaw",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1757316955656,
+      "tag": "0007_perpetual_avengers",
+      "breakpoints": true
     }
   ]
 }
