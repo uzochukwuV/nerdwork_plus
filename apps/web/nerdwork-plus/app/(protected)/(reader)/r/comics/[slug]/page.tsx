@@ -1,5 +1,4 @@
 "use client";
-import { chapterData, comicData } from "@/components/data";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 // import Link from "next/link";
@@ -8,19 +7,40 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DataTable } from "@/components/data-table";
 import { columns } from "./columns";
 import { Check } from "lucide-react";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import {
+  getComicChaptersBySlug,
+  getSingleComic,
+} from "@/actions/comic.actions";
+import LoaderScreen from "@/components/loading-screen";
+import { Chapter, Comic } from "@/lib/types";
+import Link from "next/link";
 
-const ComicInterface = ({
-  params,
-}: {
-  params: Promise<{ comicId: string }>;
-}) => {
-  const { comicId } = use(params);
+const ComicInterface = ({ params }: { params: Promise<{ slug: string }> }) => {
+  const { slug } = use(params);
   const [tab, setTab] = React.useState<string>("chapters");
   const [library, setLibrary] = React.useState(false);
 
-  const chapters = chapterData ?? [];
-  const comics = comicData ?? [];
-  const comic = comics.find((c) => parseInt(comicId) === c.id);
+  const { data: comicData, isLoading } = useQuery({
+    queryKey: ["comic"],
+    queryFn: () => getSingleComic(slug),
+    placeholderData: keepPreviousData,
+    refetchInterval: 2 * 60 * 1000,
+    refetchOnWindowFocus: true,
+  });
+
+  const { data: chaptersData, isLoading: isChaptersLoading } = useQuery({
+    queryKey: ["chapters"],
+    queryFn: () => getComicChaptersBySlug(slug),
+    placeholderData: keepPreviousData,
+    refetchInterval: 2 * 60 * 1000,
+    refetchOnWindowFocus: true,
+  });
+
+  if (isLoading || isChaptersLoading) return <LoaderScreen />;
+
+  const comic: Comic = comicData?.data?.comic;
+  const chapters: Chapter[] = chaptersData?.data?.chapters ?? [];
 
   return (
     <>
@@ -32,18 +52,23 @@ const ComicInterface = ({
               <div className="flex flex-col gap-6">
                 <h1 className="text-5xl font-bold">{comic?.title}</h1>
                 <p className="font-semibold capitalize">
-                  {comic?.rating} Rating, {comic?.chapters} chapters,{" "}
-                  {comic?.genres && comic?.genres[0]}
+                  {comic?.ageRating} Rating, {comic?.chapters} chapters,{" "}
+                  {comic?.genre && comic?.genre[0]}
                 </p>
               </div>
 
-              <p>{comic?.short_description}</p>
+              <p>{comic?.description}</p>
 
               <div className="text-nerd-muted">
-                Author: <span className="text-white">John Uche</span>, Started:{" "}
-                <span className="text-white">April 2015</span>, Status:{" "}
-                <span className="text-white capitalize">Ongoing</span>, Genre:{" "}
-                {comic?.genres?.map((gen, index) => (
+                Author:{" "}
+                <span className="text-white">{comic?.creatorName ?? ""}</span>,
+                Started:{" "}
+                <span className="text-white">
+                  {new Date(comic.createdAt).toDateString()}
+                </span>
+                , Status: <span className="text-white capitalize">Ongoing</span>
+                , Genre:{" "}
+                {comic?.genre?.map((gen, index) => (
                   <span key={index} className="text-white capitalize">
                     {gen},{" "}
                   </span>
@@ -51,7 +76,9 @@ const ComicInterface = ({
               </div>
 
               <div className="space-x-4 flex items-stretch">
-                <Button variant={"primary"}>Start Reading</Button>
+                <Link href={`/r/comics/${slug}/chapters/`}>
+                  <Button variant={"primary"}>Start Reading</Button>
+                </Link>
                 <Button
                   onClick={() => setLibrary(!library)}
                   variant={"outline"}

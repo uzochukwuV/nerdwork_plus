@@ -54,7 +54,7 @@ export const columns: ColumnDef<Chapter>[] = [
           {row.original.read ? (
             <Link
               className="cursor-pointer hover:opacity-75"
-              href={`/r/comics/${row.original.id}/chapter/${row.original.id}`}
+              href={`/r/comics/${row.original.comicSlug}/chapter/${row.original.code}`}
             >
               Read
             </Link>

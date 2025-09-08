@@ -1,6 +1,4 @@
 "use client";
-
-import { chapterData, comicData } from "@/components/data";
 import { Button } from "@/components/ui/button";
 import { Menubar, MenubarMenu, MenubarTrigger } from "@/components/ui/menubar";
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
@@ -13,22 +11,70 @@ import ComicActions from "../../../_components/comics/DesktopComicActions";
 import MobileComicActions from "../../../_components/comics/MobileComicActions";
 import ChaptersEmptyState from "../../../_components/comics/ChaptersEmptyState";
 import ChapterComics from "../../../_components/comics/ChapterComics";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import {
+  getComicChaptersBySlug,
+  getSingleComic,
+} from "@/actions/comic.actions";
+import LoaderScreen from "@/components/loading-screen";
+import { Chapter, Comic } from "@/lib/types";
+import { toast } from "sonner";
 
 const ComicDetailsPage = ({
   params,
 }: {
-  params: Promise<{ comicId: string }>;
+  params: Promise<{ slug: string }>;
 }) => {
-  const { comicId } = use(params);
-
+  const { slug } = use(params);
   const [isExpanded, setIsExpanded] = useState(false);
   const [tab, setTab] = useState<string>("all");
 
-  const chapters = chapterData ?? [];
-  const comics = comicData ?? [];
-  const comic = comics.find((c) => parseInt(comicId) === c.id);
+  const {
+    data: comicData,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["comic"],
+    queryFn: () => getSingleComic(slug),
+    placeholderData: keepPreviousData,
+    refetchInterval: 2 * 60 * 1000,
+    refetchOnWindowFocus: true,
+  });
 
-  const truncatedText = comic?.short_description.substring(0, 200);
+  const {
+    data: chaptersData,
+    isLoading: isChaptersLoading,
+    error: chapterError,
+  } = useQuery({
+    queryKey: ["chapters"],
+    queryFn: () => getComicChaptersBySlug(slug),
+    placeholderData: keepPreviousData,
+    refetchInterval: 2 * 60 * 1000,
+    refetchOnWindowFocus: true,
+  });
+
+  if (isLoading || isChaptersLoading) return <LoaderScreen />;
+
+  if (error || chapterError)
+    toast.error(
+      error?.message || chapterError?.message || "Error getting chapter details"
+    );
+
+  // if (error) {
+  //   return (
+  //     <div className="flex flex-col items-center justify-center p-10 text-center">
+  //       <p className="text-xl font-semibold">Error retrieving data</p>
+  //       <p className="mt-2 text-sm">
+  //         Try adjusting your filters or search terms.
+  //       </p>
+  //     </div>
+  //   );
+  // }
+
+  const comic: Comic = comicData?.data?.comic;
+  const chapters: Chapter[] = chaptersData?.data?.chapters ?? [];
+
+  const truncatedText = comic?.description.substring(0, 200);
 
   const counts = {
     all: chapters.length,
@@ -67,7 +113,7 @@ const ComicDetailsPage = ({
           </div>
           <div className="flex gap-2 my-8 max-md:w-full max-md:justify-between">
             <Button asChild variant={"secondary"} className="max-md:w-4/5">
-              <Link href={`/creator/comics/${comicId}/add`}>
+              <Link href={`/creator/comics/${slug}/add`}>
                 <Plus /> Add Chapter
               </Link>
             </Button>
@@ -97,19 +143,29 @@ const ComicDetailsPage = ({
           </div>
           <div className="flex max-md:flex-col gap-6 md:gap-12 max-md:text-sm">
             <p className="md:hidden max-w-[505px] w-full">
-              {isExpanded ? comic?.short_description : `${truncatedText}...`}
+              {isExpanded ? comic?.description : `${truncatedText}...`}
             </p>
             <p className="max-md:hidden max-w-[505px] w-full">
-              {comic?.short_description}
+              {comic?.description}
             </p>
             <ul className={`${isExpanded ? "" : "max-md:hidden"}`}>
-              <li>Fantasy, Adventure</li>
-              <li>Magic, Adventure, Young Adult</li>
-              <li>10 SOL</li>
-              <li>Released 10 July, 2025</li>
+              <li>
+                {comic?.genre?.map((gen, index) => (
+                  <span key={index} className="text-white capitalize">
+                    {gen},{" "}
+                  </span>
+                ))}
+              </li>
+              {/* <li>10 SOL</li> */}
+              <li>
+                Released{" "}
+                <span className="text-white">
+                  {new Date(comic.createdAt).toDateString()}
+                </span>
+              </li>
               <li>{comic?.chapters} chapters</li>
-              <li>Rated PG - 13 Teen</li>
-              <li>Collaborators: Creator, Artist, Copywriter</li>
+              <li>{comic?.ageRating} Rating</li>
+              <li>Creator: {comic?.creatorName ?? ""}</li>
             </ul>
             <button
               className="md:hidden cursor-pointer text-left text-[#707073] font-normal"
@@ -125,14 +181,14 @@ const ComicDetailsPage = ({
             src={comic?.image}
             width={322}
             height={477}
-            alt=""
+            alt={`${comic.title} cover image`}
             className="w-[322px] h-[477px] rounded-[8px] object-cover max-md:hidden"
           />
         )}
       </section>
       <hr className="!text-[#292A2E] max-md:hidden h-0 border-t border-[#292A2E]" />
       {comic && chapters.length == 0 ? (
-        <ChaptersEmptyState comicId={comic?.id} />
+        <ChaptersEmptyState comicId={comic?.slug} />
       ) : (
         <section className="py-8">
           <h3 className="font-semibold text-2xl">
@@ -175,7 +231,7 @@ const ComicDetailsPage = ({
             <hr className="!text-[#292A2E] h-0 border-t border-[#292A2E]" />
             <div className=" max-w-[1300px] mx-auto w-full mt-8">
               <TabsContent value={tab}>
-                <ChapterComics data={filteredChapters} />
+                <ChapterComics slug={slug} data={filteredChapters} />
               </TabsContent>
             </div>
             <hr className="!text-[#292A2E] h-0 mb-10 border-t border-[#292A2E]" />

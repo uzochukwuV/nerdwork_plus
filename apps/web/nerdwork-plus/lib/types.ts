@@ -1,13 +1,16 @@
 export type Comic = {
-  id: number;
+  id: string;
   image: string;
   title: string;
-  short_description: string;
+  description: string;
   status: "upcoming" | "draft" | "scheduled" | "published";
   chapters: number;
-  last_updated: string;
-  genres?: Array<string>;
-  rating?: string;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+  creatorName: string;
+  genre?: Array<string>;
+  ageRating?: string;
   isPaid?: boolean;
   isOngoing?: boolean;
 };
@@ -23,6 +26,9 @@ export type Chapter = {
   views?: number;
   read?: boolean;
   unlocked?: boolean;
+  code?: string;
+  comicSlug?: string;
+  chapterPages: string[];
 };
 
 export type Transaction = {
