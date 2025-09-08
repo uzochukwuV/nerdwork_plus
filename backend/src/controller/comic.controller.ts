@@ -268,10 +268,11 @@ export const createChapter = async (req:any, res:any) => {
         comicId,
         title,
         chapterNumber,
-        description: description || null,
+        summary: description || null,
         pages: pages || [], // Array of S3 URLs
         pageCount: pages?.length || 0,
         isDraft: true,
+        uniqueCode: comicId
       })
       .returning();
 
@@ -316,7 +317,7 @@ export const updateChapter = async (req:any, res:any) => {
       .set({
         title: title || undefined,
         chapterNumber: chapterNumber || undefined,
-        description: description || undefined,
+        summary: description || undefined,
         pages: pages || undefined,
         pageCount: pages?.length || undefined,
         updatedAt: new Date(),

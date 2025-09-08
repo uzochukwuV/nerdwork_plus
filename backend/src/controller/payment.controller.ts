@@ -64,7 +64,7 @@ export const createPaymentLink = async (req: any, res: any) => {
         const helioResponse = await sdk.paylink.create(createPaylinkDto);
 
        
-       // todo update user data
+        // todo update user data
         // get user from db
         // const user = await db.query.authUsers.findFirst({
         //     where: (users, { eq }) => eq(users.id, userId),

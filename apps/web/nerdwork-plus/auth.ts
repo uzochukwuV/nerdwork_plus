@@ -2,7 +2,7 @@ import NextAuth, { DefaultSession } from "next-auth";
 import Google from "next-auth/providers/google";
 import { JWT } from "next-auth/jwt";
 import { Session } from "next-auth";
-import { CustomJWT } from "./lib/types/auth";
+// import { CustomJWT } from "./lib/types/auth";
 import { User } from "./lib/types";
 import { googleAuth } from "./actions/auth.actions";
 
@@ -58,7 +58,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return token;
     },
     async session({ session, token }: { session: Session; token: JWT }) {
-      const customToken = token as CustomJWT;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const customToken = token as any;
 
       if (customToken.user && customToken.token !== undefined) {
         session.user = {

@@ -27,9 +27,11 @@ export function PaymentDetailsForm() {
 
   const handleContinue =async () => {
     console.log("Selected wallet:", selectedWallet);
-    const userAddress = await wallet.connect()
+    await wallet.connect()
+
+     wallet.publicKey?.toString()
     // Proceed to the next step, e.g., connect to the wallet
-    toast.info("Proceeding to wallet connection...", userAddress);
+    toast.info("Proceeding to wallet connection..." +  wallet.publicKey!.toString());
     // proceed to update user wallte address
 
     setTimeout(() => {
