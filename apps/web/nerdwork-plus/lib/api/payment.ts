@@ -27,17 +27,12 @@ export interface CreateWebhookRequest {
 
 
 export interface handlePaymentRequest {
-  blockchainSymbol: string;
-  redirectUrl: string;
-  senderPK: string;
+  data: unknown;
   transaction: string;
-  data : {
-    content: {
-      status: string;
-      statusToken: string;
-      transactionSignature: string;
-    }
-  }
+  paymentPK?: string;
+  swapTransactionSignature?: string;
+  blockchainSymbol?: string;
+  redirectUrl?: string;
 }
 
 export interface CreateWebhookResponse {

@@ -21,7 +21,7 @@ export function PaymentDetailsForm() {
   // A function to simulate wallet detection. In a real app, you would
   // use a library like @solana/wallet-adapter to check for installed wallets.
   const walletDetected = (walletName: string) => {
-   
+   console.log(walletName)
     return solfareWallet? true:  false; // or false based on the check
   };
 

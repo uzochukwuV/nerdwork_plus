@@ -40,12 +40,12 @@ const TABS = [
 
 const ReaderComics = () => {
   const [tab, setTab] = useState<string>("all");
-  const [comics, setComics] = useState<Comic[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  // const [comics, setComics] = useState<Comic[]>([]);
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState<string | null>(null);
 
   const {
-    data: comicData,
+    data: comics,
     isLoading,
     // error,
   } = useQuery({
@@ -60,7 +60,7 @@ const ReaderComics = () => {
 
   
 
-  const filteredComics = comics.filter((comic) =>
+  const filteredComics = comics!.data?.filter((comic: Comic) =>
     comic.genre?.some((genre) => genre.toLowerCase() === tab.toLowerCase())
   );
 
@@ -114,7 +114,7 @@ const ReaderComics = () => {
           </div>
           <hr className="!text-[#292A2E] h-0 border-t border-[#292A2E]" />
           <div className=" max-w-[1200px] mx-auto w-full mt-8">
-            {comics.length == 0 ? (
+            {comics!.data?.length == 0 ? (
               <>
                 <div className="flex flex-col items-center justify-center p-10 text-center">
                   <p className="text-xl font-semibold">No comics found!</p>

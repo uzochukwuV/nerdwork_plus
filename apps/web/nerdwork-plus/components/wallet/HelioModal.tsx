@@ -13,7 +13,7 @@ import Image from "next/image";
 import Helio from "@/assets/helio.svg";
 import { toast } from "sonner";
 import dynamic from "next/dynamic";
-import { handlePayment } from "@/lib/api/payment";
+import { handlePayment, handlePaymentRequest } from "@/lib/api/payment";
 
 const HelioCheckout = dynamic(() => import("@heliofi/checkout-react").then(mod => ({ default: mod.HelioCheckout })), {
   ssr: false,
@@ -54,10 +54,11 @@ const HelioModal: React.FC<HelioModalProps> = ({
   const [isClient, setIsClient] = React.useState(false);
 
   React.useEffect(() => {
+    console.log(paymentLink)
     setIsClient(true);
-  }, []);
+  }, [isClient,paymentLink]);
 
-  const handlePaymentSuccess =async (payment: any) => {
+  const handlePaymentSuccess =async (payment: handlePaymentRequest) => {
     console.log("Payment successful:", payment);
 
     const data = await handlePayment(payment)
@@ -81,7 +82,10 @@ const HelioModal: React.FC<HelioModalProps> = ({
     onMinimize?.(false);
   };
 
-  const handlePaymentError = (error: any) => {
+  const handlePaymentError = (error: {
+    transaction?: string;
+    errorMessage?: string;
+}) => {
     console.error("Payment failed:", error);
     setPaymentStatus('failed');
     toast.error("Payment failed. Please try again.");
@@ -166,7 +170,7 @@ const HelioModal: React.FC<HelioModalProps> = ({
             <Image src={Helio} width={20} height={20} alt="helio" />
           </DialogTitle>
           <DialogDescription className="text-nerd-muted">
-            Complete your NWT token purchase using Helio's secure payment system
+            Complete your NWT token purchase using Helio&apos;s secure payment system
           </DialogDescription>
         </DialogHeader>
 
@@ -216,9 +220,7 @@ const HelioModal: React.FC<HelioModalProps> = ({
                       },
                       onSuccess: handlePaymentSuccess,
                       onError: handlePaymentError,
-                      onClose: () => {
-                        console.log("Payment widget closed");
-                      },
+                     
                     }}
                   />
                 </div>
@@ -243,7 +245,7 @@ const HelioModal: React.FC<HelioModalProps> = ({
             <div>
               <p className="text-sm text-white font-medium">Secure Payment</p>
               <p className="text-xs text-nerd-muted">
-                Your payment is processed securely through Helio's encrypted payment system. 
+                Your payment is processed securely through Helio&apos;s encrypted payment system. 
                 Your card details are never stored on our servers.
               </p>
             </div>

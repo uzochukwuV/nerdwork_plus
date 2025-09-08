@@ -43,7 +43,8 @@ export const comicsApi = {
   },
 
   // Create comic (requires auth)
-  async createComic(comicData: any, token: string) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async createComic(comicData: any, token: string) { 
     try {
       const response = await axios.post(
         `${API_BASE_URL}/comics/create`,
@@ -95,6 +96,7 @@ export const comicsApi = {
   },
 
   // Create chapter (requires auth)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async createChapter(comicId: string, chapterData: any, token: string) {
     try {
       const response = await axios.post(
@@ -126,6 +128,7 @@ export const comicsApi = {
   },
 
   // Update chapter (requires auth)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async updateChapter(chapterId: string, chapterData: any, token: string) {
     try {
       const response = await axios.put(
@@ -186,6 +189,7 @@ export const comicsApi = {
 // File Upload API
 export const fileApi = {
   // Upload single file
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async uploadFile(file: File, metadata?: any, token?: string) {
     try {
       const formData = new FormData();
@@ -198,6 +202,7 @@ export const fileApi = {
         });
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const headers: any = {
         "Content-Type": "multipart/form-data",
       };
@@ -219,6 +224,7 @@ export const fileApi = {
   },
 
   // Upload multiple files
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async uploadMultipleFiles(files: File[], metadata?: any, token?: string) {
     try {
       const formData = new FormData();
@@ -234,6 +240,7 @@ export const fileApi = {
         });
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const headers: any = {
         "Content-Type": "multipart/form-data",
       };
