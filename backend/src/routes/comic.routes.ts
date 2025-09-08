@@ -344,6 +344,7 @@ router.get("/chapters/:chapterId", getChapter);
  *     summary: Update chapter (reorder pages, change info)
  *     tags: [Chapters]
  *     security:
+ * 
  *       - bearerAuth: []
  *     parameters:
  *       - in: path
@@ -394,6 +395,7 @@ router.put("/chapters/:chapterId", authenticate, updateChapter);
  *       200:
  *         description: Chapter published successfully
  */
+
 router.patch("/chapters/:chapterId/publish", authenticate, publishChapter);
 
 /**
