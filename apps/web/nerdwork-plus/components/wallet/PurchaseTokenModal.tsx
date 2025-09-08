@@ -72,9 +72,11 @@ const PurchaseTokenModal = () => {
       }
 
       // Create webhook for payment notifications
-      await createPaymentWebhook({
+      const webhook = await createPaymentWebhook({
         paymentId: paymentResponse.paylinkId
       });
+
+      console.log(webhook)
 
       // Store payment data and open Helio modal
       setPaymentData({

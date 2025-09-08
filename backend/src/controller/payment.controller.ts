@@ -9,6 +9,10 @@ const HELIO_API_BASE = "https://api.dev.hel.io/v1";
 const HELIO_PUBLIC_KEY = process.env.HELIO_PUBLIC_KEY;
 const HELIO_PRIVATE_KEY = process.env.HELIO_PRIVATE_KEY;
 const WEBHOOK_REDIRECT_URL = process.env.WEBHOOK_REDIRECT_URL;
+const HELIO_WALLET_ID = process.env.HELIO_WALLET_ID;
+const HELIO_PCURRENCY = process.env.HELIO_PCURRENCY;
+
+
 import jwt from "jsonwebtoken";
 
 import { InsertPayment } from "../model/payment"; // Make sure this import exists
@@ -39,17 +43,18 @@ export const createPaymentLink = async (req: any, res: any) => {
         //     currencies
         // });
 
+        console.log(HELIO_PCURRENCY,HELIO_WALLET_ID )
         // Prepare DTO for Helio
         const createPaylinkDto: CreatePaylinkWithApiDto = {
-            name: userId + name + new Date().toISOString(), // Unique name for each payment link
+            name: "NWT_PURCHASE", // Unique name for each payment link
             price: (Number(amount) * 1000000).toString(), // Ensure amount is a number
-            pricingCurrency: "63777da9d2f1ab96ae0ee600",
+            pricingCurrency: HELIO_PCURRENCY, 
             description: `Payment for Nerd Work Token by ${userId} on ${new Date().toISOString()} amount: ${amount} `,
             features: {},
             recipients: [
                 {
-                    walletId: "68b96c781e093b84cdbc08d0",
-                    currencyId: "66e2b724a88df2dcc5f63fe8"
+                    walletId: HELIO_WALLET_ID,
+                    currencyId: HELIO_PCURRENCY
                 }
             ],
         };
@@ -57,7 +62,7 @@ export const createPaymentLink = async (req: any, res: any) => {
         // Call Helio SDK
         const helioResponse = await sdk.paylink.create(createPaylinkDto);
 
-       console.log(helioResponse)
+       
        // todo update user data
         // get user from db
         // const user = await db.query.authUsers.findFirst({
