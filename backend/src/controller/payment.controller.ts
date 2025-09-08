@@ -30,7 +30,7 @@ export const createPaymentLink = async (req: any, res: any) => {
     console.log(userId)
     
     try {
-        const { amount, name } = req.body;
+        const { amount, name, redirectUrl } = req.body;
 
         if (!amount ) {
             return res.status(400).json({
@@ -51,6 +51,7 @@ export const createPaymentLink = async (req: any, res: any) => {
             pricingCurrency: HELIO_PCURRENCY, 
             description: `Payment for Nerd Work Token by ${userId} on ${new Date().toISOString()} amount: ${amount} `,
             features: {},
+            redirectUrl,
             recipients: [
                 {
                     walletId: HELIO_WALLET_ID,
@@ -165,25 +166,42 @@ export const createWebhookForPayment = async (req: any, res: any) => {
     }
 }
 
-export const handlePaymentWebhook = async (req: any, res: any) => {
+
+
+// // incomming req body
+
+ 
+// {
+//     transaction: 'BcQK8ibZFXpjQbBNSWGar11Xi85AT21hfaknQB4FJB4HPLtV2mrZbjSZtKeug14crw9qKVgmyWxtJT7G4fBq3WD',
+//     data: {
+//       content: {},
+//       transactionSignature: 'BcQK8ibZFXpjQbBNSWGar11Xi85AT21hfaknQB4FJB4HPLtV2mrZbjSZtKeug14crw9qKVgmyWxtJT7G4fBq3WD',
+//       status: 'SUCCESS',
+//       statusToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0cmFuc2FjdGlvblNpZ25hdHVyZSI6IkJjUUs4aWJaRlhwalFiQk5TV0dhcjExWGk4NUFUMjFoZmFrblFCNEZKQjRIUEx0VjJtclpialNadEtldWcxNGNydzlxS1ZnbXlXeHRKVDdHNGZCcTNXRCIsInRyYW5zYWN0aW9uSWQiOiI2OGJlNjlkNzVmMTI3ODQzZjFiZjQ1MmQiLCJpYXQiOjE3NTczMDk0MDMsImV4cCI6MTc1NzMxNjYwM30.lXf2-BAlDhJrWytTZGCwK-ehm27Oq7XKtmATtlyAldk'
+//     },
+//     blockchainSymbol: 'SOL',
+//     senderPK: 'FBnExnQQzaowHA3g5VQKV9JKbD4StwnMNz8EymUo9wcT'
+//   }
+
+export const handlePayment = async (req: any, res: any) => {
     try {
         console.log(req.body);
-        const { event, data } = req.body;
-        console.log('Received webhook event:', event, 'with data:', data);
+        const { data } = req.body;
+        console.log('Received webhook event:', 'with data:', data);
 
         // Example: Update payment status and metadata based on webhook event
-        if (data?.id) {
-            await db.update(payments)
-                .set({
-                    status: data.status || 'processing',
-                    failureReason: data.failureReason || null,
-                    blockchainTxHash: data.blockchainTxHash || null,
-                    processedAt: data.processedAt ? new Date(data.processedAt) : null,
-                    metadata: data, // Save the full webhook data for reference
-                    updatedAt: new Date()
-                })
-                .where(eq(payments.paymentIntentId, data.id));
-        }
+        // if (data?.id) {
+        //     await db.update(payments)
+        //         .set({
+        //             status: data.status || 'processing',
+        //             failureReason: data.failureReason || null,
+        //             blockchainTxHash: data.blockchainTxHash || null,
+        //             processedAt: data.processedAt ? new Date(data.processedAt) : null,
+        //             metadata: data, // Save the full webhook data for reference
+        //             updatedAt: new Date()
+        //         })
+        //         .where(eq(payments.paymentIntentId, data.id));
+        // }
 
         res.status(200).json({ success: true });
     } catch (error: any) {

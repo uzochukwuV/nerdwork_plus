@@ -64,12 +64,16 @@ const PurchaseTokenModal = () => {
       toast.info("Creating payment link...");
       const paymentResponse = await createPaymentLink({
         amount: nwtAmount * usdPerNwt,
-        name: "NWT_Purchase"
+        name: "NWT_Purchase",
+        // cannot use localhost as redirect url
+        redirectUrl: "http://nerdwork.ng/helio/webhook/handle"
       });
 
       if (!paymentResponse.success) {
         throw new Error("Failed to create payment link");
       }
+
+      console.log(paymentResponse)
 
       // Create webhook for payment notifications
       const webhook = await createPaymentWebhook({

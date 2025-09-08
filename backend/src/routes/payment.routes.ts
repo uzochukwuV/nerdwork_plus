@@ -2,7 +2,7 @@ import { Router } from "express";
 import {
   createPaymentLink,
   createWebhookForPayment,
-  handlePaymentWebhook,
+  handlePayment,
 } from "../controller/payment.controller";
 
 const router = Router();
@@ -23,12 +23,16 @@ const router = Router();
  *       properties:
  *         amount:
  *           type: number
- *           description: Amount for the payment in tokens
- *           example: 100
+ *           description: Amount for the payment in USD
+ *           example: 1.105
  *         name:
  *           type: string
  *           description: Optional name for the payment
- *           example: "Token Purchase"
+ *           example: "NWT_Purchase"
+ *         redirectUrl:
+ *           type: string
+ *           description: Optional redirect URL after payment completion
+ *           example: "https://nerdwork.ng/payment/success"
  *     CreatePaymentLinkResponse:
  *       type: object
  *       properties:
@@ -62,13 +66,35 @@ const router = Router();
  *     WebhookPayload:
  *       type: object
  *       properties:
- *         event:
+ *         transaction:
  *           type: string
- *           description: The webhook event type
- *           example: "CREATED"
+ *           description: Blockchain transaction signature
+ *           example: "BcQK8ibZFXpjQbBNSWGar11Xi85AT21hfaknQB4FJB4HPLtV2mrZbjSZtKeug14crw9qKVgmyWxtJT7G4fBq3WD"
  *         data:
  *           type: object
- *           description: Payment data from the webhook
+ *           properties:
+ *             content:
+ *               type: object
+ *               description: Additional payment content
+ *             transactionSignature:
+ *               type: string
+ *               description: Blockchain transaction signature
+ *               example: "BcQK8ibZFXpjQbBNSWGar11Xi85AT21hfaknQB4FJB4HPLtV2mrZbjSZtKeug14crw9qKVgmyWxtJT7G4fBq3WD"
+ *             status:
+ *               type: string
+ *               description: Payment status
+ *               example: "SUCCESS"
+ *             statusToken:
+ *               type: string
+ *               description: JWT status token from Helio
+ *         blockchainSymbol:
+ *           type: string
+ *           description: Blockchain symbol
+ *           example: "SOL"
+ *         senderPK:
+ *           type: string
+ *           description: Sender's public key
+ *           example: "FBnExnQQzaowHA3g5VQKV9JKbD4StwnMNz8EymUo9wcT"
  *     ErrorResponse:
  *       type: object
  *       properties:
@@ -181,7 +207,7 @@ router.post("/helio/webhook/create", createWebhookForPayment);
 
 /**
  * @swagger
- * /payment/helio/webhook/handle:
+ * /payment/helio/handle:
  *   post:
  *     summary: Handle incoming payment webhooks from Helio
  *     description: Processes webhook events from Helio payment system to update payment status in the database. This endpoint is called automatically by Helio when payment events occur.
@@ -216,6 +242,6 @@ router.post("/helio/webhook/create", createWebhookForPayment);
  *                   type: string
  *                   example: "Internal Server Error"
  */
-router.post("/helio/webhook/handle", handlePaymentWebhook);
+router.post("/helio/handle", handlePayment);
 
 export default router;

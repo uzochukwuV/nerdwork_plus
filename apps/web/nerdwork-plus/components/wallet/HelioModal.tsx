@@ -13,6 +13,7 @@ import Image from "next/image";
 import Helio from "@/assets/helio.svg";
 import { toast } from "sonner";
 import dynamic from "next/dynamic";
+import { handlePayment } from "@/lib/api/payment";
 
 const HelioCheckout = dynamic(() => import("@heliofi/checkout-react").then(mod => ({ default: mod.HelioCheckout })), {
   ssr: false,
@@ -56,8 +57,11 @@ const HelioModal: React.FC<HelioModalProps> = ({
     setIsClient(true);
   }, []);
 
-  const handlePaymentSuccess = (payment: any) => {
+  const handlePaymentSuccess =async (payment: any) => {
     console.log("Payment successful:", payment);
+
+    const data = await handlePayment(payment)
+    console.log(data)
     setPaymentStatus('success');
     toast.success("Payment completed successfully!");
     
