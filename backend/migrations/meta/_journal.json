@@ -57,6 +57,13 @@
       "when": 1757316955656,
       "tag": "0007_perpetual_avengers",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1757320627537,
+      "tag": "0008_even_captain_marvel",
+      "breakpoints": true
     }
   ]
 }

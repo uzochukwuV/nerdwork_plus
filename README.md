@@ -239,3 +239,4 @@ This PR adds/updates ...
 * Nerdwork Platform Architecture (0–10 k Users) – internal PDF.
 
 > **Last updated:** 16 June 2025 (commit `docs/initial-unified`) – Maintainers: *@team-platform-engineering*.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any

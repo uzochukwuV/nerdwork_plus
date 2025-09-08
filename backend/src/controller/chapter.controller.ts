@@ -4,9 +4,9 @@ import { chapters } from "../model/chapter";
 import { comics } from "../model/comic";
 
 // ✅ Create Chapter
-export const createChapter = async (req, res) => {
+export const createChapter = async (req: any, res: any) => {
   try {
-    const { title, chapterType, price, summary, pages, comicId } = req.body;
+    const { title, chapterNumber, chapterType, price, summary, pages, comicId } = req.body;
 
     const finalPrice = chapterType === "free" ? 0 : price;
 
@@ -17,11 +17,13 @@ export const createChapter = async (req, res) => {
       .insert(chapters)
       .values({
         title,
+        chapterNumber: chapterNumber || 1,
         chapterType,
         price: finalPrice,
         summary,
         chapterStatus: "published",
-        pages,
+        pages: pages || [],
+        pageCount: pages?.length || 0,
         comicId,
         uniqueCode,
       })
@@ -47,9 +49,9 @@ export const createChapter = async (req, res) => {
   }
 };
 
-export const createDraft = async (req, res) => {
+export const createDraft = async (req: any, res: any) => {
   try {
-    const { title, chapterType, price, summary, pages, comicId } = req.body;
+    const { title, chapterNumber, chapterType, price, summary, pages, comicId } = req.body;
 
     const finalPrice = chapterType === "free" ? 0 : price;
 
@@ -60,10 +62,12 @@ export const createDraft = async (req, res) => {
       .insert(chapters)
       .values({
         title,
+        chapterNumber: chapterNumber || 1,
         chapterType,
         price: finalPrice,
         summary,
-        pages,
+        pages: pages || [],
+        pageCount: pages?.length || 0,
         comicId,
         chapterStatus: "draft",
         uniqueCode,
@@ -88,7 +92,7 @@ export const createDraft = async (req, res) => {
 };
 
 // ✅ Fetch all chapters by Comic Slug
-export const fetchChaptersByComicSlug = async (req, res) => {
+export const fetchChaptersByComicSlug = async (req: any, res: any) => {
   try {
     const { slug } = req.params;
 
@@ -117,7 +121,7 @@ export const fetchChaptersByComicSlug = async (req, res) => {
 };
 
 // ✅ Fetch single chapter by unique 4-digit code
-export const fetchChapterByUniqueCode = async (req, res) => {
+export const fetchChapterByUniqueCode = async (req: any, res: any) => {
   try {
     const { code } = req.params;
 
@@ -143,7 +147,7 @@ export const fetchChapterByUniqueCode = async (req, res) => {
 };
 
 // ✅ Fetch chapter pages by chapter ID
-export const fetchChapterPagesById = async (req, res) => {
+export const fetchChapterPagesById = async (req: any, res: any) => {
   try {
     const { chapterId } = req.params;
 
