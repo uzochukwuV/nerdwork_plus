@@ -4,7 +4,7 @@
   "private": true,
   "packageManager": "pnpm@10.15.1",
   "workspaces": [
-    "apps/web/*",
+    
     "services/*",
     "libs/*",
     "infra/*"
